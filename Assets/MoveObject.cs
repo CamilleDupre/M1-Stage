@@ -25,35 +25,6 @@ public class MoveObject : MonoBehaviour
         m_HasPosition = UpdatePointer();
         m_Pointer.SetActive(m_HasPosition);
 
-        //Teleport
-        if (m_TeleportAction.GetStateUp(m_pose.inputSource))
-            tryTeleport();
-    }
-
-    private void tryTeleport()
-    {
-        if (!m_HasPosition || m_IsTeleportoting)
-            return;
-
-        Vector3 headPosition = SteamVR_Render.Top().head.position;
-        Transform cameraRig = SteamVR_Render.Top().origin;
-
-        Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
-        Vector3 translateVector = m_Pointer.transform.position - groundPosition;
-
-        MoveO(cameraRig);
-    }
-
-    private void MoveO(Transform cameraRig)
-    {
-        m_IsTeleportoting = true;
-
-        
-        
-           
-
-        m_IsTeleportoting = false;
-
     }
 
     private bool UpdatePointer()
