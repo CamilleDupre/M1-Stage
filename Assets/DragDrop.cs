@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
 
-
-public class MoveObject : MonoBehaviour
+public class DragDrop : MonoBehaviour
 {
     public GameObject m_Pointer;
     //public SteamVR_Action_Boolean m_TeleportAction;
@@ -12,6 +11,7 @@ public class MoveObject : MonoBehaviour
 
     private SteamVR_Behaviour_Pose m_pose = null;
     private bool m_HasPosition = false;
+    private bool isMoving = false;
 
 
     private RaycastHit hit;
@@ -41,22 +41,16 @@ public class MoveObject : MonoBehaviour
       Debug.Log("Move");
         if (!m_HasPosition)
             return;
-        else if(hit.transform.tag == "Card" &&  ob == null){
-          //hit.transform.localPosition = new Vector3(m_Pointer.transform.position.x / 10, (m_Pointer.transform.position.y -1) / 2, -0.02f);
-            ob = hit.transform.gameObject;
-            ob.GetComponent<Renderer>().material = selectedColor;
+        else if(hit.transform.tag == "Card" &&  isMoving == false){
+          isMoving = true;
+          hit.transform.localPosition = new Vector3(m_Pointer.transform.position.x / 10, (m_Pointer.transform.position.y -1) / 2, -0.02f);
         }
-        else if(hit.transform.tag == "Wall"){
-        float x,y,z;
-        x =  m_Pointer.transform.position.x / 10;
-        y =  (m_Pointer.transform.position.y -1) / 2  ;
-        z = -0.02f;
-            if(ob != null){
-            ob.transform.localPosition = new Vector3(x, y, z); // ici pb
-            ob.GetComponent<Renderer>().material = initialColor;
-            ob = null;
-          }
+
+        else if(hit.transform.tag == "Card" &&  isMoving == true){
+          isMoving = false;
+
         }
+
     }
 
     private bool UpdatePointer()
