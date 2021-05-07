@@ -16,8 +16,10 @@ public class MoveObject : MonoBehaviour
     public SteamVR_Action_Boolean grabAction;
     //public SteamVR_Action_Boolean m_TeleportAction;
     private RaycastHit hit;
-    private RaycastHit hit2;
     private GameObject ob;
+    public Material initialColor ;
+    public Material selectedColor ;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -41,19 +43,21 @@ public class MoveObject : MonoBehaviour
       Debug.Log("Move");
         if (!m_HasPosition)
             return;
-        if(hit.transform.tag == "Card"){
+        else if(hit.transform.tag == "Card"){
             ob = hit.transform.gameObject;
-            MoveCard();
+            ob.GetComponent<Renderer>().material = selectedColor;
+            //MoveCard();
         }
-        if(hit.transform.tag == "Wall"){
-        float x;
-        float y;
-        float z;
-        x = m_Pointer.transform.position.x;
-        y = 0.02f;
-        z = m_Pointer.transform.position.z;
+        else if(hit.transform.tag == "Wall"){
+        float x,y,z;
+        x =  m_Pointer.transform.position.x / 10;
+        y =  (m_Pointer.transform.position.y -1) / 2  ; //devant le mur
+        //5.21f/2 +
+        z = -0.02f;
             if(ob != null){
-            ob.transform.localPosition = new Vector3(-x, y, 0); // ici pb Z
+           ob.transform.localPosition = new Vector3(x, y, z); // ici pb
+        //  ob.transform.localPosition = new Vector3(0, 0, 0);
+            ob.GetComponent<Renderer>().material = initialColor;
             ob = null;
           }
         }
