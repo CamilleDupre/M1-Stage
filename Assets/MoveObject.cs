@@ -32,6 +32,14 @@ public class MoveObject : MonoBehaviour
         //Pointer
         m_HasPosition = UpdatePointer();
         m_Pointer.SetActive(m_HasPosition);
+        if (ob != null) // follow the mouvement
+        {
+            float x, y, z;
+            x = m_Pointer.transform.position.x / 10;
+            y = (m_Pointer.transform.position.y - 1) / 2;
+            z = -0.02f;
+            ob.transform.localPosition = new Vector3(x, y, z);
+        }
         if (interactWithUI.GetStateUp(m_pose.inputSource))
             Move();
     }
@@ -39,23 +47,34 @@ public class MoveObject : MonoBehaviour
     private void Move()
     {
       Debug.Log("Move");
+
+        float x, y, z;
+        x = m_Pointer.transform.position.x / 10;
+        y = (m_Pointer.transform.position.y - 1) / 2;
+        z = -0.02f;
+
+
         if (!m_HasPosition)
             return;
+        
         else if(hit.transform.tag == "Card" &&  ob == null){
           //hit.transform.localPosition = new Vector3(m_Pointer.transform.position.x / 10, (m_Pointer.transform.position.y -1) / 2, -0.02f);
             ob = hit.transform.gameObject;
             ob.GetComponent<Renderer>().material = selectedColor;
         }
-        else if(hit.transform.tag == "Wall"){
-        float x,y,z;
-        x =  m_Pointer.transform.position.x / 10;
-        y =  (m_Pointer.transform.position.y -1) / 2  ;
-        z = -0.02f;
+        else if(hit.transform.tag == "Wall" || hit.transform.tag == "Card")
+        {
+            
             if(ob != null){
-            ob.transform.localPosition = new Vector3(x, y, z); // ici pb
-            ob.GetComponent<Renderer>().material = initialColor;
-            ob = null;
+                ob.transform.localPosition = new Vector3(x, y, z); // ici pb
+                ob.GetComponent<Renderer>().material = initialColor;
+                ob = null;
           }
+        }
+
+        else if (ob != null) // follow the mouvement
+        {
+            ob.transform.localPosition = new Vector3(x, y, z);
         }
     }
 
