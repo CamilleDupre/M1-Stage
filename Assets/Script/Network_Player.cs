@@ -33,9 +33,9 @@ public class Network_Player : MonoBehaviour
             Transform cameraRig = SteamVR_Render.Top().origin;
 
           
-            leftHand.gameObject.SetActive(false);
-            rightHand.gameObject.SetActive(false);
-            head.gameObject.SetActive(false);
+            //leftHand.gameObject.SetActive(false);
+           // rightHand.gameObject.SetActive(false);
+            //head.gameObject.SetActive(false);
 
             MapPosition(head, cameraRig);
             MapPosition(rightHand, Right);
