@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
-using Photon.Pun;
 
 
-public class MoveObject : MonoBehaviourPun
+public class MoveObject : MonoBehaviour
 {
     public GameObject m_Pointer;
     //public SteamVR_Action_Boolean m_TeleportAction;
@@ -62,6 +61,7 @@ public class MoveObject : MonoBehaviourPun
           //hit.transform.localPosition = new Vector3(m_Pointer.transform.position.x / 10, (m_Pointer.transform.position.y -1) / 2, -0.02f);
             ob = hit.transform.gameObject;
            // ob.GetComponent<Renderer>().material = selectedColor;
+         
         }
         else if(hit.transform.tag == "Wall" || hit.transform.tag == "Card")
         {
@@ -86,8 +86,8 @@ public class MoveObject : MonoBehaviourPun
         {
             if (hit.transform.tag == "Card" || hit.transform.tag == "Wall")
             {
+
                 m_Pointer.transform.position = hit.point;
-                base.photonView.RequestOwnership();
                 return true;
             }
         }
