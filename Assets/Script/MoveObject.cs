@@ -88,7 +88,8 @@ public class MoveObject : MonoBehaviourPun
         {
             if (hit.transform.tag == "Card" || hit.transform.tag == "Wall")
             {
-                 m_Pointer.transform.position = hit.point;
+                hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
+                m_Pointer.transform.position = hit.point;
                 return true;
             }
         }
