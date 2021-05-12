@@ -27,8 +27,8 @@ public class Network_Player : MonoBehaviour
     {
         photonView = GetComponent<PhotonView>();
 
-
-        headset = GameObject.Find("/[CameraRig]/Camera");
+        headset = GameObject.Find("Camera (eye)");
+       // headset = GameObject.Find("/[CameraRig]/Camera");
         right = GameObject.Find("/[CameraRig]/Controller (right)");
         left = GameObject.Find("/[CameraRig]/Controller (left)");
     }
