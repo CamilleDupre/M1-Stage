@@ -41,14 +41,14 @@ public class DragDrop : MonoBehaviourPun
             z = -0.02f;
             ob.transform.localPosition = new Vector3(x, y, z);
         }
-        if (interactWithUI.GetStateUp(m_pose.inputSource) && hit.transform.tag == "Card")
+        if (interactWithUI.GetStateUp(m_pose.inputSource))
             {
            
             isMoving = false;
             ob = null;
         }
 
-        if (interactWithUI.GetStateDown(m_pose.inputSource))
+        if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "Card")
         {
             isMoving = true;
             ob = hit.transform.gameObject;
