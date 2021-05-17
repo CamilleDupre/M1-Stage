@@ -12,6 +12,14 @@ public class Network_Player : MonoBehaviour
     public Transform leftHand;
     public Transform rightHand;
 
+    public Transform headSphere;
+    public Transform leftHandSphere;
+    public Transform rightHandSphere;
+
+    public Transform pointer;
+
+    public Material blue;
+
     private GameObject headset;
     private GameObject right;
     private GameObject left;
@@ -39,7 +47,7 @@ public class Network_Player : MonoBehaviour
         if (photonView.IsMine)
         {
             //Vector3 headPosition = SteamVR_Render.Top().head.position;
-           // Transform cameraRig = SteamVR_Render.Top().origin;
+            // Transform cameraRig = SteamVR_Render.Top().origin;
 
 
             //leftHand.gameObject.SetActive(false);
@@ -51,6 +59,10 @@ public class Network_Player : MonoBehaviour
             MapPosition(rightHand, XRNode.RightHand);
             MapPosition(leftHand, XRNode.LeftHand);
             */
+            headSphere.GetComponent<Renderer>().material = blue;
+            leftHandSphere.GetComponent<Renderer>().material = blue;
+            rightHandSphere.GetComponent<Renderer>().material = blue;
+            pointer.GetComponent<Renderer>().material = blue;
             MapPosition();
         }
        
