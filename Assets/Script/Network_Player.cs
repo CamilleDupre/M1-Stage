@@ -36,7 +36,6 @@ public class Network_Player : MonoBehaviour
         photonView = GetComponent<PhotonView>();
 
         headset = GameObject.Find("Camera (eye)");
-       // headset = GameObject.Find("/[CameraRig]/Camera");
         right = GameObject.Find("/[CameraRig]/Controller (right)");
         left = GameObject.Find("/[CameraRig]/Controller (left)");
     }
@@ -46,19 +45,6 @@ public class Network_Player : MonoBehaviour
     {
         if (photonView.IsMine)
         {
-            //Vector3 headPosition = SteamVR_Render.Top().head.position;
-            // Transform cameraRig = SteamVR_Render.Top().origin;
-
-
-            //leftHand.gameObject.SetActive(false);
-            // rightHand.gameObject.SetActive(false);
-            //head.gameObject.SetActive(false);
-
-            /*
-            MapPosition(head, XRNode.Head);
-            MapPosition(rightHand, XRNode.RightHand);
-            MapPosition(leftHand, XRNode.LeftHand);
-            */
             headSphere.GetComponent<Renderer>().material = blue;
             leftHandSphere.GetComponent<Renderer>().material = blue;
             rightHandSphere.GetComponent<Renderer>().material = blue;
@@ -71,18 +57,6 @@ public class Network_Player : MonoBehaviour
     //void MapPosition(Transform target, XRNode node)
     void MapPosition()
     {
-        /*  InputDevices.GetDeviceAtXRNode(node).TryGetFeatureValue(CommonUsages.devicePosition, out Vector3 position);
-          InputDevices.GetDeviceAtXRNode(node).TryGetFeatureValue(CommonUsages.deviceRotation, out Quaternion rotation);
-          target.position = position;
-          target.rotation = rotation;
-        */
-
-        // m_pose.inputSource
-        // head.position = SteamVR_Render.Top().origin.position;
-        // head.rotation = SteamVR_Render.Top().origin.rotation;
-        //rightHand.position = poseAction[inputSource].localPosition;
-        //rightHand.rotation = poseAction[inputSource].localRotation;
-
         leftHand.position = left.transform.position;
         leftHand.rotation = left.transform.rotation;
 

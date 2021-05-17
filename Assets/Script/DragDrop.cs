@@ -58,7 +58,7 @@ public class DragDrop : MonoBehaviourPun
 
     private void Move()
     {
-        Debug.Log("Move");
+        //Debug.Log("Move");
 
         float x, y, z;
         x = m_Pointer.transform.position.x / 10;

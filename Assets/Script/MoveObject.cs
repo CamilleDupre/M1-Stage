@@ -8,12 +8,10 @@ using Photon.Pun;
 public class MoveObject : MonoBehaviourPun
 {
     public GameObject m_Pointer;
-    //public SteamVR_Action_Boolean m_TeleportAction;
     public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");
 
     private SteamVR_Behaviour_Pose m_pose = null;
     private bool m_HasPosition = false;
-
 
     private RaycastHit hit;
     private GameObject ob;
@@ -47,7 +45,7 @@ public class MoveObject : MonoBehaviourPun
 
     private void Move()
     {
-      Debug.Log("Move");
+     // Debug.Log("Move");
 
         float x, y, z;
         x = m_Pointer.transform.position.x / 10;
@@ -60,7 +58,6 @@ public class MoveObject : MonoBehaviourPun
         
         else if(hit.transform.tag == "Card" &&  ob == null){
             hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
-            //hit.transform.localPosition = new Vector3(m_Pointer.transform.position.x / 10, (m_Pointer.transform.position.y -1) / 2, -0.02f);
             ob = hit.transform.gameObject;
            // ob.GetComponent<Renderer>().material = selectedColor;
          
