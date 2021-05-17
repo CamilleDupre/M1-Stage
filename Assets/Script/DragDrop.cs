@@ -41,8 +41,19 @@ public class DragDrop : MonoBehaviourPun
             z = -0.02f;
             ob.transform.localPosition = new Vector3(x, y, z);
         }
-        if (interactWithUI.GetStateUp(m_pose.inputSource))
-            Move();
+        if (interactWithUI.GetStateUp(m_pose.inputSource) && hit.transform.tag == "Card")
+            {
+           
+            isMoving = false;
+            ob = null;
+        }
+
+        if (interactWithUI.GetStateDown(m_pose.inputSource))
+        {
+            isMoving = true;
+            ob = hit.transform.gameObject;
+        }
+        Move();
     }
 
     private void Move()
@@ -58,29 +69,9 @@ public class DragDrop : MonoBehaviourPun
         if (!m_HasPosition)
             return;
 
-        else if (hit.transform.tag == "Card" && ob == null)
-        {
-            hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
-            //hit.transform.localPosition = new Vector3(m_Pointer.transform.position.x / 10, (m_Pointer.transform.position.y -1) / 2, -0.02f);
-            ob = hit.transform.gameObject;
-            // ob.GetComponent<Renderer>().material = selectedColor;
-
-        }
-        else if (hit.transform.tag == "Wall" || hit.transform.tag == "Card")
-        {
-
-            if (ob != null)
-            {
-                ob.transform.localPosition = new Vector3(x, y, z); // ici pb
-                //ob.GetComponent<Renderer>().material = initialColor;
-                ob = null;
-            }
-        }
-
-        else if (ob != null) // follow the mouvement
-        {
-            ob.transform.localPosition = new Vector3(x, y, z);
-        }
+        if(isMoving)
+         ob.transform.localPosition = new Vector3(x, y, z);
+    
     }
 
     private bool UpdatePointer()
