@@ -42,8 +42,7 @@ public class DragDrop : MonoBehaviourPun
             ob.transform.localPosition = new Vector3(x, y, z);
         }
         if (interactWithUI.GetStateUp(m_pose.inputSource))
-            {
-           
+        {
             isMoving = false;
             ob = null;
         }
