@@ -40,6 +40,10 @@ public class Network_Player : MonoBehaviour
     {
         if (photonView.IsMine)
         {
+           // leftHand.gameObject.SetActive(false);
+           // rightHand.gameObject.SetActive(false);
+            head.gameObject.SetActive(false);
+
             headSphere.GetComponent<Renderer>().material = blue;
             leftHandSphere.GetComponent<Renderer>().material = blue;
             rightHandSphere.GetComponent<Renderer>().material = blue;

@@ -338,7 +338,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1380188632808674591}
-  - component: {fileID: 1380188632808674590}
   - component: {fileID: 1380188632808674588}
   m_Layer: 0
   m_Name: Head
@@ -362,28 +361,6 @@ Transform:
   m_Father: {fileID: 1380188632496951978}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1380188632808674590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1380188632808674589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 10
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &1380188632808674588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,9 +386,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1380188632459107396}
-  - component: {fileID: 1380188633042283531}
   - component: {fileID: 1380188633042283530}
-  - component: {fileID: 1380188633042283525}
   m_Layer: 0
   m_Name: Left Hand
   m_TagString: Untagged
@@ -434,28 +409,6 @@ Transform:
   m_Father: {fileID: 1380188632496951978}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1380188633042283531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1380188633042283528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 9
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &1380188633042283530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,29 +425,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &1380188633042283525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1380188633042283528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 1380188633042283530}
-  sceneViewId: 15
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &1380188633311980317
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,9 +434,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1380188633311980316}
-  - component: {fileID: 1380188633311980313}
   - component: {fileID: 1380188633311980319}
-  - component: {fileID: 1380188633311980318}
   m_Layer: 0
   m_Name: Right Hand
   m_TagString: Untagged
@@ -529,28 +457,6 @@ Transform:
   m_Father: {fileID: 1380188632496951978}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1380188633311980313
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1380188633311980317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 8
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &1380188633311980319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,29 +473,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &1380188633311980318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1380188633311980317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 1380188633311980319}
-  sceneViewId: 12
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &1380188633547862025
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,7 +769,6 @@ GameObject:
   - component: {fileID: 1380188632496951978}
   - component: {fileID: 1380188633747218345}
   - component: {fileID: 1380188633747218350}
-  - component: {fileID: 1380188633747218344}
   m_Layer: 0
   m_Name: Network Player
   m_TagString: Untagged
@@ -929,8 +811,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 1380188633747218344}
+  ObservedComponents: []
   sceneViewId: 11
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -953,19 +834,3 @@ MonoBehaviour:
   leftHandSphere: {fileID: 1380188632376095736}
   rightHandSphere: {fileID: 1380188633547862024}
   blue: {fileID: 2100000, guid: b2e475abc24c327479abc278aa407c2c, type: 2}
---- !u!114 &1380188633747218344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1380188633747218348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
