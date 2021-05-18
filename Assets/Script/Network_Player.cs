@@ -16,7 +16,7 @@ public class Network_Player : MonoBehaviour
     public Transform leftHandSphere;
     public Transform rightHandSphere;
 
-    public Transform pointer;
+    //public Transform pointer;
     public Material blue;
 
     private GameObject headset;
@@ -43,7 +43,7 @@ public class Network_Player : MonoBehaviour
             headSphere.GetComponent<Renderer>().material = blue;
             leftHandSphere.GetComponent<Renderer>().material = blue;
             rightHandSphere.GetComponent<Renderer>().material = blue;
-            pointer.GetComponent<Renderer>().material = blue;
+            //pointer.GetComponent<Renderer>().material = blue;
             MapPosition();
         }
        
