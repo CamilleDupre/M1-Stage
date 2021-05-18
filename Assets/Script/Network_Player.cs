@@ -17,7 +17,6 @@ public class Network_Player : MonoBehaviour
     public Transform rightHandSphere;
 
     public Transform pointer;
-
     public Material blue;
 
     private GameObject headset;
@@ -25,10 +24,6 @@ public class Network_Player : MonoBehaviour
     private GameObject left;
 
     private PhotonView photonView;
-    public SteamVR_Input_Sources inputSource;
-    public SteamVR_Input_Sources inputSource2;
-    public SteamVR_Action_Pose poseAction = SteamVR_Input.GetAction<SteamVR_Action_Pose>("Pose");
-
 
     // Start is called before the first frame update
     void Start()
