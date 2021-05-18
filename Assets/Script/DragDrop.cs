@@ -33,24 +33,23 @@ public class DragDrop : MonoBehaviourPun
         //Pointer
         m_HasPosition = UpdatePointer();
         m_Pointer.SetActive(m_HasPosition);
-        if (ob != null) // follow the mouvement
-        {
-            float x, y, z;
-            x = m_Pointer.transform.position.x / 10;
-            y = (m_Pointer.transform.position.y - 1) / 2;
-            z = -0.02f;
-            ob.transform.localPosition = new Vector3(x, y, z);
-        }
+
         if (interactWithUI.GetStateUp(m_pose.inputSource))
         {
+            Debug.Log("test 2");
             isMoving = false;
             ob = null;
         }
+        if (interactWithUI.GetStateDown(m_pose.inputSource)) Debug.Log("test 23");
+      
+
 
         if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "Card")
         {
+            hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
             isMoving = true;
             ob = hit.transform.gameObject;
+            Debug.Log("Move");
         }
         Move();
     }
@@ -65,8 +64,7 @@ public class DragDrop : MonoBehaviourPun
         z = -0.02f;
 
 
-        if (!m_HasPosition)
-            return;
+        if (!m_HasPosition) return;
 
         if(isMoving)
          ob.transform.localPosition = new Vector3(x, y, z);
@@ -80,10 +78,12 @@ public class DragDrop : MonoBehaviourPun
         {
             if (hit.transform.tag == "Card" || hit.transform.tag == "Wall")
             {
-                hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
+                Debug.Log("test");
                 m_Pointer.transform.position = hit.point;
                 return true;
             }
+            else if (hit.transform.tag == "baton" ){ Debug.Log("baton"); }
+            else { Debug.Log("rien : " + hit.transform.name); }
         }
         return false;
     }

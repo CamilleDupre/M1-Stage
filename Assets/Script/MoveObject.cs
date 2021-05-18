@@ -66,7 +66,7 @@ public class MoveObject : MonoBehaviourPun
         {
             
             if(ob != null){
-                ob.transform.localPosition = new Vector3(x, y, z); // ici pb
+                ob.transform.localPosition = new Vector3(x, y, z);
                 //ob.GetComponent<Renderer>().material = initialColor;
                 ob = null;
           }
@@ -85,7 +85,6 @@ public class MoveObject : MonoBehaviourPun
         {
             if (hit.transform.tag == "Card" || hit.transform.tag == "Wall")
             {
-                hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
                 m_Pointer.transform.position = hit.point;
                 return true;
             }

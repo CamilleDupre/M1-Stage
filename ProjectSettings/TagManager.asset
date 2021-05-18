@@ -8,6 +8,10 @@ TagManager:
   - Tp
   - Wall
   - Card
+  - projectile
+  - FxTemporaire
+  - Bullet
+  - baton
   layers:
   - Default
   - TransparentFX
