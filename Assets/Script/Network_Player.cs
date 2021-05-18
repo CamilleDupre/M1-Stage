@@ -59,7 +59,8 @@ public class Network_Player : MonoBehaviour
         //Ray raycast = new Ray(transform.position, transform.forward);
         //RaycastHit hit;
 
-        ray.position = right.transform.position;
+
+        ray.position = new Vector3(right.transform.position.x , right.transform.position.y , right.transform.position.z);
         ray.rotation = right.transform.rotation;
 
         leftHand.position = left.transform.position;

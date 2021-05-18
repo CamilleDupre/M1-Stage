@@ -36,20 +36,16 @@ public class DragDrop : MonoBehaviourPun
 
         if (interactWithUI.GetStateUp(m_pose.inputSource))
         {
-            Debug.Log("test 2");
             isMoving = false;
             ob = null;
         }
-        if (interactWithUI.GetStateDown(m_pose.inputSource)) Debug.Log("test 23");
-      
-
+          
 
         if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "Card")
         {
             hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
             isMoving = true;
             ob = hit.transform.gameObject;
-            Debug.Log("Move");
         }
         Move();
     }
