@@ -16,7 +16,11 @@ public class Network_Player : MonoBehaviour
     public Transform leftHandSphere;
     public Transform rightHandSphere;
 
-    //public Transform pointer;
+
+    public Transform pointer_Tp;
+    public Transform pointer;
+    public Transform ray;
+
     public Material blue;
 
     private GameObject headset;
@@ -56,6 +60,12 @@ public class Network_Player : MonoBehaviour
     //void MapPosition(Transform target, XRNode node)
     void MapPosition()
     {
+        //Ray raycast = new Ray(transform.position, transform.forward);
+        //RaycastHit hit;
+
+        ray.position = right.transform.position;
+        ray.rotation = right.transform.rotation;
+
         leftHand.position = left.transform.position;
         leftHand.rotation = left.transform.rotation;
 
