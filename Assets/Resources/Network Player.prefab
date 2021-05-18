@@ -799,9 +799,7 @@ MonoBehaviour:
   headSphere: {fileID: 1380188632210726537}
   leftHandSphere: {fileID: 1380188632376095736}
   rightHandSphere: {fileID: 1380188633547862024}
-  pointer_Tp: {fileID: 0}
-  pointer: {fileID: 0}
-  ray: {fileID: 3766772479788919917}
+  ray: {fileID: 5175505596137631447}
   blue: {fileID: 2100000, guid: b2e475abc24c327479abc278aa407c2c, type: 2}
 --- !u!1 &1571149608119275557
 GameObject:
@@ -863,7 +861,7 @@ GameObject:
   - component: {fileID: 5528335449101971570}
   - component: {fileID: 6818868044179251647}
   m_Layer: 0
-  m_Name: Ray
+  m_Name: Ray cast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

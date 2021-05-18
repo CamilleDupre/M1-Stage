@@ -16,9 +16,6 @@ public class Network_Player : MonoBehaviour
     public Transform leftHandSphere;
     public Transform rightHandSphere;
 
-
-    public Transform pointer_Tp;
-    public Transform pointer;
     public Transform ray;
 
     public Material blue;
