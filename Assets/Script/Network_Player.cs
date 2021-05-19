@@ -17,15 +17,24 @@ public class Network_Player : MonoBehaviour
     public Transform rightHandSphere;
     public Transform ray;
 
+    public Transform rayCast;
+
     public Material blue;
+    public Material red;
+    public Material white;
+    public Material green;
 
     private GameObject headset;
     private GameObject right;
     private GameObject left;
 
-    private Ray m_Ray;
+    public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");
+    public SteamVR_Action_Boolean Grip = SteamVR_Input.GetBooleanAction("Grip");
+
+
 
     private PhotonView photonView;
+    private SteamVR_Behaviour_Pose m_pose = null;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +44,7 @@ public class Network_Player : MonoBehaviour
         headset = GameObject.Find("Camera (eye)");
         right = GameObject.Find("/[CameraRig]/Controller (right)");
         left = GameObject.Find("/[CameraRig]/Controller (left)");
+        m_pose = GetComponent<SteamVR_Behaviour_Pose>();
     }
 
     // Update is called once per frame
@@ -42,28 +52,37 @@ public class Network_Player : MonoBehaviour
     {
         if (photonView.IsMine)
         {
-           // leftHand.gameObject.SetActive(false);
-           // rightHand.gameObject.SetActive(false);
+            // leftHand.gameObject.SetActive(false);
+            // rightHand.gameObject.SetActive(false);
             head.gameObject.SetActive(false);
 
             headSphere.GetComponent<Renderer>().material = blue;
             leftHandSphere.GetComponent<Renderer>().material = blue;
             rightHandSphere.GetComponent<Renderer>().material = blue;
+            rayCast.GetComponent<Renderer>().material = blue;
             //pointer.GetComponent<Renderer>().material = blue;
             MapPosition();
         }
-       
+
+        if (interactWithUI.GetStateDown(m_pose.inputSource))
+        {
+            rayCast.GetComponent<Renderer>().material = green;
+        }
+        else if (Grip.GetStateDown(m_pose.inputSource))
+        {
+            rayCast.GetComponent<Renderer>().material = red;
+        }
+
+        else if (interactWithUI.GetStateUp(m_pose.inputSource) || Grip.GetStateUp(m_pose.inputSource))
+        {
+            rayCast.GetComponent<Renderer>().material = white;
+        }
     }
 
-    //void MapPosition(Transform target, XRNode node)
-    void MapPosition()
+        //void MapPosition(Transform target, XRNode node)
+        void MapPosition()
     {
-        //Ray raycast = new Ray(transform.position, transform.forward);
-        //RaycastHit hit;
-
-        //m_Ray = new Ray(transform.position, transform.forward);
         ray.position = right.transform.position;
-        //ray.localPosition= new Vector3(ray.position.x +1, ray.position.y, ray.position.z);
         ray.rotation = right.transform.rotation;
 
         leftHand.position = left.transform.position;
