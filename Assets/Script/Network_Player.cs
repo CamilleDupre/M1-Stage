@@ -26,18 +26,11 @@ public class Network_Player : MonoBehaviour
     private GameObject right;
     private GameObject left;
 
-    public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");
-
-
-
+    //public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");
     private PhotonView photonView;
-    private SteamVR_Behaviour_Pose m_pose = null;
+    //private SteamVR_Behaviour_Pose m_pose = null;
 
-    void Awake()
-    {
-        m_pose = GetComponent<SteamVR_Behaviour_Pose>();
-    }
-
+   
     void Start()
     {
         photonView = GetComponent<PhotonView>();
@@ -60,14 +53,11 @@ public class Network_Player : MonoBehaviour
             headSphere.GetComponent<Renderer>().material = blue;
             leftHandSphere.GetComponent<Renderer>().material = blue;
             rightHandSphere.GetComponent<Renderer>().material = blue;
-            //rayCast.GetComponent<Renderer>().material = blue;
+            rayCast.GetComponent<Renderer>().material = blue;
             //pointer.GetComponent<Renderer>().material = blue;
             MapPosition();
         }
-        if (interactWithUI.GetStateUp(m_pose.inputSource))
-        {
-            rayCast.GetComponent<Renderer>().material = green;
-        }
+       
 
     }
 

@@ -803,9 +803,6 @@ MonoBehaviour:
   rayCast: {fileID: 3766772479788919917}
   blue: {fileID: 2100000, guid: b2e475abc24c327479abc278aa407c2c, type: 2}
   green: {fileID: 2100000, guid: fcbabaf981be0dc47b646bf30f784533, type: 2}
-  interactWithUI:
-    actionPath: /actions/default/in/InteractUI
-    needsReinit: 0
 --- !u!1 &1571149608119275557
 GameObject:
   m_ObjectHideFlags: 0
