@@ -77,8 +77,10 @@ public class DragDrop : MonoBehaviourPun
                 m_Pointer.transform.position = hit.point;
                 return true;
             }
-            else if (hit.transform.tag == "baton" ){ Debug.Log("baton"); }
-            else { Debug.Log("rien : " + hit.transform.name); }
+            else if (hit.transform.tag == "baton" ){ //Debug.Log("baton"); 
+            }
+            else { //Debug.Log("rien : " + hit.transform.name); 
+                }
         }
         return false;
     }

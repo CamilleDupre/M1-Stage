@@ -16,21 +16,28 @@ public class Network_Player : MonoBehaviour
     public Transform leftHandSphere;
     public Transform rightHandSphere;
     public Transform ray;
+    public Transform palette;
 
     public Transform rayCast;
 
     public Material blue;
     public Material green;
+    public Material red;
 
     private GameObject headset;
     private GameObject right;
     private GameObject left;
 
-    //public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");
+    public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");
     private PhotonView photonView;
-    //private SteamVR_Behaviour_Pose m_pose = null;
+    private SteamVR_Behaviour_Pose m_pose = null;
+    private RaycastHit hit;
 
-   
+    void Awake()
+    {
+        m_pose = GetComponent<SteamVR_Behaviour_Pose>();
+    }
+
     void Start()
     {
         photonView = GetComponent<PhotonView>();
@@ -43,29 +50,39 @@ public class Network_Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-  
+       
+
         if (photonView.IsMine)
         {
-            // leftHand.gameObject.SetActive(false);
-            // rightHand.gameObject.SetActive(false);
+            leftHand.gameObject.SetActive(false);
+            rightHand.gameObject.SetActive(false);
             head.gameObject.SetActive(false);
 
             headSphere.GetComponent<Renderer>().material = blue;
             leftHandSphere.GetComponent<Renderer>().material = blue;
             rightHandSphere.GetComponent<Renderer>().material = blue;
-            rayCast.GetComponent<Renderer>().material = blue;
+            //rayCast.GetComponent<Renderer>().material = blue;
             //pointer.GetComponent<Renderer>().material = blue;
             MapPosition();
         }
-       
+        Ray ray = new Ray(transform.position, transform.forward);
+        if (Physics.Raycast(ray, out hit))
+        {
+            Debug.Log(" test 1 " + hit.transform.tag);
+            if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "Red tag")
+            {
+                Debug.Log(" test 2 ");
+                rayCast.GetComponent<Renderer>().material = red;
+            }
+         }
 
     }
 
     //void MapPosition(Transform target, XRNode node)
     void MapPosition()
     {
-        ray.position = right.transform.position;
-        ray.rotation = right.transform.rotation;
+        palette.position = left.transform.position;
+        palette.rotation = left.transform.rotation;
 
         leftHand.position = left.transform.position;
         leftHand.rotation = left.transform.rotation;
@@ -73,7 +90,10 @@ public class Network_Player : MonoBehaviour
         rightHand.position = right.transform.position;
         rightHand.rotation = right.transform.rotation;
 
-        
+        ray.position = right.transform.position;
+        ray.rotation = right.transform.rotation;
+
+
         head.position = headset.transform.position;
         head.rotation = headset.transform.rotation;
     }

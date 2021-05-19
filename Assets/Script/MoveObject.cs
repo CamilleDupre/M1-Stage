@@ -53,6 +53,7 @@ public class MoveObject : MonoBehaviourPun
         z = -0.02f;
 
 
+
         if (!m_HasPosition)
             return;
         
@@ -75,6 +76,7 @@ public class MoveObject : MonoBehaviourPun
         else if (ob != null) // follow the mouvement
         {
             ob.transform.localPosition = new Vector3(x, y, z);
+            //ob.transform.localPosition = new Vector3(z, y, x);
         }
     }
 
