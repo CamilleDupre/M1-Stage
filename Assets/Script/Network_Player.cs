@@ -23,6 +23,8 @@ public class Network_Player : MonoBehaviour
     private GameObject right;
     private GameObject left;
 
+    private Ray m_Ray;
+
     private PhotonView photonView;
 
     // Start is called before the first frame update
@@ -59,9 +61,10 @@ public class Network_Player : MonoBehaviour
         //Ray raycast = new Ray(transform.position, transform.forward);
         //RaycastHit hit;
 
-
-        ray.position = new Vector3(right.transform.position.x , right.transform.position.y , right.transform.position.z);
-        ray.rotation = right.transform.rotation;
+        m_Ray = new Ray(transform.position, transform.forward);
+        // ray.position = right.transform.position;
+        //ray.localPosition= new Vector3(ray.position.x +1, ray.position.y, ray.position.z);
+        //ray.rotation = right.transform.forward;
 
         leftHand.position = left.transform.position;
         leftHand.rotation = left.transform.rotation;
