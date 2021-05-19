@@ -728,6 +728,7 @@ GameObject:
   - component: {fileID: 1380188632496951978}
   - component: {fileID: 1380188633747218345}
   - component: {fileID: 1380188633747218350}
+  - component: {fileID: 7853298269385456829}
   m_Layer: 0
   m_Name: Network Player
   m_TagString: Untagged
@@ -802,9 +803,43 @@ MonoBehaviour:
   ray: {fileID: 5175505596137631447}
   rayCast: {fileID: 3766772479788919917}
   blue: {fileID: 2100000, guid: b2e475abc24c327479abc278aa407c2c, type: 2}
+  green: {fileID: 2100000, guid: fcbabaf981be0dc47b646bf30f784533, type: 2}
   interactWithUI:
     actionPath: /actions/default/in/InteractUI
     needsReinit: 0
+--- !u!114 &7853298269385456829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380188633747218348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a5fb0ca93b55ef4b8d54b512b103341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poseAction:
+    actionPath: /actions/default/in/Pose
+    needsReinit: 0
+  inputSource: 2
+  origin: {fileID: 0}
+  onTransformUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  onTransformChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onConnectedChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onTrackingChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeviceIndexChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  broadcastDeviceChanges: 1
 --- !u!1 &1571149608119275557
 GameObject:
   m_ObjectHideFlags: 0
