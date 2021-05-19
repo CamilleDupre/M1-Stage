@@ -802,14 +802,8 @@ MonoBehaviour:
   ray: {fileID: 5175505596137631447}
   rayCast: {fileID: 3766772479788919917}
   blue: {fileID: 2100000, guid: b2e475abc24c327479abc278aa407c2c, type: 2}
-  red: {fileID: 2100000, guid: e0b801c75c8a5304e970777a323032c8, type: 2}
-  white: {fileID: 2100000, guid: 8d5b411f3b7f06c46823332377e3ffba, type: 2}
-  green: {fileID: 2100000, guid: fcbabaf981be0dc47b646bf30f784533, type: 2}
   interactWithUI:
     actionPath: /actions/default/in/InteractUI
-    needsReinit: 0
-  Grip:
-    actionPath: /actions/default/in/GrabGrip
     needsReinit: 0
 --- !u!1 &1571149608119275557
 GameObject:
@@ -885,8 +879,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3608140261089048536}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 4}
+  m_LocalPosition: {x: 0, y: 0, z: 4}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 8}
   m_Children: []
   m_Father: {fileID: 5175505596137631447}
   m_RootOrder: 0

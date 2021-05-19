@@ -20,23 +20,19 @@ public class Network_Player : MonoBehaviour
     public Transform rayCast;
 
     public Material blue;
-    public Material red;
-    public Material white;
-    public Material green;
 
     private GameObject headset;
     private GameObject right;
     private GameObject left;
 
     public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");
-    public SteamVR_Action_Boolean Grip = SteamVR_Input.GetBooleanAction("Grip");
 
 
 
     private PhotonView photonView;
     private SteamVR_Behaviour_Pose m_pose = null;
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         photonView = GetComponent<PhotonView>();
@@ -44,12 +40,12 @@ public class Network_Player : MonoBehaviour
         headset = GameObject.Find("Camera (eye)");
         right = GameObject.Find("/[CameraRig]/Controller (right)");
         left = GameObject.Find("/[CameraRig]/Controller (left)");
-        m_pose = GetComponent<SteamVR_Behaviour_Pose>();
     }
 
     // Update is called once per frame
     void Update()
     {
+  
         if (photonView.IsMine)
         {
             // leftHand.gameObject.SetActive(false);
@@ -64,23 +60,10 @@ public class Network_Player : MonoBehaviour
             MapPosition();
         }
 
-        if (interactWithUI.GetStateDown(m_pose.inputSource))
-        {
-            rayCast.GetComponent<Renderer>().material = green;
-        }
-        else if (Grip.GetStateDown(m_pose.inputSource))
-        {
-            rayCast.GetComponent<Renderer>().material = red;
-        }
-
-        else if (interactWithUI.GetStateUp(m_pose.inputSource) || Grip.GetStateUp(m_pose.inputSource))
-        {
-            rayCast.GetComponent<Renderer>().material = white;
-        }
     }
 
-        //void MapPosition(Transform target, XRNode node)
-        void MapPosition()
+    //void MapPosition(Transform target, XRNode node)
+    void MapPosition()
     {
         ray.position = right.transform.position;
         ray.rotation = right.transform.rotation;

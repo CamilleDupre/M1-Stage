@@ -21,7 +21,6 @@ public class DragDrop : MonoBehaviourPun
     public Material initialColor ;
     public Material selectedColor ;
 
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -74,7 +73,7 @@ public class DragDrop : MonoBehaviourPun
         {
             if (hit.transform.tag == "Card" || hit.transform.tag == "Wall")
             {
-                Debug.Log("test");
+               // Debug.Log("test");
                 m_Pointer.transform.position = hit.point;
                 return true;
             }
