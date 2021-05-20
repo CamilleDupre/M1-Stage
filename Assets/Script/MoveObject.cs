@@ -46,24 +46,25 @@ public class MoveObject : MonoBehaviourPun
             //ob.transform.localPosition = new Vector3(x, y, z);
             //ob.transform.localPosition = new Vector3(0, 0, 0);
             if (ob.transform.parent.name == "MUR L") {
-               /* if (x > -5)
+
+                ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / 10, y, z);
+                if (hit.transform.name == "MUR B")
                 {
                     Debug.Log("changement de mur B ");
                     ob.transform.parent = MurB;
-                   // ob.transform.rotation = MurB.rotation;
-
-                }*/
+                    //ob.transform.rotation = MurB.rotation;
+                }
                 
-            ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / 10, y, z);
+           
             }
 
             else if (ob.transform.parent.name == "MUR B") {
-               /*if (z < 4.9798f)
-                {
-                    Debug.Log("changement de mur L ");
-                    ob.transform.parent = MurL;
-                   // ob.transform.rotation = MurL.rotation;
-                }*/
+                if (hit.transform.name == "MUR L")
+                 {
+                     Debug.Log("changement de mur L ");
+                     ob.transform.parent = MurL;
+                    // ob.transform.rotation = MurL.rotation;
+                 }
                 ob.transform.localPosition = new Vector3(x, y, z);
             }
         }
