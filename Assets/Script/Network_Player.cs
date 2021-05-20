@@ -69,7 +69,12 @@ public class Network_Player : MonoBehaviour
             {
                 rayCast.GetComponent<Renderer>().material = red;
             }
-         }
+            if (hit.transform.tag == "Card")
+            {
+                hit.transform.GetChild(0).GetComponent<Renderer>().material = rayCast.GetComponent<Renderer>().material;
+                //rayCast.GetComponent<Renderer>().material = red;
+            }
+        }
 
     }
 
