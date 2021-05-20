@@ -12,6 +12,7 @@ TagManager:
   - FxTemporaire
   - Bullet
   - baton
+  - tag
   layers:
   - Default
   - TransparentFX

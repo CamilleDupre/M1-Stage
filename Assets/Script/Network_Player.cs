@@ -21,8 +21,6 @@ public class Network_Player : MonoBehaviour
     public Transform rayCast;
 
     public Material blue;
-    public Material green;
-    public Material red;
 
     private GameObject headset;
     private GameObject right;
@@ -65,9 +63,9 @@ public class Network_Player : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
            // Debug.Log(" test 1 " + hit.transform.tag);
-            if (hit.transform.tag == "Red tag")
+            if (hit.transform.tag == "tag")
             {
-                rayCast.GetComponent<Renderer>().material = red;
+                rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
             }
             if (hit.transform.tag == "Card")
             {
