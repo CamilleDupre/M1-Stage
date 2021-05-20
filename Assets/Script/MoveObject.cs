@@ -19,7 +19,11 @@ public class MoveObject : MonoBehaviourPun
     public Material initialColor ;
     public Material selectedColor ;
 
-   // public GameObject rayCast;
+    public Transform MurB;
+    public Transform MurL;
+    public Transform MurR;
+
+    // public GameObject rayCast;
     // Start is called before the first frame update
     void Awake()
     {
@@ -41,11 +45,27 @@ public class MoveObject : MonoBehaviourPun
             z = -0.02f;
             //ob.transform.localPosition = new Vector3(x, y, z);
             //ob.transform.localPosition = new Vector3(0, 0, 0);
-            if (ob.transform.parent.name == "MUR (2)")
-                ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / 10, y, z);
+            if (ob.transform.parent.name == "MUR L") {
+               /* if (x > -5)
+                {
+                    Debug.Log("changement de mur B ");
+                    ob.transform.parent = MurB;
+                   // ob.transform.rotation = MurB.rotation;
 
-            if (ob.transform.parent.name == "MUR")
+                }*/
+                
+            ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / 10, y, z);
+            }
+
+            else if (ob.transform.parent.name == "MUR B") {
+               /*if (z < 4.9798f)
+                {
+                    Debug.Log("changement de mur L ");
+                    ob.transform.parent = MurL;
+                   // ob.transform.rotation = MurL.rotation;
+                }*/
                 ob.transform.localPosition = new Vector3(x, y, z);
+            }
         }
         if (interactWithUI.GetStateUp(m_pose.inputSource))
             Move();
@@ -63,8 +83,6 @@ public class MoveObject : MonoBehaviourPun
         y = (m_Pointer.transform.position.y - 1) / 2;
         z = -0.02f;
 
-
-
         if (!m_HasPosition)
             return;
         
@@ -79,11 +97,17 @@ public class MoveObject : MonoBehaviourPun
         {
             
             if(ob != null){
-                if(ob.transform.parent.name == "MUR (2)")
-                ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / 10, y, z);
+                if(ob.transform.parent.name == "MUR L")
+                {
+                    ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / 10, y, z);
+                }
+          
 
-                if (ob.transform.parent.name == "MUR")
+                else if (ob.transform.parent.name == "MUR B")
+                {
                     ob.transform.localPosition = new Vector3(x, y, z);
+                }
+                 
                 //ob.GetComponent<Renderer>().material = initialColor;
                 ob = null;
           }
