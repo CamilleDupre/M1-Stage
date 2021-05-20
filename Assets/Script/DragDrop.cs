@@ -21,6 +21,10 @@ public class DragDrop : MonoBehaviourPun
     public Material initialColor ;
     public Material selectedColor ;
 
+    public Transform MurB;
+    public Transform MurL;
+    public Transform MurR;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -61,9 +65,55 @@ public class DragDrop : MonoBehaviourPun
 
         if (!m_HasPosition) return;
 
-        if(isMoving)
-         ob.transform.localPosition = new Vector3(x, y, z);
-    
+        if (isMoving)
+        {
+            if (ob.transform.parent.name == "MUR L")
+            {
+
+                ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / 10, y, z);
+                if (hit.transform.name == "MUR B")
+                {
+                    Debug.Log("changement de mur B ");
+                    ob.transform.parent = MurB;
+                    ob.transform.rotation = MurB.rotation;
+                    ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+                }
+
+
+            }
+
+            else if (ob.transform.parent.name == "MUR B")
+            {
+                if (hit.transform.name == "MUR L")
+                {
+                    Debug.Log("changement de mur L ");
+                    ob.transform.parent = MurL;
+                    ob.transform.rotation = MurL.rotation;
+                    ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+                }
+
+                if (hit.transform.name == "MUR R")
+                {
+                    Debug.Log("changement de mur R ");
+                    ob.transform.parent = MurR;
+                    ob.transform.rotation = MurR.rotation;
+                    ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+                }
+                ob.transform.localPosition = new Vector3(x, y, z);
+            }
+
+            else if (ob.transform.parent.name == "MUR R")
+            {
+                if (hit.transform.name == "MUR B")
+                {
+                    Debug.Log("changement de mur B ");
+                    ob.transform.parent = MurB;
+                    ob.transform.rotation = MurB.rotation;
+                    ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+                }
+                ob.transform.localPosition = new Vector3( -m_Pointer.transform.position.z / 10, y, z);
+            }
+        }
     }
 
     private bool UpdatePointer()
