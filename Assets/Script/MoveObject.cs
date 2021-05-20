@@ -52,7 +52,8 @@ public class MoveObject : MonoBehaviourPun
                 {
                     Debug.Log("changement de mur B ");
                     ob.transform.parent = MurB;
-                    //ob.transform.rotation = MurB.rotation;
+                    ob.transform.rotation = MurB.rotation;
+                    ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
                 }
                 
            
@@ -63,8 +64,9 @@ public class MoveObject : MonoBehaviourPun
                  {
                      Debug.Log("changement de mur L ");
                      ob.transform.parent = MurL;
-                    // ob.transform.rotation = MurL.rotation;
-                 }
+                     ob.transform.rotation = MurL.rotation;
+                    ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+                }
                 ob.transform.localPosition = new Vector3(x, y, z);
             }
         }
