@@ -64,7 +64,7 @@ public class Network_Player : MonoBehaviour
         Ray ray = new Ray(right.transform.position, right.transform.forward);
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.Log(" test 1 " + hit.transform.tag);
+           // Debug.Log(" test 1 " + hit.transform.tag);
             if (hit.transform.tag == "Red tag")
             {
                 rayCast.GetComponent<Renderer>().material = red;
