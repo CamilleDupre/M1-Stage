@@ -143,25 +143,27 @@ public class Network_Player : MonoBehaviour
     {
         //Debug.Log("ChangeTag ");
 
-        if (hit.transform.tag == "Card")
+        if (ob.transform.tag == "Card")
         {
 
-            if (nameT == "blue (Instance)")
-            {
-                ob.transform.GetChild(0).GetComponent<Renderer>().material = blue;
-            }
-            else if (nameT == "Green (Instance)")
-            {
-                ob.transform.GetChild(0).GetComponent<Renderer>().material = Green;
-            }
-            else if (nameT == "Red (Instance)")
-            {
-                ob.transform.GetChild(0).GetComponent<Renderer>().material = red;
-            }
-            else
-            {
-                ob.transform.GetChild(0).GetComponent<Renderer>().material = white;
-            }
+            /*  if (nameT == "blue (Instance)")
+              {
+                  ob.transform.GetChild(0).GetComponent<Renderer>().material = blue;
+              }
+              else if (nameT == "Green (Instance)")
+              {
+                  ob.transform.GetChild(0).GetComponent<Renderer>().material = Green;
+              }
+              else if (nameT == "Red (Instance)")
+              {
+                  ob.transform.GetChild(0).GetComponent<Renderer>().material = red;
+              }
+              else
+              {
+                  ob.transform.GetChild(0).GetComponent<Renderer>().material = white;
+              }
+              */
+            ob.transform.GetChild(0).GetComponent<Renderer>().material = red;
             ob = null;
         }
     }
