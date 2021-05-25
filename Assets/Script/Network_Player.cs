@@ -90,7 +90,7 @@ public class Network_Player : MonoBehaviour
                 ob = hit.transform.gameObject;
                 nameT = rayCast.GetComponent<Renderer>().material.name;
 
-                photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, nameT, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
+                //photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, nameT, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
               
                 //rayCast.GetComponent<Renderer>().material = red;
             }
