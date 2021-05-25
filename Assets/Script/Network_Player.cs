@@ -21,6 +21,9 @@ public class Network_Player : MonoBehaviour
     public Transform rayCast;
 
     public Material blue;
+    public Material Green;
+    public Material white;
+    public Material red;
 
     private GameObject headset;
     private GameObject right;
@@ -65,15 +68,21 @@ public class Network_Player : MonoBehaviour
            // Debug.Log(" test 1 " + hit.transform.tag);
             if (hit.transform.tag == "tag")
             {
-                photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, hit.transform.GetComponent<Renderer>().material);
-               
+                name = hit.transform.GetComponent<Renderer>().material.name;
+                photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, name);
+                //rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
+
             }
             if (hit.transform.tag == "Card")
             {
                 hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
-                photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, rayCast.GetComponent<Renderer>().material);
+               // photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, blue);
                 
-               // hit.transform.GetChild(0).GetComponent<Renderer>().material = rayCast.GetComponent<Renderer>().material;
+                //hit.transform.GetChild(0).GetComponent<Renderer>().material = rayCast.GetComponent<Renderer>().material;
+                name = rayCast.GetComponent<Renderer>().material.name;
+                photonView.RPC("ChangeTag", RpcTarget.AllBuffered, name);
+
+
                 //rayCast.GetComponent<Renderer>().material = red;
             }
         }
@@ -100,13 +109,48 @@ public class Network_Player : MonoBehaviour
         head.rotation = headset.transform.rotation;
     }
 
-      void ChangeRayColour(Material m)
+    [PunRPC]
+    void ChangeRayColour(string name)
     {
-        rayCast.GetComponent<Renderer>().material = blue;
+        Debug.Log("ChangeRayColour /" + name + "/");
+        if (name == "blue (Instance)")
+        {
+            rayCast.GetComponent<Renderer>().material = blue;
+        }
+        else if(name == "Green (Instance)")
+        {
+            rayCast.GetComponent<Renderer>().material = Green;
+        }
+        else if(name == "Red (Instance)")
+        {
+            rayCast.GetComponent<Renderer>().material = red;
+        }
+        else
+        {
+            rayCast.GetComponent<Renderer>().material = white;
+        }
     }
 
-    void ChangeTag(Material m)
+    [PunRPC]
+    void ChangeTag(string name)
     {
-        hit.transform.GetChild(0).GetComponent<Renderer>().material = blue;
+        Debug.Log("ChangeTag ");
+
+        if (name == "blue (Instance)")
+        {
+            hit.transform.GetChild(0).GetComponent<Renderer>().material = blue;
+        }
+        else if (name == "Green (Instance)")
+        {
+            hit.transform.GetChild(0).GetComponent<Renderer>().material = Green;
+        }
+        else if (name == "Red (Instance)")
+        {
+            hit.transform.GetChild(0).GetComponent<Renderer>().material = red;
+        }
+        else
+        {
+            hit.transform.GetChild(0).GetComponent<Renderer>().material = white;
+        }
     }
 }

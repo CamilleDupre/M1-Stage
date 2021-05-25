@@ -996,6 +996,9 @@ MonoBehaviour:
   palette: {fileID: 6971465204408581961}
   rayCast: {fileID: 2261335539224480970}
   blue: {fileID: 2100000, guid: b2e475abc24c327479abc278aa407c2c, type: 2}
+  Green: {fileID: 2100000, guid: fcbabaf981be0dc47b646bf30f784533, type: 2}
+  white: {fileID: 2100000, guid: 8d5b411f3b7f06c46823332377e3ffba, type: 2}
+  red: {fileID: 2100000, guid: e0b801c75c8a5304e970777a323032c8, type: 2}
 --- !u!1 &1571149608119275557
 GameObject:
   m_ObjectHideFlags: 0
