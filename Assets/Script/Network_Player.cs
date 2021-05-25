@@ -148,19 +148,19 @@ public class Network_Player : MonoBehaviour
 
              if (nameT == "blue (Instance)")
               {
-                PhotonView.Find(20).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = blue;
+                PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = blue;
               }
               else if (nameT == "Green (Instance)")
               {
-                PhotonView.Find(20).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = Green;
+                PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = Green;
               }
               else if (nameT == "Red (Instance)")
               {
-                PhotonView.Find(20).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = red;
+                PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = red;
               }
               else
               {
-                PhotonView.Find(20).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = white;
+                PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = white;
               }
               
          }
