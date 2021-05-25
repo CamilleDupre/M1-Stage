@@ -112,7 +112,7 @@ public class Network_Player : MonoBehaviour
     [PunRPC]
     void ChangeRayColour(string name)
     {
-        Debug.Log("ChangeRayColour /" + name + "/");
+        //Debug.Log("ChangeRayColour /" + name + "/");
         if (name == "blue (Instance)")
         {
             rayCast.GetComponent<Renderer>().material = blue;
@@ -134,8 +134,8 @@ public class Network_Player : MonoBehaviour
     [PunRPC]
     void ChangeTag(string name)
     {
-        Debug.Log("ChangeTag ");
-
+        //Debug.Log("ChangeTag ");
+       
         if (name == "blue (Instance)")
         {
             hit.transform.GetChild(0).GetComponent<Renderer>().material = blue;
