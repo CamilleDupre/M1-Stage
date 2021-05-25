@@ -89,9 +89,8 @@ public class Network_Player : MonoBehaviour
                 ob = hit.transform.gameObject;
                 nameT = rayCast.GetComponent<Renderer>().material.name;
 
-                photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, nameT);
-
-
+                photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, nameT, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
+              
                 //rayCast.GetComponent<Renderer>().material = red;
             }
         }
@@ -141,32 +140,33 @@ public class Network_Player : MonoBehaviour
     }
 
     [PunRPC]
-    void ChangeTag(string nameT)
+    void ChangeTag(string nameT, int OB)
     {
         //Debug.Log("ChangeTag ");
 
-       // if (hit.transform.tag == "Card")
-        //{
+       
+        if (hit.transform.tag == "Card")
+        {
 
              if (nameT == "blue (Instance)")
               {
-                ob.transform.GetChild(0).GetComponent<Renderer>().material = blue;
+                PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = blue;
               }
               else if (nameT == "Green (Instance)")
               {
-                ob.transform.GetChild(0).GetComponent<Renderer>().material = Green;
+                PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = Green;
               }
               else if (nameT == "Red (Instance)")
               {
-                 ob.transform.GetChild(0).GetComponent<Renderer>().material = red;
+                PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = red;
               }
               else
               {
-                 ob.transform.GetChild(0).GetComponent<Renderer>().material = white;
+                PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = white;
               }
               
             //ob.transform.GetChild(0).GetComponent<Renderer>().material = red;
-            ob = null;
-        //}
+            //ob = null;
+        }
     }
 }
