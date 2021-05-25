@@ -80,7 +80,7 @@ public class Network_Player : MonoBehaviour
             }
             if (hit.transform.tag == "Card" && photonView.IsMine)
             {
-                hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
+               // hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
               // hit.transform.GetChild(0).gameObject.GetComponent<PhotonView>().RequestOwnership();
                              
 
@@ -148,19 +148,19 @@ public class Network_Player : MonoBehaviour
 
              if (nameT == "blue (Instance)")
               {
-                PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = blue;
+                PhotonView.Find(20).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = blue;
               }
               else if (nameT == "Green (Instance)")
               {
-                PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = Green;
+                PhotonView.Find(20).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = Green;
               }
               else if (nameT == "Red (Instance)")
               {
-                PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = red;
+                PhotonView.Find(20).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = red;
               }
               else
               {
-                PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = white;
+                PhotonView.Find(20).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = white;
               }
               
          }
