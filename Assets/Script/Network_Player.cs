@@ -143,8 +143,8 @@ public class Network_Player : MonoBehaviour
     {
         //Debug.Log("ChangeTag ");
 
-        if (hit.transform.tag == "Card")
-        {
+       // if (hit.transform.tag == "Card")
+        //{
 
              if (nameT == "blue (Instance)")
               {
@@ -165,6 +165,6 @@ public class Network_Player : MonoBehaviour
               
             //ob.transform.GetChild(0).GetComponent<Renderer>().material = red;
             //ob = null;
-        }
+        //}
     }
 }
