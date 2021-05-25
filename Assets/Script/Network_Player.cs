@@ -148,27 +148,23 @@ public class Network_Player : MonoBehaviour
 
              if (nameT == "blue (Instance)")
               {
-                ob = hit.transform.gameObject;
-                ob.transform.GetChild(0).GetComponent<Renderer>().material = blue;
+                hit.transform.GetChild(0).GetComponent<Renderer>().material = blue;
               }
               else if (nameT == "Green (Instance)")
               {
-                ob = hit.transform.gameObject;
-                ob.transform.GetChild(0).GetComponent<Renderer>().material = Green;
+                hit.transform.GetChild(0).GetComponent<Renderer>().material = Green;
               }
               else if (nameT == "Red (Instance)")
               {
-                ob = hit.transform.gameObject;
-                ob.transform.GetChild(0).GetComponent<Renderer>().material = red;
+                hit.transform.GetChild(0).GetComponent<Renderer>().material = red;
               }
               else
               {
-                ob = hit.transform.gameObject;
-                ob.transform.GetChild(0).GetComponent<Renderer>().material = white;
+                hit.transform.GetChild(0).GetComponent<Renderer>().material = white;
               }
               
             //ob.transform.GetChild(0).GetComponent<Renderer>().material = red;
-            ob = null;
+            //ob = null;
         }
     }
 }
