@@ -81,7 +81,7 @@ public class DragDrop : MonoBehaviourPun
                   // ob.transform.parent = MurB;
                   // ob.transform.rotation = MurB.rotation;
                   // ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
-                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM);
+                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM, ob.GetComponent<PhotonView>().ViewID);
                 }
 
             }
@@ -95,7 +95,7 @@ public class DragDrop : MonoBehaviourPun
                     //ob.transform.rotation = MurL.rotation;
                     //ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
                     nameM = hit.transform.name;
-                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM);
+                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM, ob.GetComponent<PhotonView>().ViewID);
                 }
 
                 if (hit.transform.name == "MUR R")
@@ -105,7 +105,7 @@ public class DragDrop : MonoBehaviourPun
                     //ob.transform.rotation = MurR.rotation;
                     //ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
                     nameM = hit.transform.name;
-                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM);
+                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM, ob.GetComponent<PhotonView>().ViewID);
                 }
                 ob.transform.localPosition = new Vector3(x, y, z);
             }
@@ -120,7 +120,7 @@ public class DragDrop : MonoBehaviourPun
                     //ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
                     nameM = hit.transform.name;
                     
-                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM);
+                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM , ob.GetComponent<PhotonView>().ViewID);
                 }
                 ob.transform.localPosition = new Vector3( -m_Pointer.transform.position.z / 10, y, z);
                 Debug.Log("Photon.Pun.RpcTarget.All :" + Photon.Pun.RpcTarget.All);
@@ -144,7 +144,7 @@ public class DragDrop : MonoBehaviourPun
     }
 
     [PunRPC]
-    void ChangeMur(string nameT)
+    void ChangeMur(string nameT, int OB)
     {
         Debug.Log("nameT :  " + nameT);
 
@@ -152,23 +152,23 @@ public class DragDrop : MonoBehaviourPun
         if (nameT == "MUR L")
         {
              Debug.Log("changement de mur L ");
-             ob.transform.parent = MurL;
-             ob.transform.rotation = MurL.rotation;
-             ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+            PhotonView.Find(OB).gameObject.transform.parent = MurL;
+            PhotonView.Find(OB).gameObject.transform.rotation = MurL.rotation;
+            PhotonView.Find(OB).gameObject.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
         }
         else if (nameT == "MUR B")
         {
              Debug.Log("changement de mur B ");
-             ob.transform.parent = MurB;
-             ob.transform.rotation = MurB.rotation;
-             ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+            PhotonView.Find(OB).transform.parent = MurB;
+            PhotonView.Find(OB).transform.rotation = MurB.rotation;
+            PhotonView.Find(OB).transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
         }
         else if (nameT == "MUR R")
         {
             Debug.Log("changement de mur R ");
-            ob.transform.parent = MurR;
-            ob.transform.rotation = MurR.rotation;
-            ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+            PhotonView.Find(OB).transform.parent = MurR;
+            PhotonView.Find(OB).transform.rotation = MurR.rotation;
+            PhotonView.Find(OB).transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
 
         }
     }
