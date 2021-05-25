@@ -35,6 +35,8 @@ public class Network_Player : MonoBehaviour
     private RaycastHit hit;
     private string nameR;
     private string nameT;
+    private GameObject ob;
+
 
 
 
@@ -83,6 +85,7 @@ public class Network_Player : MonoBehaviour
                 // photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, blue);
 
                 //hit.transform.GetChild(0).GetComponent<Renderer>().material = rayCast.GetComponent<Renderer>().material;
+                ob = hit.transform.gameObject;
                 nameT = rayCast.GetComponent<Renderer>().material.name;
                 photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, nameT);
 
@@ -140,25 +143,26 @@ public class Network_Player : MonoBehaviour
     {
         //Debug.Log("ChangeTag ");
 
-        if (hit.transform.tag == "Card")
+        if (ob.transform.tag == "Card")
         {
 
             if (nameT == "blue (Instance)")
             {
-                hit.transform.GetChild(0).GetComponent<Renderer>().material = blue;
+                ob.transform.GetChild(0).GetComponent<Renderer>().material = blue;
             }
             else if (nameT == "Green (Instance)")
             {
-                hit.transform.GetChild(0).GetComponent<Renderer>().material = Green;
+                ob.transform.GetChild(0).GetComponent<Renderer>().material = Green;
             }
             else if (nameT == "Red (Instance)")
             {
-                hit.transform.GetChild(0).GetComponent<Renderer>().material = red;
+                ob.transform.GetChild(0).GetComponent<Renderer>().material = red;
             }
             else
             {
-                hit.transform.GetChild(0).GetComponent<Renderer>().material = white;
+                ob.transform.GetChild(0).GetComponent<Renderer>().material = white;
             }
+            ob = null;
         }
     }
 }
