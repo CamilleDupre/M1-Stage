@@ -82,9 +82,8 @@ public class Network_Player : MonoBehaviour
             if (hit.transform.tag == "Card" && photonView.IsMine)
             {
                 hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
-                hit.transform.GetChild(0).gameObject.GetComponent<PhotonView>().RequestOwnership();
-                hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
-                
+               // hit.transform.GetChild(0).gameObject.GetComponent<PhotonView>().RequestOwnership();
+                             
 
                 //hit.transform.GetChild(0).GetComponent<Renderer>().material = rayCast.GetComponent<Renderer>().material;
                 ob = hit.transform.gameObject;
