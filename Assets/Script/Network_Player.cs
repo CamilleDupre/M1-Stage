@@ -143,7 +143,7 @@ public class Network_Player : MonoBehaviour
         //Debug.Log("ChangeTag ");
 
        
-        if (hit.transform.tag == "Card")
+        //if (hit.transform.tag == "Card")
         {
 
              if (nameT == "blue (Instance)")
