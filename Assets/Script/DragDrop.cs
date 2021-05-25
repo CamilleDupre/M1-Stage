@@ -25,6 +25,8 @@ public class DragDrop : MonoBehaviourPun
     public Transform MurL;
     public Transform MurR;
 
+    private string nameM = "";
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -74,12 +76,13 @@ public class DragDrop : MonoBehaviourPun
                 ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / 10, y, z);
                 if (hit.transform.name == "MUR B")
                 {
-                    Debug.Log("changement de mur B ");
-                    ob.transform.parent = MurB;
-                    ob.transform.rotation = MurB.rotation;
-                    ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+                    nameM = hit.transform.name;
+                  //  Debug.Log("changement de mur B ");
+                  // ob.transform.parent = MurB;
+                  // ob.transform.rotation = MurB.rotation;
+                  // ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM);
                 }
-
 
             }
 
@@ -87,18 +90,22 @@ public class DragDrop : MonoBehaviourPun
             {
                 if (hit.transform.name == "MUR L")
                 {
-                    Debug.Log("changement de mur L ");
-                    ob.transform.parent = MurL;
-                    ob.transform.rotation = MurL.rotation;
-                    ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+                    // Debug.Log("changement de mur L ");
+                    //ob.transform.parent = MurL;
+                    //ob.transform.rotation = MurL.rotation;
+                    //ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+                    nameM = hit.transform.name;
+                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM);
                 }
 
                 if (hit.transform.name == "MUR R")
                 {
-                    Debug.Log("changement de mur R ");
-                    ob.transform.parent = MurR;
-                    ob.transform.rotation = MurR.rotation;
-                    ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+                    //Debug.Log("changement de mur R ");
+                    //ob.transform.parent = MurR;
+                    //ob.transform.rotation = MurR.rotation;
+                    //ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+                    nameM = hit.transform.name;
+                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM);
                 }
                 ob.transform.localPosition = new Vector3(x, y, z);
             }
@@ -107,12 +114,16 @@ public class DragDrop : MonoBehaviourPun
             {
                 if (hit.transform.name == "MUR B")
                 {
-                    Debug.Log("changement de mur B ");
-                    ob.transform.parent = MurB;
-                    ob.transform.rotation = MurB.rotation;
-                    ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+                    //Debug.Log("changement de mur B ");
+                    //ob.transform.parent = MurB;
+                    //ob.transform.rotation = MurB.rotation;
+                    //ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+                    nameM = hit.transform.name;
+                    
+                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM);
                 }
                 ob.transform.localPosition = new Vector3( -m_Pointer.transform.position.z / 10, y, z);
+                Debug.Log("Photon.Pun.RpcTarget.All :" + Photon.Pun.RpcTarget.All);
             }
         }
     }
@@ -128,11 +139,38 @@ public class DragDrop : MonoBehaviourPun
                 m_Pointer.transform.position = hit.point;
                 return true;
             }
-            else if (hit.transform.tag == "baton" ){ //Debug.Log("baton"); 
-            }
-            else { //Debug.Log("rien : " + hit.transform.name); 
-                }
         }
         return false;
     }
-}
+
+    [PunRPC]
+    void ChangeMur(string nameT)
+    {
+        Debug.Log("nameT :  " + nameT);
+
+
+        if (nameT == "MUR L")
+        {
+             Debug.Log("changement de mur L ");
+             ob.transform.parent = MurL;
+             ob.transform.rotation = MurL.rotation;
+             ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+        }
+        else if (nameT == "MUR B")
+        {
+             Debug.Log("changement de mur B ");
+             ob.transform.parent = MurB;
+             ob.transform.rotation = MurB.rotation;
+             ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+        }
+        else if (nameT == "MUR R")
+        {
+            Debug.Log("changement de mur R ");
+            ob.transform.parent = MurR;
+            ob.transform.rotation = MurR.rotation;
+            ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+
+        }
+    }
+
+    }
