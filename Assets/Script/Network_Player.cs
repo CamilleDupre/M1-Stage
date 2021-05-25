@@ -65,12 +65,15 @@ public class Network_Player : MonoBehaviour
            // Debug.Log(" test 1 " + hit.transform.tag);
             if (hit.transform.tag == "tag")
             {
-                rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
+                photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, hit.transform.GetComponent<Renderer>().material);
+               
             }
             if (hit.transform.tag == "Card")
             {
                 hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
-                hit.transform.GetChild(0).GetComponent<Renderer>().material = rayCast.GetComponent<Renderer>().material;
+                photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, rayCast.GetComponent<Renderer>().material);
+                
+               // hit.transform.GetChild(0).GetComponent<Renderer>().material = rayCast.GetComponent<Renderer>().material;
                 //rayCast.GetComponent<Renderer>().material = red;
             }
         }
@@ -95,5 +98,15 @@ public class Network_Player : MonoBehaviour
 
         head.position = headset.transform.position;
         head.rotation = headset.transform.rotation;
+    }
+
+      void ChangeRayColour(Material m)
+    {
+        rayCast.GetComponent<Renderer>().material = m ;
+    }
+
+    void ChangeTag(Material m)
+    {
+        hit.transform.GetChild(0).GetComponent<Renderer>().material = m;
     }
 }
