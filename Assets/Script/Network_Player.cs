@@ -81,9 +81,10 @@ public class Network_Player : MonoBehaviour
             }
             if (hit.transform.tag == "Card" && photonView.IsMine)
             {
-                //hit.transform.GetChild(0).gameObject.GetComponent<PhotonView>().RequestOwnership();
                 hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
-                // photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, blue);
+                hit.transform.GetChild(0).gameObject.GetComponent<PhotonView>().RequestOwnership();
+                hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
+                
 
                 //hit.transform.GetChild(0).GetComponent<Renderer>().material = rayCast.GetComponent<Renderer>().material;
                 ob = hit.transform.gameObject;
@@ -165,8 +166,6 @@ public class Network_Player : MonoBehaviour
                 PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = white;
               }
               
-            //ob.transform.GetChild(0).GetComponent<Renderer>().material = red;
-            //ob = null;
-        }
+         }
     }
 }
