@@ -74,6 +74,7 @@ public class Network_Player : MonoBehaviour
             if (hit.transform.tag == "tag")
             {
                 nameR = hit.transform.GetComponent<Renderer>().material.name;
+               
                 photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
                 //rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
 
@@ -85,8 +86,9 @@ public class Network_Player : MonoBehaviour
                 // photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, blue);
 
                 //hit.transform.GetChild(0).GetComponent<Renderer>().material = rayCast.GetComponent<Renderer>().material;
-              
+                ob = hit.transform.gameObject;
                 nameT = rayCast.GetComponent<Renderer>().material.name;
+
                 photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, nameT);
 
 
@@ -148,23 +150,23 @@ public class Network_Player : MonoBehaviour
 
              if (nameT == "blue (Instance)")
               {
-                hit.transform.GetChild(0).GetComponent<Renderer>().material = blue;
+                ob.transform.GetChild(0).GetComponent<Renderer>().material = blue;
               }
               else if (nameT == "Green (Instance)")
               {
-                hit.transform.GetChild(0).GetComponent<Renderer>().material = Green;
+                ob.transform.GetChild(0).GetComponent<Renderer>().material = Green;
               }
               else if (nameT == "Red (Instance)")
               {
-                hit.transform.GetChild(0).GetComponent<Renderer>().material = red;
+                 ob.transform.GetChild(0).GetComponent<Renderer>().material = red;
               }
               else
               {
-                hit.transform.GetChild(0).GetComponent<Renderer>().material = white;
+                 ob.transform.GetChild(0).GetComponent<Renderer>().material = white;
               }
               
             //ob.transform.GetChild(0).GetComponent<Renderer>().material = red;
-            //ob = null;
+            ob = null;
         //}
     }
 }
