@@ -102,11 +102,11 @@ public class Network_Player : MonoBehaviour
 
       void ChangeRayColour(Material m)
     {
-        rayCast.GetComponent<Renderer>().material = m ;
+        rayCast.GetComponent<Renderer>().material = blue;
     }
 
     void ChangeTag(Material m)
     {
-        hit.transform.GetChild(0).GetComponent<Renderer>().material = m;
+        hit.transform.GetChild(0).GetComponent<Renderer>().material = blue;
     }
 }
