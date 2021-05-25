@@ -138,22 +138,26 @@ public class Network_Player : MonoBehaviour
     void ChangeTag(string nameT)
     {
         //Debug.Log("ChangeTag ");
-       
-        if (nameT == "blue (Instance)")
+
+        if (hit.transform.tag == "Card")
         {
-            hit.transform.GetChild(0).GetComponent<Renderer>().material = blue;
-        }
-        else if (nameT == "Green (Instance)")
-        {
-            hit.transform.GetChild(0).GetComponent<Renderer>().material = Green;
-        }
-        else if (nameT == "Red (Instance)")
-        {
-            hit.transform.GetChild(0).GetComponent<Renderer>().material = red;
-        }
-        else
-        {
-            hit.transform.GetChild(0).GetComponent<Renderer>().material = white;
+
+            if (nameT == "blue (Instance)")
+            {
+                hit.transform.GetChild(0).GetComponent<Renderer>().material = blue;
+            }
+            else if (nameT == "Green (Instance)")
+            {
+                hit.transform.GetChild(0).GetComponent<Renderer>().material = Green;
+            }
+            else if (nameT == "Red (Instance)")
+            {
+                hit.transform.GetChild(0).GetComponent<Renderer>().material = red;
+            }
+            else
+            {
+                hit.transform.GetChild(0).GetComponent<Renderer>().material = white;
+            }
         }
     }
 }
