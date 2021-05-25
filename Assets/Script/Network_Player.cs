@@ -66,19 +66,7 @@ public class Network_Player : MonoBehaviour
             //rayCast.GetComponent<Renderer>().material = blue;
             //pointer.GetComponent<Renderer>().material = blue;
             MapPosition();
-        }
-        Ray ray = new Ray(right.transform.position, right.transform.forward);
-        if (Physics.Raycast(ray, out hit))
-        {
-           // Debug.Log(" test 1 " + hit.transform.tag);
-            if (hit.transform.tag == "tag")
-            {
-                nameR = hit.transform.GetComponent<Renderer>().material.name;
-               
-                photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
-                //rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
 
-            }
             if (hit.transform.tag == "Card")
             {
                 //hit.transform.GetChild(0).gameObject.GetComponent<PhotonView>().RequestOwnership();
@@ -94,6 +82,20 @@ public class Network_Player : MonoBehaviour
 
                 //rayCast.GetComponent<Renderer>().material = red;
             }
+        }
+        Ray ray = new Ray(right.transform.position, right.transform.forward);
+        if (Physics.Raycast(ray, out hit))
+        {
+           // Debug.Log(" test 1 " + hit.transform.tag);
+            if (hit.transform.tag == "tag")
+            {
+                nameR = hit.transform.GetComponent<Renderer>().material.name;
+               
+                photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
+                //rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
+
+            }
+          
         }
 
     }
