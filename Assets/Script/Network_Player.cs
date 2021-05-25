@@ -33,8 +33,8 @@ public class Network_Player : MonoBehaviour
     private PhotonView photonView;
    // private SteamVR_Behaviour_Pose m_pose = null;
     private RaycastHit hit;
-    private string nameR;
-    private string nameT;
+    private string nameR="";
+    private string nameT="";
     private GameObject ob;
 
 
@@ -143,7 +143,7 @@ public class Network_Player : MonoBehaviour
     {
         //Debug.Log("ChangeTag ");
 
-        if (ob.transform.tag == "Card")
+        if (hit.transform.tag == "Card")
         {
 
             if (nameT == "blue (Instance)")
