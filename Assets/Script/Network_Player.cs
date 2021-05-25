@@ -78,6 +78,7 @@ public class Network_Player : MonoBehaviour
             }
             if (hit.transform.tag == "Card")
             {
+                hit.transform.GetChild(0).gameObject.GetComponent<PhotonView>().RequestOwnership();
                 hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
                 // photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, blue);
 
