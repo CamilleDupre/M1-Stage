@@ -37,7 +37,7 @@ public class DragDrop : MonoBehaviourPun
     {
         //Pointer
         m_HasPosition = UpdatePointer();
-        m_Pointer.SetActive(m_HasPosition);
+        //m_Pointer.SetActive(m_HasPosition);
 
         if (interactWithUI.GetStateUp(m_pose.inputSource))
         {
@@ -137,8 +137,10 @@ public class DragDrop : MonoBehaviourPun
             {
                // Debug.Log("test");
                 m_Pointer.transform.position = hit.point;
+               
                 return true;
             }
+            m_Pointer.gameObject.SetActive(false);
         }
         return false;
     }

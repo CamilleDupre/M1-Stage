@@ -36,7 +36,7 @@ public class MoveObject : MonoBehaviourPun
     {
          //Pointer
         m_HasPosition = UpdatePointer();
-        m_Pointer.SetActive(m_HasPosition);
+       // m_Pointer.SetActive(m_HasPosition);
         if (ob != null) // follow the mouvement
         {
             float x, y, z;
@@ -158,6 +158,7 @@ public class MoveObject : MonoBehaviourPun
             if (hit.transform.tag == "Card" || hit.transform.tag == "Wall")
             {
                 m_Pointer.transform.position = hit.point;
+                m_Pointer.gameObject.SetActive(false);
                 return true;
             }
         }

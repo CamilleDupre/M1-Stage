@@ -26,7 +26,7 @@ public class Teleporter : MonoBehaviour
     {
         //Pointer
         m_HasPosition = UpdatePointer();
-        m_Pointer.SetActive(m_HasPosition);
+        //m_Pointer.SetActive(m_HasPosition);
 
         //Teleport
         if (m_TeleportAction.GetStateUp(m_pose.inputSource))
@@ -100,6 +100,7 @@ public class Teleporter : MonoBehaviour
             if (hit.transform.tag == "Tp" || hit.transform.tag == "Card" || hit.transform.tag == "Wall")
             {
                 m_Pointer.transform.position = hit.point;
+                m_Pointer.gameObject.SetActive(false);
                 return true;
             }
         }
