@@ -27,7 +27,7 @@ public class rendering : MonoBehaviour
             float w, h;
             Vector3 v = mur.localScale;
 
-            float div = 2 * 1000f;
+            float div = GetDiv();
 
             h = tex.height / div;
             w = tex.width / div;
@@ -41,6 +41,8 @@ public class rendering : MonoBehaviour
             goCard.transform.localPosition = new Vector3(0, 0, -0.001f);
         }
     }
+
+    public static float GetDiv() { return 1 * 1000f; }
 
     // Start is called before the first frame update
     void Start()
