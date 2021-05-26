@@ -13,6 +13,7 @@ public class Teleporter : MonoBehaviour
     private bool m_HasPosition = false;
     private bool m_IsTeleportoting = false;
     private float m_FadeTime = 0.5f;
+    RaycastHit hit;
 
     // Start is called before the first frame update
     void Awake()
@@ -40,10 +41,39 @@ public class Teleporter : MonoBehaviour
         Vector3 headPosition = SteamVR_Render.Top().head.position;
         Transform cameraRig = SteamVR_Render.Top().origin;
 
-        Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
-        Vector3 translateVector = m_Pointer.transform.position - groundPosition;
+        if (hit.transform.tag == "Tp")
+        {
+            Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
+            Vector3 translateVector = m_Pointer.transform.position - groundPosition;
 
-        StartCoroutine(MoveRig(cameraRig, translateVector));
+            StartCoroutine(MoveRig(cameraRig, translateVector));
+        }
+
+        if (hit.transform.tag == "Wall" || hit.transform.tag == "Card")
+
+        {
+            if (hit.transform.name == "MUR B")
+            {
+                Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
+                Vector3 translateVector = new Vector3(m_Pointer.transform.position.x - groundPosition.x, 0, 0);
+                StartCoroutine(MoveRig(cameraRig, translateVector));
+                Debug.Log("mur b :");
+            }
+            else if (hit.transform.name == "MUR R")
+            {
+                Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
+                Vector3 translateVector = new Vector3(0 ,  0, m_Pointer.transform.position.z - groundPosition.z);
+                StartCoroutine(MoveRig(cameraRig, translateVector));
+                Debug.Log("mur R :");
+            }
+            else if (hit.transform.name == "MUR L")
+            {
+                Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
+                Vector3 translateVector = new Vector3(0, 0, m_Pointer.transform.position.z -groundPosition.z);
+                StartCoroutine(MoveRig(cameraRig, translateVector));
+                Debug.Log("mur L :");
+            }
+        }
     }
 
     private IEnumerator MoveRig(Transform cameraRig , Vector3 translation)
@@ -64,11 +94,10 @@ public class Teleporter : MonoBehaviour
     private bool UpdatePointer()
     {
         Ray ray = new Ray(transform.position, transform.forward);
-        RaycastHit hit;
-
+       
         if(Physics.Raycast(ray , out hit) )
         {
-            if (hit.transform.tag == "Tp")
+            if (hit.transform.tag == "Tp" || hit.transform.tag == "Card" || hit.transform.tag == "Wall")
             {
                 m_Pointer.transform.position = hit.point;
                 return true;
