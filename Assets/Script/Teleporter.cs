@@ -52,26 +52,27 @@ public class Teleporter : MonoBehaviour
         if (hit.transform.tag == "Wall" || hit.transform.tag == "Card")
 
         {
-            if (hit.transform.name == "MUR B")
+            if (hit.transform.name == "MUR B" || hit.transform.parent.name == "MUR B")
             {
                 Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
                 Vector3 translateVector = new Vector3(m_Pointer.transform.position.x - groundPosition.x, 0, 0);
                 StartCoroutine(MoveRig(cameraRig, translateVector));
-                Debug.Log("mur b :");
+                Debug.Log("test ");
+
             }
-            else if (hit.transform.name == "MUR R")
+            else if (hit.transform.name == "MUR R" || hit.transform.parent.name == "MUR R")
             {
                 Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
                 Vector3 translateVector = new Vector3(0 ,  0, m_Pointer.transform.position.z - groundPosition.z);
                 StartCoroutine(MoveRig(cameraRig, translateVector));
-                Debug.Log("mur R :");
+              
             }
-            else if (hit.transform.name == "MUR L")
+            else if (hit.transform.name == "MUR L" || hit.transform.parent.name == "MUR L")
             {
                 Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
                 Vector3 translateVector = new Vector3(0, 0, m_Pointer.transform.position.z -groundPosition.z);
                 StartCoroutine(MoveRig(cameraRig, translateVector));
-                Debug.Log("mur L :");
+                
             }
         }
     }
@@ -100,8 +101,9 @@ public class Teleporter : MonoBehaviour
             if (hit.transform.tag == "Tp" || hit.transform.tag == "Card" || hit.transform.tag == "Wall")
             {
                 m_Pointer.transform.position = hit.point;
-                m_Pointer.gameObject.SetActive(false);
+               // m_Pointer.gameObject.SetActive(false);
                 return true;
+                
             }
         }
         return false;

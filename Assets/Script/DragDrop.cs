@@ -24,6 +24,7 @@ public class DragDrop : MonoBehaviourPun
     public Transform MurB;
     public Transform MurL;
     public Transform MurR;
+    public Texture tex;
 
     private string nameM = "";
 
@@ -137,7 +138,6 @@ public class DragDrop : MonoBehaviourPun
             {
                // Debug.Log("test");
                 m_Pointer.transform.position = hit.point;
-               
                 return true;
             }
             m_Pointer.gameObject.SetActive(false);
@@ -150,27 +150,49 @@ public class DragDrop : MonoBehaviourPun
     {
         Debug.Log("nameT :  " + nameT);
 
-
+        float w, h;
+        float div = 2 * 1000f;
+       
         if (nameT == "MUR L")
         {
-             Debug.Log("changement de mur L ");
+
+            Vector3 v = MurL.localScale;
+            h = tex.height / div;
+            w = tex.width / div;
+
+            w = w * (v.y / v.x);
+            Debug.Log("changement de mur L ");
             PhotonView.Find(OB).gameObject.transform.parent = MurL;
             PhotonView.Find(OB).gameObject.transform.rotation = MurL.rotation;
-            PhotonView.Find(OB).gameObject.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+
+            PhotonView.Find(OB).gameObject.transform.localScale = new Vector3(w, h, 1.0f);
         }
         else if (nameT == "MUR B")
         {
-             Debug.Log("changement de mur B ");
+            Vector3 v = MurB.localScale;
+           
+            h = tex.height / div;
+            w = tex.width / div;
+            w = w * (v.y / v.x);
+
+            Debug.Log("changement de mur B ");
             PhotonView.Find(OB).transform.parent = MurB;
             PhotonView.Find(OB).transform.rotation = MurB.rotation;
-            PhotonView.Find(OB).transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+
+            PhotonView.Find(OB).transform.localScale = new Vector3(w, h, 1.0f);
         }
         else if (nameT == "MUR R")
         {
+            Vector3 v = MurR.localScale;
+             Debug.Log("R scale: " + v);
+            h = tex.height / div;
+            w = tex.width / div;
+            w = w * (v.y / v.x);
             Debug.Log("changement de mur R ");
             PhotonView.Find(OB).transform.parent = MurR;
             PhotonView.Find(OB).transform.rotation = MurR.rotation;
-            PhotonView.Find(OB).transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
+
+            PhotonView.Find(OB).transform.localScale = new Vector3(w, h, 1.0f);
 
         }
     }

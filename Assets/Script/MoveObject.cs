@@ -157,10 +157,11 @@ public class MoveObject : MonoBehaviourPun
         {
             if (hit.transform.tag == "Card" || hit.transform.tag == "Wall")
             {
+                // Debug.Log("test");
                 m_Pointer.transform.position = hit.point;
-                m_Pointer.gameObject.SetActive(false);
                 return true;
             }
+            m_Pointer.gameObject.SetActive(false);
         }
         return false;
     }
