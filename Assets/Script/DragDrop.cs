@@ -64,8 +64,6 @@ public class DragDrop : MonoBehaviourPun
         Vector3 v = MurR.localScale;
         Vector3 p = MurR.position;
 
-        Debug.Log("Vector p :" + p);
-
         x = m_Pointer.transform.position.x / v.x;
         y = (m_Pointer.transform.position.y - p.y) / v.y;
         z = -0.02f;

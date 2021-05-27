@@ -22,6 +22,8 @@ public class rendering : MonoBehaviour
             goCard.transform.parent = mur;
             goCard.transform.rotation = mur.rotation;
 
+           // goCard.AddComponent<PhotonView> ();
+
             Debug.Log("TEXTURES: " + tex.width + " " + tex.height);
 
             float w, h;
@@ -42,7 +44,7 @@ public class rendering : MonoBehaviour
         }
     }
 
-    public static float GetDiv() { return 1 * 1000f; }
+    public static float GetDiv() { return 2 * 1000f; }
 
     // Start is called before the first frame update
     void Start()
@@ -51,8 +53,23 @@ public class rendering : MonoBehaviour
 
         Debug.Log("TEXTURES: " + textures.Length);
 
-    
-        MyCard c = new MyCard(Instantiate(pfCard), (Texture2D)textures[0], MurL);
+        int nbcard = 1;
+        for (int i = 0 ; i < nbcard ; i++)
+        {
+            if (i < nbcard / 3)
+            {
+                MyCard c = new MyCard(Instantiate(pfCard), (Texture2D)textures[i], MurL);
+            }
+            else if (i < 2* nbcard / 3)
+            {
+                MyCard c = new MyCard(Instantiate(pfCard), (Texture2D)textures[i], MurB);
+            }
+            else 
+            {
+                MyCard c = new MyCard(Instantiate(pfCard), (Texture2D)textures[i], MurR);
+            }
+        }
+        
 
     }
 
