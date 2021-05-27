@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class rendering : MonoBehaviour
 {
@@ -14,9 +15,10 @@ public class rendering : MonoBehaviour
         public GameObject goCard = null;
         public string tag = "";
 
-        public MyCard(GameObject go, Texture2D tex, Transform mur)
+        public MyCard(Texture2D tex, Transform mur , int i )
         {
-            goCard = go;
+
+            GameObject goCard = PhotonNetwork.InstantiateRoomObject("Quad (23)", mur.position, mur.rotation, 0, null);
             goCard.GetComponent<Renderer>().material.SetTexture("_MainTex", tex);
 
             goCard.transform.parent = mur;
@@ -24,7 +26,7 @@ public class rendering : MonoBehaviour
 
            // goCard.AddComponent<PhotonView> ();
 
-            Debug.Log("TEXTURES: " + tex.width + " " + tex.height);
+            //Debug.Log("TEXTURES: " + tex.width + " " + tex.height);
 
             float w, h;
             Vector3 v = mur.localScale;
@@ -40,33 +42,56 @@ public class rendering : MonoBehaviour
 
             // goCard.transform.localScale = new Vector3(w, h, 1.0f); // new Vector3(0.04165002f, 0.3106501f, 1.01f);
             goCard.transform.localScale = new Vector3(w, h, 1.0f);
-            goCard.transform.localPosition = new Vector3(0, 0, -0.001f);
+           
+            if (i < 10)
+            {
+                goCard.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * i, -1 * h, -0.001f);
+            }
+            else
+            {
+                i = i - 10;
+                goCard.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * i, 1 * h, -0.001f);
+            }
+           
+           
         }
     }
 
     public static float GetDiv() { return 2 * 1000f; }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        object[] textures = Resources.LoadAll("dixit_part1/", typeof(Texture2D));
+        StartCoroutine(waiter());
 
-        Debug.Log("TEXTURES: " + textures.Length);
+    }
 
-        int nbcard = 1;
+    IEnumerator waiter()
+    {
+        //Wait for 4 seconds
+        yield return new WaitForSeconds(3); // ici wait pour le spawn du playeur 
+       // object[] textures = Resources.LoadAll("dixit_part1/", typeof(Texture2D));
+        object[] textures = Resources.LoadAll("dixit_part2/", typeof(Texture2D));
+
+        // Debug.Log("TEXTURES: " + textures.Length);
+
+        int nbcard = textures.Length;
         for (int i = 0 ; i < nbcard ; i++)
         {
+
+           // MyCard c = new MyCard((Texture2D)textures[i], MurB, nbcard , i);
+
             if (i < nbcard / 3)
             {
-                MyCard c = new MyCard(Instantiate(pfCard), (Texture2D)textures[i], MurL);
+              MyCard c = new MyCard((Texture2D)textures[i], MurL, i);
             }
             else if (i < 2* nbcard / 3)
             {
-                MyCard c = new MyCard(Instantiate(pfCard), (Texture2D)textures[i], MurB);
+               MyCard c = new MyCard((Texture2D)textures[i], MurB, i - nbcard / 3);
             }
             else 
             {
-                MyCard c = new MyCard(Instantiate(pfCard), (Texture2D)textures[i], MurR);
+              MyCard c = new MyCard((Texture2D)textures[i], MurR, i - 2 * nbcard / 3);
             }
         }
         
