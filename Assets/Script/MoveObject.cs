@@ -40,15 +40,17 @@ public class MoveObject : MonoBehaviourPun
         if (ob != null) // follow the mouvement
         {
             float x, y, z;
-            x = m_Pointer.transform.position.x / 10;
-            y = (m_Pointer.transform.position.y - 1) / 2;
+            Vector3 v = MurR.localScale;
+            x = m_Pointer.transform.position.x / v.x;
+            y = (m_Pointer.transform.position.y - 1) / v.y;
             z = -0.02f;
+
             //ob.transform.localPosition = new Vector3(x, y, z);
             //ob.transform.localPosition = new Vector3(0, 0, 0);
             if (ob.transform.parent.name == "MUR L")
             {
 
-                ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / 10, y, z);
+                ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / v.x, y, z);
                 if (hit.transform.name == "MUR B")
                 {
                     Debug.Log("changement de mur B ");
@@ -89,7 +91,7 @@ public class MoveObject : MonoBehaviourPun
                     ob.transform.rotation = MurB.rotation;
                     ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
                 }
-                ob.transform.localPosition = new Vector3(-m_Pointer.transform.position.z / 10, y, z);
+                ob.transform.localPosition = new Vector3(-m_Pointer.transform.position.z / v.x, y, z);
             }
         }
         if (interactWithUI.GetStateUp(m_pose.inputSource))
@@ -101,12 +103,14 @@ public class MoveObject : MonoBehaviourPun
 
     private void Move()
     {
-     // Debug.Log("Move");
+        // Debug.Log("Move");
 
         float x, y, z;
-        x = m_Pointer.transform.position.x / 10;
-        y = (m_Pointer.transform.position.y - 1) / 2;
+        Vector3 v = MurR.localScale;
+        x = m_Pointer.transform.position.x / v.x;
+        y = (m_Pointer.transform.position.y - 1) / v.y;
         z = -0.02f;
+
 
         if (!m_HasPosition)
             return;
@@ -124,7 +128,7 @@ public class MoveObject : MonoBehaviourPun
             if(ob != null){
                 if(ob.transform.parent.name == "MUR L")
                 {
-                    ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / 10, y, z);
+                    ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / v.x, y, z);
                 }
           
 
@@ -135,7 +139,7 @@ public class MoveObject : MonoBehaviourPun
 
                 else if (ob.transform.parent.name == "MUR R")
                 {
-                    ob.transform.localPosition = new Vector3(-m_Pointer.transform.position.z / 10, y, z);
+                    ob.transform.localPosition = new Vector3(-m_Pointer.transform.position.z / v.x, y, z);
                 }
                     //ob.GetComponent<Renderer>().material = initialColor;
                     ob = null;

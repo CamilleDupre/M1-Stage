@@ -14,7 +14,6 @@ public class DragDrop : MonoBehaviourPun
     private bool m_HasPosition = false;
     private bool isMoving = false;
 
-
     private RaycastHit hit;
     private GameObject ob;
 
@@ -62,8 +61,13 @@ public class DragDrop : MonoBehaviourPun
         //Debug.Log("Move");
 
         float x, y, z;
-        x = m_Pointer.transform.position.x / 10;
-        y = (m_Pointer.transform.position.y - 1) / 2;
+        Vector3 v = MurR.localScale;
+        Vector3 p = MurR.position;
+
+        Debug.Log("Vector p :" + p);
+
+        x = m_Pointer.transform.position.x / v.x;
+        y = (m_Pointer.transform.position.y - p.y) / v.y;
         z = -0.02f;
 
 
@@ -73,8 +77,9 @@ public class DragDrop : MonoBehaviourPun
         {
             if (ob.transform.parent.name == "MUR L")
             {
+                
 
-                ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / 10, y, z);
+                ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / v.x , y, z);  // /10
                 if (hit.transform.name == "MUR B")
                 {
                     nameM = hit.transform.name;
@@ -123,7 +128,7 @@ public class DragDrop : MonoBehaviourPun
                     
                     photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM , ob.GetComponent<PhotonView>().ViewID);
                 }
-                ob.transform.localPosition = new Vector3( -m_Pointer.transform.position.z / 10, y, z);
+                ob.transform.localPosition = new Vector3( -m_Pointer.transform.position.z / v.x, y, z);
                 Debug.Log("Photon.Pun.RpcTarget.All :" + Photon.Pun.RpcTarget.All);
             }
         }
