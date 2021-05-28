@@ -22,6 +22,7 @@ public class Network_Player : MonoBehaviour
     public Material Green;
     public Material white;
     public Material red;
+    public Material none;
 
     private GameObject headset;
     private GameObject right;
@@ -109,9 +110,13 @@ public class Network_Player : MonoBehaviour
         {
             rayCast.GetComponent<Renderer>().material = red;
         }
-        else
+        else if (nameR == "white (Instance)")
         {
             rayCast.GetComponent<Renderer>().material = white;
+        }
+        else 
+        {
+            rayCast.GetComponent<Renderer>().material = none;
         }
     }
 
@@ -119,8 +124,8 @@ public class Network_Player : MonoBehaviour
     void ChangeTag(string nameT, int OB)
     {
         {
-
-             if (nameT == "blue (Instance)")
+           // Debug.Log("ChangeRayColour /" + nameT + "/");
+            if (nameT == "blue (Instance)")
               {
                 PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = blue;
               }
@@ -132,11 +137,15 @@ public class Network_Player : MonoBehaviour
               {
                 PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = red;
               }
-              else
+              else if (nameT == "white (Instance)")
               {
                 PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = white;
               }
-              
-         }
+             else
+              {
+                PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = none;
+              }
+        }
+
     }
 }
