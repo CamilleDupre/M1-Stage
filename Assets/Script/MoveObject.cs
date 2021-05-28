@@ -23,20 +23,17 @@ public class MoveObject : MonoBehaviourPun
     public Transform MurL;
     public Transform MurR;
 
-    // public GameObject rayCast;
     // Start is called before the first frame update
     void Awake()
     {
-        m_pose = GetComponent<SteamVR_Behaviour_Pose>();
-
-        
+        m_pose = GetComponent<SteamVR_Behaviour_Pose>();   
     }
     // Update is called once per frame
     void Update()
     {
          //Pointer
         m_HasPosition = UpdatePointer();
-       // m_Pointer.SetActive(m_HasPosition);
+
         if (ob != null) // follow the mouvement
         {
             float x, y, z;
@@ -45,11 +42,8 @@ public class MoveObject : MonoBehaviourPun
             y = (m_Pointer.transform.position.y - 1) / v.y;
             z = -0.02f;
 
-            //ob.transform.localPosition = new Vector3(x, y, z);
-            //ob.transform.localPosition = new Vector3(0, 0, 0);
             if (ob.transform.parent.name == "MUR L")
             {
-
                 ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / v.x, y, z);
                 if (hit.transform.name == "MUR B")
                 {
@@ -58,8 +52,6 @@ public class MoveObject : MonoBehaviourPun
                     ob.transform.rotation = MurB.rotation;
                     ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
                 }
-
-
             }
 
             else if (ob.transform.parent.name == "MUR B")
@@ -95,10 +87,9 @@ public class MoveObject : MonoBehaviourPun
             }
         }
         if (interactWithUI.GetStateUp(m_pose.inputSource))
+        {
             Move();
-
-
-        //Debug.Log("x : " + m_Pointer.transform.position.x  + "/ y : " + m_Pointer.transform.position.y  + " / z : " + m_Pointer.transform.position.z);
+        }   
     }
 
     private void Move()
@@ -118,9 +109,6 @@ public class MoveObject : MonoBehaviourPun
         else if(hit.transform.tag == "Card" &&  ob == null){
             hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
             ob = hit.transform.gameObject;
-            // ob.GetComponent<Renderer>().material = selectedColor;
-            //rayCast.GetComponent<Renderer>().material = selectedColor;
-
         }
         else if(hit.transform.tag == "Wall" || hit.transform.tag == "Card")
         {
@@ -130,8 +118,7 @@ public class MoveObject : MonoBehaviourPun
                 {
                     ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / v.x, y, z);
                 }
-          
-
+       
                 else if (ob.transform.parent.name == "MUR B")
                 {
                     ob.transform.localPosition = new Vector3(x, y, z);
@@ -141,16 +128,9 @@ public class MoveObject : MonoBehaviourPun
                 {
                     ob.transform.localPosition = new Vector3(-m_Pointer.transform.position.z / v.x, y, z);
                 }
-                    //ob.GetComponent<Renderer>().material = initialColor;
+     
                     ob = null;
           }
-        }
-
-        else if (ob != null) // follow the mouvement
-        {
-            // ob.transform.localPosition = new Vector3(x, y, z);
-            // ob.transform.localPosition = new Vector3(z, y, x);
-            
         }
     }
 

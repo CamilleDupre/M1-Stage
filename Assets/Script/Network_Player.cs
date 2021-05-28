@@ -5,9 +5,7 @@ using Valve.VR;
 using Photon.Pun;
 
 public class Network_Player : MonoBehaviour
-
 {
-
     public Transform head;
     public Transform leftHand;
     public Transform rightHand;
@@ -29,15 +27,11 @@ public class Network_Player : MonoBehaviour
     private GameObject right;
     private GameObject left;
 
-    //public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");
     private PhotonView photonView;
-   // private SteamVR_Behaviour_Pose m_pose = null;
+
     private RaycastHit hit;
     private string nameR="";
     private string nameT="";
-
-
-
 
     void Start()
     {
@@ -51,19 +45,14 @@ public class Network_Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
-
         if (photonView.IsMine)
         {
             leftHand.gameObject.SetActive(false);
             rightHand.gameObject.SetActive(false);
             head.gameObject.SetActive(false);
-
-            headSphere.GetComponent<Renderer>().material = blue;
-            leftHandSphere.GetComponent<Renderer>().material = blue;
-            rightHandSphere.GetComponent<Renderer>().material = blue;
-            //rayCast.GetComponent<Renderer>().material = blue;
-            //pointer.GetComponent<Renderer>().material = blue;
+          //  headSphere.GetComponent<Renderer>().material = blue;
+          //  leftHandSphere.GetComponent<Renderer>().material = blue;
+          //  rightHandSphere.GetComponent<Renderer>().material = blue;
             MapPosition();
         }
         Ray ray = new Ray(right.transform.position, right.transform.forward);
@@ -73,23 +62,12 @@ public class Network_Player : MonoBehaviour
             if (hit.transform.tag == "tag")
             {
                 nameR = hit.transform.GetComponent<Renderer>().material.name;
-               
                 photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
-                //rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
-
             }
             if (hit.transform.tag == "Card")
             {
-               // hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
-              // hit.transform.GetChild(0).gameObject.GetComponent<PhotonView>().RequestOwnership();
-                             
-
-                //hit.transform.GetChild(0).GetComponent<Renderer>().material = rayCast.GetComponent<Renderer>().material;
                 nameT = rayCast.GetComponent<Renderer>().material.name;
-
                 photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, nameT, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
-              
-                //rayCast.GetComponent<Renderer>().material = red;
             }
         }
 
@@ -140,10 +118,6 @@ public class Network_Player : MonoBehaviour
     [PunRPC]
     void ChangeTag(string nameT, int OB)
     {
-        //Debug.Log("ChangeTag ");
-
-       
-        //if (hit.transform.tag == "Card")
         {
 
              if (nameT == "blue (Instance)")

@@ -17,16 +17,12 @@ public class rendering : MonoBehaviour
 
         public MyCard(Texture2D tex, Transform mur , int i )
         {
-
             GameObject goCard = PhotonNetwork.InstantiateRoomObject("Quad (23)", mur.position, mur.rotation, 0, null);
             goCard.GetComponent<Renderer>().material.SetTexture("_MainTex", tex);
-
             goCard.transform.parent = mur;
             goCard.transform.rotation = mur.rotation;
 
-           // goCard.AddComponent<PhotonView> ();
-
-            //Debug.Log("TEXTURES: " + tex.width + " " + tex.height);
+           //Debug.Log("TEXTURES: " + tex.width + " " + tex.height);
 
             float w, h;
             Vector3 v = mur.localScale;
@@ -37,12 +33,9 @@ public class rendering : MonoBehaviour
             w = tex.width / div;
 
             //Debug.Log("scale: " + v);
-            // h = h/mur.
             w = w * (v.y / v.x);
 
-            // goCard.transform.localScale = new Vector3(w, h, 1.0f); // new Vector3(0.04165002f, 0.3106501f, 1.01f);
             goCard.transform.localScale = new Vector3(w, h, 1.0f);
-           
             if (i < 10)
             {
                 goCard.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * i, -1 * h, -0.001f);
@@ -51,9 +44,7 @@ public class rendering : MonoBehaviour
             {
                 i = i - 10;
                 goCard.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * i, 1 * h, -0.001f);
-            }
-           
-           
+            }  
         }
     }
 
@@ -63,7 +54,6 @@ public class rendering : MonoBehaviour
     void Awake()
     {
         StartCoroutine(waiter());
-
     }
 
     IEnumerator waiter()
@@ -78,9 +68,6 @@ public class rendering : MonoBehaviour
         int nbcard = textures.Length;
         for (int i = 0 ; i < nbcard ; i++)
         {
-
-           // MyCard c = new MyCard((Texture2D)textures[i], MurB, nbcard , i);
-
             if (i < nbcard / 3)
             {
               MyCard c = new MyCard((Texture2D)textures[i], MurL, i);
@@ -94,8 +81,6 @@ public class rendering : MonoBehaviour
               MyCard c = new MyCard((Texture2D)textures[i], MurR, i - 2 * nbcard / 3);
             }
         }
-        
-
     }
 
     // Update is called once per frame

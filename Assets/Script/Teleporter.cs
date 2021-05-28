@@ -103,7 +103,6 @@ public class Teleporter : MonoBehaviour
             if (hit.transform.tag == "Tp" || hit.transform.tag == "Card" || hit.transform.tag == "Wall")
             {
                 m_Pointer.transform.position = hit.point;
-               // m_Pointer.gameObject.SetActive(false);
                 return true;
                 
             }
