@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class rendering : MonoBehaviour
+public class rendering : MonoBehaviourPunCallbacks
 {
     public GameObject pfCard;
     public Transform MurB;
@@ -53,13 +53,12 @@ public class rendering : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        StartCoroutine(waiter());
+        //StartCoroutine(waiter());
     }
 
-    IEnumerator waiter()
-    {
-        //Wait for 4 seconds
-        yield return new WaitForSeconds(3); // ici wait pour le spawn du playeur 
+    public override void OnCreatedRoom() { 
+        
+        
        // object[] textures = Resources.LoadAll("dixit_part1/", typeof(Texture2D));
         object[] textures = Resources.LoadAll("dixit_part2/", typeof(Texture2D));
 
