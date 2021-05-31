@@ -20,10 +20,10 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         public MyCard(Texture2D tex, Transform mur , int i )
         {
             GameObject goCard = PhotonNetwork.InstantiateRoomObject("Quad (23)", mur.position, mur.rotation, 0, null);
-            goCard.GetComponent<Renderer>().material.SetTexture("_MainTex", tex);
+            //goCard.GetComponent<Renderer>().material.SetTexture("_MainTex", tex);
             //goCard.transform.parent = mur;
             p = mur;
-            goCard.transform.rotation = mur.rotation;
+            //goCard.transform.rotation = mur.rotation;
             pv = goCard.GetPhotonView();
 
             /*
