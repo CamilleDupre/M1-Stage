@@ -81,17 +81,17 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
             if (i < nbcard / 3)
             {
               MyCard c = new MyCard((Texture2D)textures[i], MurL, i);
-                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.All,  MurL.GetComponent<PhotonView>().ViewID , i);//GetComponent<PhotonView>().ViewID);
+                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.All, c.pv.ViewID, MurL.GetComponent<PhotonView>().ViewID , i);//GetComponent<PhotonView>().ViewID);
             }
             else if (i < 2* nbcard / 3)
             {
                MyCard c = new MyCard((Texture2D)textures[i], MurB, i - nbcard / 3);
-                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.All, MurB.GetComponent<PhotonView>().ViewID, i - nbcard / 3);
+                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.All, c.pv.ViewID, MurB.GetComponent<PhotonView>().ViewID, i - nbcard / 3);
             }
             else 
             {
               MyCard c = new MyCard((Texture2D)textures[i], MurR, i - 2 * nbcard / 3);
-                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.All, MurR.GetComponent<PhotonView>().ViewID, i - 2 * nbcard / 3);
+                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.All, c.pv.ViewID, MurR.GetComponent<PhotonView>().ViewID, i - 2 * nbcard / 3);
             }
         
         

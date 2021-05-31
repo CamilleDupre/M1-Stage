@@ -43,6 +43,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("new player");
         base.OnPlayerEnteredRoom(newPlayer);
+        if (PhotonNetwork.IsMasterClient) {
+
+            PhotonNetwork.LoadLevel("SampleScene");
+        }
     }
   
 }
