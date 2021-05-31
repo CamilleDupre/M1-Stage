@@ -72,7 +72,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         //base.OnPlayerEnteredRoom(newPlayer);
     //}
 
-    public override void OnCreatedRoom() { 
+    public override void OnJoinedRoom() { 
         
         
        // object[] textures = Resources.LoadAll("dixit_part1/", typeof(Texture2D));
