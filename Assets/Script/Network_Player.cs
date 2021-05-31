@@ -63,7 +63,7 @@ public class Network_Player : MonoBehaviour
             if (hit.transform.tag == "tag")
             {
                 nameR = hit.transform.GetComponent<Renderer>().material.name;
-                photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
+                photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.AllBuffered, nameR);
             }
             if (hit.transform.tag == "Card")
             {
