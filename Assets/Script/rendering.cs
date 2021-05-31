@@ -56,8 +56,7 @@ public class rendering : MonoBehaviourPunCallbacks
         //StartCoroutine(waiter());
     }
 
-    public override void OnJoinedRoom()
-    { 
+    public override void OnCreatedRoom() { 
         
         
        // object[] textures = Resources.LoadAll("dixit_part1/", typeof(Texture2D));
