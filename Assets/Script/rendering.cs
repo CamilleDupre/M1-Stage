@@ -20,7 +20,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
 
         public MyCard(Texture2D tex, Transform mur , int i )
         {
-            GameObject goCard = PhotonNetwork.InstantiateRoomObject("Quad (23)", mur.position, mur.rotation, 0, null);
+            GameObject goCard = PhotonNetwork.Instantiate("Quad (23)", mur.position, mur.rotation, 0, null);
             //goCard.GetComponent<Renderer>().material.SetTexture("_MainTex", tex);
             //goCard.transform.parent = mur;
             p = mur;
@@ -72,7 +72,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         //base.OnPlayerEnteredRoom(newPlayer);
     //}
 
-    public override void OnJoinedRoom() { 
+    public override void OnCreatedRoom() { 
         
         
        // object[] textures = Resources.LoadAll("dixit_part1/", typeof(Texture2D));
@@ -88,17 +88,17 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
             if (i < nbcard / 3)
             {
               MyCard c = new MyCard((Texture2D)textures[i], MurL, i);
-                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.All, c.pv.ViewID, MurL.GetComponent<PhotonView>().ViewID , i);//GetComponent<PhotonView>().ViewID);
+                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurL.GetComponent<PhotonView>().ViewID , i);//GetComponent<PhotonView>().ViewID);
             }
             else if (i < 2* nbcard / 3)
             {
                MyCard c = new MyCard((Texture2D)textures[i], MurB, i - nbcard / 3);
-                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.All, c.pv.ViewID, MurB.GetComponent<PhotonView>().ViewID, i - nbcard / 3);
+                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurB.GetComponent<PhotonView>().ViewID, i - nbcard / 3);
             }
             else 
             {
               MyCard c = new MyCard((Texture2D)textures[i], MurR, i - 2 * nbcard / 3);
-                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.All, c.pv.ViewID, MurR.GetComponent<PhotonView>().ViewID, i - 2 * nbcard / 3);
+                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurR.GetComponent<PhotonView>().ViewID, i - 2 * nbcard / 3);
             }
         
         

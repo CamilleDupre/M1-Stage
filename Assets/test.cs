@@ -5,10 +5,11 @@ using Photon.Pun;
 
 public class test : MonoBehaviour
 {
+    object[] textures;
+
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -20,8 +21,11 @@ public class test : MonoBehaviour
     [PunRPC]
     void LoadCard( int OB, int p , int i)
     {
-        
-        object[] textures = Resources.LoadAll("dixit_part2/", typeof(Texture2D));
+        if (textures == null)
+        {
+            textures = Resources.LoadAll("dixit_part2/", typeof(Texture2D));
+        }
+
         Transform mur = PhotonView.Find(p).transform;
         GameObject goCard = PhotonView.Find(OB).gameObject;
         Texture2D tex = (Texture2D)textures[i];
