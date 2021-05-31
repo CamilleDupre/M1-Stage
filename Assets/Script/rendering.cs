@@ -64,6 +64,8 @@ public class rendering : MonoBehaviourPunCallbacks
 
         // Debug.Log("TEXTURES: " + textures.Length);
 
+        Debug.Log("Creation carte " );
+
         int nbcard = textures.Length;
         for (int i = 0 ; i < nbcard ; i++)
         {
