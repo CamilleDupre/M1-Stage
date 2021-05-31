@@ -66,13 +66,13 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         //StartCoroutine(waiter());
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
+    //public override void OnPlayerEnteredRoom(Player newPlayer)
+    //{
        // Debug.Log("new player");
         //base.OnPlayerEnteredRoom(newPlayer);
     //}
 
-    //public override void OnCreatedRoom() { 
+    public override void OnCreatedRoom() { 
         
         
        // object[] textures = Resources.LoadAll("dixit_part1/", typeof(Texture2D));
