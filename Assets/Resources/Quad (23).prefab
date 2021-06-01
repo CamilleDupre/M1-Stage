@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7099689790222019802}
   - component: {fileID: 7099689790222019813}
   - component: {fileID: 7099689790222019814}
-  - component: {fileID: 752154758280412610}
+  - component: {fileID: -8158985191078020004}
   m_Layer: 0
   m_Name: Quad (23)
   m_TagString: Card
@@ -120,6 +120,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 7099689790222019814}
+  - {fileID: 8213418327059425144}
   sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -139,7 +140,7 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &752154758280412610
+--- !u!114 &-8158985191078020004
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
