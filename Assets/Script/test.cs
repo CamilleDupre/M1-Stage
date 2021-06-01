@@ -19,7 +19,7 @@ public class test : MonoBehaviour
     }
 
     [PunRPC]
-    void LoadCard( int OB, int p , int i)
+    void LoadCard( int OB, int p , int i , int t)
     {
         if (textures == null)
         {
@@ -28,10 +28,10 @@ public class test : MonoBehaviour
 
         Transform mur = PhotonView.Find(p).transform;
         GameObject goCard = PhotonView.Find(OB).gameObject;
-        Texture2D tex = (Texture2D)textures[i];
+        Texture2D tex = (Texture2D)textures[t];
 
         //GameObject goCard = PhotonNetwork.InstantiateRoomObject("Quad (23)", mur.position, mur.rotation, 0, null);
-        //goCard.GetComponent<Renderer>().material.SetTexture("_MainTex", tex);
+        goCard.GetComponent<Renderer>().material.SetTexture("_MainTex", tex);
 
         goCard.transform.parent = mur;
         goCard.transform.rotation = mur.rotation;

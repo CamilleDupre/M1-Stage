@@ -88,17 +88,17 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
             if (i < nbcard / 3)
             {
               MyCard c = new MyCard((Texture2D)textures[i], MurL, i);
-                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurL.GetComponent<PhotonView>().ViewID , i);//GetComponent<PhotonView>().ViewID);
+                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurL.GetComponent<PhotonView>().ViewID , i , i);//GetComponent<PhotonView>().ViewID);
             }
             else if (i < 2* nbcard / 3)
             {
                MyCard c = new MyCard((Texture2D)textures[i], MurB, i - nbcard / 3);
-                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurB.GetComponent<PhotonView>().ViewID, i - nbcard / 3);
+                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurB.GetComponent<PhotonView>().ViewID, i - nbcard / 3, i);
             }
             else 
             {
               MyCard c = new MyCard((Texture2D)textures[i], MurR, i - 2 * nbcard / 3);
-                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurR.GetComponent<PhotonView>().ViewID, i - 2 * nbcard / 3);
+                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurR.GetComponent<PhotonView>().ViewID, i - 2 * nbcard / 3, i);
             }
         
         
