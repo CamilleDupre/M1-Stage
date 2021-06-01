@@ -38,19 +38,19 @@ public class Tag : MonoBehaviour
         //m_Pointer.SetActive(m_HasPosition);
         if(photonView == null)
         {
-            photonView = GameObject.Find("Network Player(Clone)").GetComponent<PhotonView>();
+            //photonView = GameObject.Find("Network Player(Clone)").GetComponent<PhotonView>();
         }
        
             if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "Card")
         {
             //nameT = rayCast.GetComponent<Renderer>().material.name;
-            photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
+           // photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
         }
 
         if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "tag")
         {
             nameR = hit.transform.GetComponent<Renderer>().material.name;
-            photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
+            //photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
         }
 
     }

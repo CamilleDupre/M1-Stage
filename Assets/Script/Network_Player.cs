@@ -33,6 +33,8 @@ public class Network_Player : MonoBehaviour
     private RaycastHit hit;
     private string nameR="";
     private string nameT="";
+    private SteamVR_Behaviour_Pose m_pose = null;
+    public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");
 
     void Start()
     {
@@ -41,6 +43,7 @@ public class Network_Player : MonoBehaviour
         headset = GameObject.Find("Camera (eye)");
         right = GameObject.Find("/[CameraRig]/Controller (right)");
         left = GameObject.Find("/[CameraRig]/Controller (left)");
+        m_pose = right.GetComponent<SteamVR_Behaviour_Pose>();
     }
 
     // Update is called once per frame
@@ -60,15 +63,15 @@ public class Network_Player : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
            // Debug.Log(" test 1 " + hit.transform.tag);
-            if (hit.transform.tag == "tag")
+            if (interactWithUI.GetStateDown(m_pose.inputSource) &&  hit.transform.tag == "tag")
             {
                 nameR = hit.transform.GetComponent<Renderer>().material.name;
-              //  photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
+              photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
             }
-            if (hit.transform.tag == "Card")
+            if (interactWithUI.GetStateDown(m_pose.inputSource) &&  hit.transform.tag == "Card")
             {
                 nameT = rayCast.GetComponent<Renderer>().material.name;
-               // photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, nameT, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
+               photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, nameT, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
             }
         }
 
@@ -121,10 +124,10 @@ public class Network_Player : MonoBehaviour
     }
 
     [PunRPC]
-    void ChangeTag(int OB)
+    void ChangeTag(string nameT , int OB)
     {
         {
-            nameT = rayCast.GetComponent<Renderer>().material.name;
+           // nameT = rayCast.GetComponent<Renderer>().material.name;
             // Debug.Log("ChangeRayColour /" + nameT + "/");
             if (nameT == "blue (Instance)")
               {
