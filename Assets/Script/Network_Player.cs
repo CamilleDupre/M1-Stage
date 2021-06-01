@@ -28,6 +28,8 @@ public class Network_Player : MonoBehaviour
     private GameObject right;
     private GameObject left;
 
+    private GameObject salle;
+
     private PhotonView photonView;
 
     private RaycastHit hit;
@@ -36,6 +38,7 @@ public class Network_Player : MonoBehaviour
     private SteamVR_Behaviour_Pose m_pose = null;
     public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");
 
+
     void Start()
     {
         photonView = GetComponent<PhotonView>();
@@ -43,6 +46,9 @@ public class Network_Player : MonoBehaviour
         headset = GameObject.Find("Camera (eye)");
         right = GameObject.Find("/[CameraRig]/Controller (right)");
         left = GameObject.Find("/[CameraRig]/Controller (left)");
+
+        salle = GameObject.Find("Salle");
+
         m_pose = right.GetComponent<SteamVR_Behaviour_Pose>();
     }
 
@@ -54,27 +60,34 @@ public class Network_Player : MonoBehaviour
             leftHand.gameObject.SetActive(false);
             rightHand.gameObject.SetActive(false);
             head.gameObject.SetActive(false);
-          //  headSphere.GetComponent<Renderer>().material = blue;
-          //  leftHandSphere.GetComponent<Renderer>().material = blue;
-          //  rightHandSphere.GetComponent<Renderer>().material = blue;
+            //  headSphere.GetComponent<Renderer>().material = blue;
+            //  leftHandSphere.GetComponent<Renderer>().material = blue;
+            //  rightHandSphere.GetComponent<Renderer>().material = blue;
             MapPosition();
         }
         Ray ray = new Ray(right.transform.position, right.transform.forward);
         if (Physics.Raycast(ray, out hit))
         {
-           // Debug.Log(" test 1 " + hit.transform.tag);
-            if (interactWithUI.GetStateDown(m_pose.inputSource) &&  hit.transform.tag == "tag")
+            // Debug.Log(" test 1 " + hit.transform.tag);
+            if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "tag")
             {
                 nameR = hit.transform.GetComponent<Renderer>().material.name;
-              photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
+                photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
             }
-            if (interactWithUI.GetStateDown(m_pose.inputSource) &&  hit.transform.tag == "Card")
+            if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "Card")
+            {
+
+                nameT = rayCast.GetComponent<Renderer>().material.name;
+                photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, nameT, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
+
+            }
+
+            if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "Wall")
             {
                 nameT = rayCast.GetComponent<Renderer>().material.name;
-               photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, nameT, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
+                salle.transform.GetComponent<PhotonView>().RPC("TeleportCard", Photon.Pun.RpcTarget.All, nameT , hit.transform.name);
             }
         }
-
     }
 
     //void MapPosition(Transform target, XRNode node)

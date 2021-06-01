@@ -10,6 +10,8 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
     public Transform MurB;
     public Transform MurL;
     public Transform MurR;
+    public List<GameObject> cardList;
+    public object[] textures;
 
     public class MyCard
     {
@@ -17,6 +19,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         public string tag = "";
         public PhotonView pv;
         public Transform p;
+       
 
         public MyCard(Texture2D tex, Transform mur , int i )
         {
@@ -76,7 +79,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         
         
        // object[] textures = Resources.LoadAll("dixit_part1/", typeof(Texture2D));
-        object[] textures = Resources.LoadAll("dixit_part2/", typeof(Texture2D));
+       textures = Resources.LoadAll("dixit_part2/", typeof(Texture2D));
 
         // Debug.Log("TEXTURES: " + textures.Length);
 
@@ -88,16 +91,20 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
             if (i < nbcard / 3)
             {
               MyCard c = new MyCard((Texture2D)textures[i], MurL, i);
+               // Material m = c.goCard.transform.GetChild(0).GetComponent<Renderer>().material;
+                cardList.Add(PhotonView.Find(c.pv.ViewID).gameObject);
                 c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurL.GetComponent<PhotonView>().ViewID , i , i);//GetComponent<PhotonView>().ViewID);
             }
             else if (i < 2* nbcard / 3)
             {
                MyCard c = new MyCard((Texture2D)textures[i], MurB, i - nbcard / 3);
+                cardList.Add(PhotonView.Find(c.pv.ViewID).gameObject);
                 c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurB.GetComponent<PhotonView>().ViewID, i - nbcard / 3, i);
             }
             else 
             {
               MyCard c = new MyCard((Texture2D)textures[i], MurR, i - 2 * nbcard / 3);
+                cardList.Add(PhotonView.Find(c.pv.ViewID).gameObject);
                 c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurR.GetComponent<PhotonView>().ViewID, i - 2 * nbcard / 3, i);
             }
         
@@ -109,5 +116,51 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
     void Update()
     {
         
+    }
+
+    [PunRPC]
+    void TeleportCard(string nameR, string murName)
+    {
+         Debug.Log(" TeleportCard 1 ");
+
+        Debug.Log(nameR);
+        float w, h;
+        float div = 2 * 1000f;
+        Texture tex= (Texture2D)textures[0];
+
+        Transform mur;
+        if (murName == "MUR B")
+        { mur = MurB; }
+        else if (murName == "MUR L")
+        { mur = MurL; }
+        else
+        { mur = MurR; }
+
+        int j = 0;
+        for (int i = 0; i < cardList.Count; i++)
+        {
+
+            // Instantiate(objectsToSpawn[Random.Range(0, objectsToSpawn.Count)], itemLocations[i].transform.position, Quaternion.identity);
+            // optionally you may add the following:
+            // Destroy(itemLocations[i]);
+            Debug.Log(cardList[i].transform.GetChild(0).GetComponent<Renderer>().material.name);
+            if (cardList[i].transform.GetChild(0).GetComponent<Renderer>().material.name == nameR)
+            {
+                Debug.Log(" TeleportCard 2 ");
+                Vector3 v = MurB.localScale;
+
+                h = tex.height / div;
+                w = tex.width / div;
+                w = w * (v.y / v.x);
+
+                Debug.Log("changement de mur B ");
+                cardList[i].transform.transform.parent = mur;
+                cardList[i].transform.transform.rotation = mur.rotation;
+
+                cardList[i].transform.transform.localScale = new Vector3(w, h, 1.0f);
+                cardList[i].transform.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * j, 0, -0.02f);
+                j++;
+            }
+        }
     }
 }
