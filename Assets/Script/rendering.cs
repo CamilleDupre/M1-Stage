@@ -67,6 +67,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
     void Awake()
     {
         //StartCoroutine(waiter());
+        textures = Resources.LoadAll("dixit_part2/", typeof(Texture2D));
     }
 
     //public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -79,7 +80,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         
         
        // object[] textures = Resources.LoadAll("dixit_part1/", typeof(Texture2D));
-       textures = Resources.LoadAll("dixit_part2/", typeof(Texture2D));
+      
 
         // Debug.Log("TEXTURES: " + textures.Length);
 
@@ -139,10 +140,6 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         int j = 0;
         for (int i = 0; i < cardList.Count; i++)
         {
-
-            // Instantiate(objectsToSpawn[Random.Range(0, objectsToSpawn.Count)], itemLocations[i].transform.position, Quaternion.identity);
-            // optionally you may add the following:
-            // Destroy(itemLocations[i]);
             Debug.Log(cardList[i].transform.GetChild(0).GetComponent<Renderer>().material.name);
             if (cardList[i].transform.GetChild(0).GetComponent<Renderer>().material.name == nameR)
             {
