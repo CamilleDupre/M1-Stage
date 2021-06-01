@@ -22,8 +22,6 @@ public class MoveObject : MonoBehaviourPun
     public Transform MurB;
     public Transform MurL;
     public Transform MurR;
-    private string nameM = "";
-    public Texture tex;
 
     // Start is called before the first frame update
     void Awake()
@@ -40,18 +38,19 @@ public class MoveObject : MonoBehaviourPun
         {
             float x, y, z;
             Vector3 v = MurR.localScale;
-            Vector3 p = MurR.position;
             x = m_Pointer.transform.position.x / v.x;
-            y = (m_Pointer.transform.position.y- p.y) / v.y;
+            y = (m_Pointer.transform.position.y - 1) / v.y;
             z = -0.02f;
 
             if (ob.transform.parent.name == "MUR L")
             {
-                ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / v.x, y, z);  // /10
+                ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / v.x, y, z);
                 if (hit.transform.name == "MUR B")
                 {
-                    nameM = hit.transform.name;
-                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM, ob.GetComponent<PhotonView>().ViewID);
+                    Debug.Log("changement de mur B ");
+                    ob.transform.parent = MurB;
+                    ob.transform.rotation = MurB.rotation;
+                    ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
                 }
             }
 
@@ -59,14 +58,18 @@ public class MoveObject : MonoBehaviourPun
             {
                 if (hit.transform.name == "MUR L")
                 {
-                    nameM = hit.transform.name;
-                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM, ob.GetComponent<PhotonView>().ViewID);
+                    Debug.Log("changement de mur L ");
+                    ob.transform.parent = MurL;
+                    ob.transform.rotation = MurL.rotation;
+                    ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
                 }
 
                 if (hit.transform.name == "MUR R")
                 {
-                    nameM = hit.transform.name;
-                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM, ob.GetComponent<PhotonView>().ViewID);
+                    Debug.Log("changement de mur R ");
+                    ob.transform.parent = MurR;
+                    ob.transform.rotation = MurR.rotation;
+                    ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
                 }
                 ob.transform.localPosition = new Vector3(x, y, z);
             }
@@ -75,8 +78,10 @@ public class MoveObject : MonoBehaviourPun
             {
                 if (hit.transform.name == "MUR B")
                 {
-                    nameM = hit.transform.name;
-                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM, ob.GetComponent<PhotonView>().ViewID);
+                    Debug.Log("changement de mur B ");
+                    ob.transform.parent = MurB;
+                    ob.transform.rotation = MurB.rotation;
+                    ob.transform.localScale = new Vector3(0.04165002f, 0.3106501f, 1.01f);
                 }
                 ob.transform.localPosition = new Vector3(-m_Pointer.transform.position.z / v.x, y, z);
             }
@@ -93,10 +98,10 @@ public class MoveObject : MonoBehaviourPun
 
         float x, y, z;
         Vector3 v = MurR.localScale;
-        Vector3 p = MurR.position;
         x = m_Pointer.transform.position.x / v.x;
-        y = (m_Pointer.transform.position.y - p.y) / v.y;
+        y = (m_Pointer.transform.position.y - 1) / v.y;
         z = -0.02f;
+
 
         if (!m_HasPosition)
             return;
@@ -143,57 +148,5 @@ public class MoveObject : MonoBehaviourPun
             m_Pointer.gameObject.SetActive(false);
         }
         return false;
-    }
-
-    [PunRPC]
-    void ChangeMur(string nameT, int OB)
-    {
-        Debug.Log("nameT :  " + nameT);
-
-        float w, h;
-        float div = 2 * 1000f;
-
-        if (nameT == "MUR L")
-        {
-
-            Vector3 v = MurL.localScale;
-            h = tex.height / div;
-            w = tex.width / div;
-
-            w = w * (v.y / v.x);
-            Debug.Log("changement de mur L ");
-            PhotonView.Find(OB).gameObject.transform.parent = MurL;
-            PhotonView.Find(OB).gameObject.transform.rotation = MurL.rotation;
-
-            PhotonView.Find(OB).gameObject.transform.localScale = new Vector3(w, h, 1.0f);
-        }
-        else if (nameT == "MUR B")
-        {
-            Vector3 v = MurB.localScale;
-
-            h = tex.height / div;
-            w = tex.width / div;
-            w = w * (v.y / v.x);
-
-            Debug.Log("changement de mur B ");
-            PhotonView.Find(OB).transform.parent = MurB;
-            PhotonView.Find(OB).transform.rotation = MurB.rotation;
-
-            PhotonView.Find(OB).transform.localScale = new Vector3(w, h, 1.0f);
-        }
-        else if (nameT == "MUR R")
-        {
-            Vector3 v = MurR.localScale;
-            Debug.Log("R scale: " + v);
-            h = tex.height / div;
-            w = tex.width / div;
-            w = w * (v.y / v.x);
-            Debug.Log("changement de mur R ");
-            PhotonView.Find(OB).transform.parent = MurR;
-            PhotonView.Find(OB).transform.rotation = MurR.rotation;
-
-            PhotonView.Find(OB).transform.localScale = new Vector3(w, h, 1.0f);
-
-        }
     }
 }

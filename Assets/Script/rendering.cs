@@ -26,6 +26,35 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
             p = mur;
             //goCard.transform.rotation = mur.rotation;
             pv = goCard.GetPhotonView();
+
+            /*
+            //Debug.Log("TEXTURES: " + tex.width + " " + tex.height);
+
+            float w, h;
+            Vector3 v = mur.localScale;
+
+            float div =  2 * 1000f; //GetDiv();
+
+            h = tex.height / div;
+            w = tex.width / div;
+
+            //Debug.Log("scale: " + v);
+            w = w * (v.y / v.x);
+
+            goCard.transform.localScale = new Vector3(w, h, 1.0f);
+            if (i < 10)
+            {
+                goCard.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * i, -1 * h, -0.001f);
+            }
+            else
+            {
+                i = i - 10;
+                goCard.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * i, 1 * h, -0.001f);
+            }
+
+            //PhotonView photonView = PhotonView.Get(goCard.GetComponent<PhotonView>());
+            //photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, nameT, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
+            */
         }
     }
 
