@@ -31,7 +31,7 @@ public class test : MonoBehaviour
         Texture2D tex = (Texture2D)textures[i];
 
         //GameObject goCard = PhotonNetwork.InstantiateRoomObject("Quad (23)", mur.position, mur.rotation, 0, null);
-        goCard.GetComponent<Renderer>().material.SetTexture("_MainTex", tex);
+        //goCard.GetComponent<Renderer>().material.SetTexture("_MainTex", tex);
 
         goCard.transform.parent = mur;
         goCard.transform.rotation = mur.rotation;
