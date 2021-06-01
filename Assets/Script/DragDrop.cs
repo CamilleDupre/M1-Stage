@@ -102,7 +102,7 @@ public class DragDrop : MonoBehaviourPun
                 }
                 ob.transform.localPosition = new Vector3( -m_Pointer.transform.position.z / v.x, y, z);
             }
-        }
+            }
     }
 
     private bool UpdatePointer()
