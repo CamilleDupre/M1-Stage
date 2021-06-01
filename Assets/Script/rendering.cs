@@ -92,20 +92,23 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
             if (i < nbcard / 3)
             {
               MyCard c = new MyCard((Texture2D)textures[i], MurL, i);
-               // Material m = c.goCard.transform.GetChild(0).GetComponent<Renderer>().material;
-                cardList.Add(PhotonView.Find(c.pv.ViewID).gameObject);
+                // Material m = c.goCard.transform.GetChild(0).GetComponent<Renderer>().material;
+                // cardList.Add(PhotonView.Find(c.pv.ViewID).gameObject);
+                photonView.RPC("addListCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID);
                 c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurL.GetComponent<PhotonView>().ViewID , i , i);//GetComponent<PhotonView>().ViewID);
             }
             else if (i < 2* nbcard / 3)
             {
                MyCard c = new MyCard((Texture2D)textures[i], MurB, i - nbcard / 3);
-                cardList.Add(PhotonView.Find(c.pv.ViewID).gameObject);
+                //cardList.Add(PhotonView.Find(c.pv.ViewID).gameObject);
+                photonView.RPC("addListCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID);
                 c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurB.GetComponent<PhotonView>().ViewID, i - nbcard / 3, i);
             }
             else 
             {
               MyCard c = new MyCard((Texture2D)textures[i], MurR, i - 2 * nbcard / 3);
                 cardList.Add(PhotonView.Find(c.pv.ViewID).gameObject);
+                photonView.RPC("addListCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID);
                 c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurR.GetComponent<PhotonView>().ViewID, i - 2 * nbcard / 3, i);
             }
         
@@ -118,6 +121,14 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
     {
         
     }
+
+    [PunRPC]
+
+    void addListCard(int OB)
+    {
+        cardList.Add(PhotonView.Find(OB).gameObject);
+    }
+
 
     [PunRPC]
     void TeleportCard(string nameR, string murName)
