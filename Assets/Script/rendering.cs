@@ -151,11 +151,11 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
                 w = w * (v.y / v.x);
 
                 Debug.Log("changement de mur B ");
-                cardList[i].transform.transform.parent = mur;
-                cardList[i].transform.transform.rotation = mur.rotation;
+                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.parent = mur;
+                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.rotation = mur.rotation;
 
-                cardList[i].transform.transform.localScale = new Vector3(w, h, 1.0f);
-                cardList[i].transform.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * j, 0, -0.02f);
+                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localScale = new Vector3(w, h, 1.0f);
+                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * j, 0, -0.02f);
                 j++;
             }
         }
