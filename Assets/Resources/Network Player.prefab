@@ -525,7 +525,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1380188632210726537}
-  - {fileID: 5066587065602416366}
   m_Father: {fileID: 1380188632496951978}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -576,7 +575,7 @@ Transform:
   - {fileID: 1380188632376095736}
   - {fileID: 4613232518543626307}
   m_Father: {fileID: 1380188632496951978}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1380188633042283530
 MonoBehaviour:
@@ -625,7 +624,7 @@ Transform:
   - {fileID: 1380188633547862024}
   - {fileID: 2489002550054626531}
   m_Father: {fileID: 1380188632496951978}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1380188633311980319
 MonoBehaviour:
@@ -958,6 +957,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1380188632808674591}
+  - {fileID: 5066587065602416366}
   - {fileID: 1380188632459107396}
   - {fileID: 1380188633311980316}
   - {fileID: 8938242256906166396}
@@ -1054,7 +1054,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1380188632496951978}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2035094665561351205
 MonoBehaviour:
@@ -1100,7 +1100,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4006016812638035990}
-  m_Father: {fileID: 1380188632808674591}
+  m_Father: {fileID: 1380188632496951978}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1692911542907433468
@@ -1631,7 +1631,7 @@ Transform:
   - {fileID: 2358008312213394932}
   - {fileID: 5703227868800005200}
   m_Father: {fileID: 1380188632496951978}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &528345850465377094
 MonoBehaviour:
@@ -1870,7 +1870,7 @@ Transform:
   m_Children:
   - {fileID: 2261335539224480970}
   m_Father: {fileID: 1380188632496951978}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5174687087950893558
 MonoBehaviour:
