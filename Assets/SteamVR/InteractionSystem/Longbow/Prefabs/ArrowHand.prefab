@@ -373,8 +373,8 @@ MonoBehaviour:
   blendEditorExpanded: 0
   poseNames:
   - longbowArrowPose (MAIN)
-  overridePreviewLeftHandPrefab: {fileID: 0}
-  overridePreviewRightHandPrefab: {fileID: 0}
+  overridePreviewLeftHandPrefab: {fileID: 1000013348574242, guid: 638779290bce1af49b356f33dcc6fccf, type: 3}
+  overridePreviewRightHandPrefab: {fileID: 1000010304998954, guid: 6def53d002137b747aec0b29551e0e25, type: 3}
   skeletonMainPose: {fileID: 11400000, guid: 12d7f50e857b2f44a87430b50a8a0c25, type: 2}
   skeletonAdditionalPoses: []
   showLeftPreview: 0
