@@ -13,6 +13,8 @@ public class Network_Player : MonoBehaviour
     public Transform headSphere;
     public Transform leftHandSphere;
     public Transform rightHandSphere;
+
+    public Transform torse;
     public Transform ray;
     public Transform palette;
 
@@ -108,6 +110,8 @@ public class Network_Player : MonoBehaviour
 
         head.position = headset.transform.position;
         head.rotation = headset.transform.rotation;
+
+        torse.position = headset.transform.position;
     }
 
     [PunRPC]

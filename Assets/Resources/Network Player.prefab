@@ -986,6 +986,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1380188632808674588}
+  - {fileID: 4910525506920261503}
   - {fileID: 1380188633042283530}
   - {fileID: 1380188633311980319}
   - {fileID: 2035094665561351205}
@@ -1014,6 +1015,7 @@ MonoBehaviour:
   headSphere: {fileID: 1380188632210726537}
   leftHandSphere: {fileID: 1380188632376095736}
   rightHandSphere: {fileID: 1380188633547862024}
+  torse: {fileID: 5066587065602416366}
   ray: {fileID: 5175505596137631447}
   palette: {fileID: 6971465204408581961}
   rayCast: {fileID: 2261335539224480970}
