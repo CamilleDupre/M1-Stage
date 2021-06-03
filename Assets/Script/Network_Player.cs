@@ -81,7 +81,7 @@ public class Network_Player : MonoBehaviour
             {
 
                 nameT = rayCast.GetComponent<Renderer>().material.name;
-                photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, nameT, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
+                //photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, nameT, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
 
             }
 
@@ -142,10 +142,10 @@ public class Network_Player : MonoBehaviour
     }
 
     [PunRPC]
-    void ChangeTag(string nameT , int OB)
+    void ChangeTag( int OB)
     {
         {
-           // nameT = rayCast.GetComponent<Renderer>().material.name;
+            nameT = rayCast.GetComponent<Renderer>().material.name;
             // Debug.Log("ChangeRayColour /" + nameT + "/");
             if (nameT == "blue (Instance)")
               {

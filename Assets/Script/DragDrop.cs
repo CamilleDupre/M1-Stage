@@ -12,6 +12,7 @@ public class DragDrop : MonoBehaviourPun
     private SteamVR_Behaviour_Pose m_pose = null;
     private bool m_HasPosition = false;
     private bool isMoving = false;
+    private bool wait = false;
 
     private RaycastHit hit;
     private GameObject ob;
@@ -23,8 +24,11 @@ public class DragDrop : MonoBehaviourPun
     public Transform MurL;
     public Transform MurR;
     public Texture tex;
+    public Vector3 coordClic;
 
     private string nameM = "";
+
+    public GameObject player;
 
     // Start is called before the first frame update
     void Awake()
@@ -40,15 +44,32 @@ public class DragDrop : MonoBehaviourPun
 
         if (interactWithUI.GetStateUp(m_pose.inputSource))
         {
+            if (wait)
+            {
+                player = GameObject.Find("Network Player(Clone)");
+                player.GetComponent<PhotonView>().RPC("ChangeTag", Photon.Pun.RpcTarget.All, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
+            }
             isMoving = false;
             ob = null;
+            wait = false;
         }
 
         if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "Card")
         {
             hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
-            isMoving = true;
+            //isMoving = true;
             ob = hit.transform.gameObject;
+            coordClic = hit.transform.position;
+            Debug.Log(coordClic);
+            wait = true;
+
+        }
+
+        if (wait && Vector3.Distance(coordClic, hit.transform.position) > 0.1 )
+        {
+            //hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
+            isMoving = true;
+            wait = false;
         }
         Move();
     }
