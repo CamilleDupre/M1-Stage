@@ -13,6 +13,7 @@ public class DragDrop : MonoBehaviourPun
     private bool m_HasPosition = false;
     private bool isMoving = false;
     private bool wait = false;
+    private bool longclic = false;
 
     private RaycastHit hit;
     private GameObject ob;
@@ -25,6 +26,7 @@ public class DragDrop : MonoBehaviourPun
     public Transform MurR;
     public Texture tex;
     public Vector3 coordClic;
+    public int timer = 0;
 
     private string nameM = "";
 
@@ -52,6 +54,7 @@ public class DragDrop : MonoBehaviourPun
             isMoving = false;
             ob = null;
             wait = false;
+            longclic = false;
         }
 
         if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "Card")
@@ -70,6 +73,16 @@ public class DragDrop : MonoBehaviourPun
             //hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
             isMoving = true;
             wait = false;
+        }
+        if (wait)
+        {
+            timer++; 
+            if (timer > 500)
+            {
+                longclic = true;
+               wait = false;
+                Debug.Log("long clic");
+            }
         }
         Move();
     }

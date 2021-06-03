@@ -77,13 +77,7 @@ public class Network_Player : MonoBehaviour
                 nameR = hit.transform.GetComponent<Renderer>().material.name;
                 photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
             }
-            if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "Card")
-            {
-
-                nameT = rayCast.GetComponent<Renderer>().material.name;
-                //photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, nameT, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
-
-            }
+           
 
             if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "Wall")
             {
