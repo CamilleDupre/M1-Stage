@@ -49,7 +49,7 @@ public class DragDrop : MonoBehaviourPun
             if (wait)
             {
                 player = GameObject.Find("Network Player(Clone)");
-                player.GetComponent<PhotonView>().RPC("ChangeTag", Photon.Pun.RpcTarget.All, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
+                player.GetComponent<PhotonView>().RPC("ChangeTag", Photon.Pun.RpcTarget.AllBuffered, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
             }
             isMoving = false;
             ob = null;
