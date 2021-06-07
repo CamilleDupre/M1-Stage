@@ -55,6 +55,8 @@ public class DragDrop : MonoBehaviourPun
             ob = null;
             wait = false;
             longclic = false;
+            Debug.Log("reset");
+            timer = 0;
         }
 
         if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "Card")
@@ -70,16 +72,16 @@ public class DragDrop : MonoBehaviourPun
 
         if (wait && Vector3.Distance(coordClic, hit.transform.position) > 0.1 )
         {
-            //hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
             isMoving = true;
             wait = false;
         }
+
         if (wait)
         {
             timer++; 
             if (timer > 500)
             {
-                longclic = true;
+               longclic = true;
                wait = false;
                 Debug.Log("long clic");
             }
