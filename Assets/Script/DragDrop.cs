@@ -70,7 +70,7 @@ public class DragDrop : MonoBehaviourPun
 
         }
 
-        if (wait && Vector3.Distance(coordClic, hit.transform.position) > 0.1 )
+        if (wait && Vector3.Distance(coordClic, hit.transform.position) > 0.000001 )
         {
             isMoving = true;
             wait = false;
