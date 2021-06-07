@@ -17,7 +17,10 @@ public class Teleporter : MonoBehaviour
 
     private bool wait = false;
     private bool longclic = false;
+    private bool isMoving = false;
     private Vector3 coordClic;
+    private Vector3 coordPrev;
+    public Vector3 forwardClic;
     public int timer = 0;
     public string longClicWallName;
 
@@ -38,7 +41,8 @@ public class Teleporter : MonoBehaviour
 
         if (m_TeleportAction.GetStateDown(m_pose.inputSource))
         {
-            coordClic = hit.transform.position;
+            coordClic = coordPrev = m_Pointer.transform.position; //hit.transform.position;
+            forwardClic = transform.forward;
             Debug.Log("coordClic : " + coordClic);
             wait = true;
 
@@ -58,36 +62,63 @@ public class Teleporter : MonoBehaviour
            
             longclic = false;
             wait = false;
+            isMoving = false;
             timer = 0;
 
         }
-       
-        if (wait)
-        {
-            timer++;
-            if (timer > 500)
-            {
-                longclic = true;
-                wait = false;
 
-                if (hit.transform.tag == "Wall")
-                {
-                    longClicWallName = hit.transform.name;
-                }
-                if (hit.transform.tag == "Card")
-                {
-                    longClicWallName = hit.transform.parent.name;
-                }
-                tryTeleport();
-                
-                Debug.Log("long clic");
+        if (wait && Vector3.Angle(forwardClic, transform.forward) > 2)
+        {
+            isMoving = true;
+            wait = false;
+         
+        }
+
+        if (isMoving)
+        {
+            // coordPrev = new Vector3(m_Pointer.transform.position);
+            dragTeleport(coordPrev, m_Pointer.transform.position);
+            coordPrev = m_Pointer.transform.position;
+        }
+
+    }
+
+    private void dragTeleport(Vector3 prev, Vector3 curr)
+    {
+        if (!m_HasPosition || m_IsTeleportoting)
+            return;
+
+        Vector3 headPosition = SteamVR_Render.Top().head.position;
+        Transform cameraRig = SteamVR_Render.Top().origin;
+
+        Vector3 delta = new Vector3();
+        delta = curr - prev;
+
+        if (hit.transform.tag == "Wall" || hit.transform.tag == "Card")
+        {
+            if (hit.transform.name == "MUR B" || hit.transform.parent.name == "MUR B")
+            {
+
+                Vector3 translation = new Vector3(-delta.x, 0, 0);
+                cameraRig.position = cameraRig.position + translation;
+                Debug.Log("drag mur b " + translation);
+
+            }
+            else if (hit.transform.name == "MUR R" || hit.transform.parent.name == "MUR R")
+            {
+                Vector3 translation = new Vector3(0, 0, -delta.z);
+                cameraRig.position = cameraRig.position + translation;
+                Debug.Log("drag mur r " + translation);
+
+            }
+            else if (hit.transform.name == "MUR L" || hit.transform.parent.name == "MUR L")
+            {
+                Vector3 translation = new Vector3(0, 0, -delta.z);
+                cameraRig.position = cameraRig.position + translation;
+                Debug.Log("drag mur l " + translation);
+
             }
         }
-        if (longclic)
-        {
-            tryTeleport();
-        }
-
     }
 
     private void tryTeleport()
@@ -98,7 +129,7 @@ public class Teleporter : MonoBehaviour
         Vector3 headPosition = SteamVR_Render.Top().head.position;
         Transform cameraRig = SteamVR_Render.Top().origin;
 
-        if (hit.transform.tag == "Tp")
+        if (hit.transform.tag == "Tp" && !longclic)
         {
             Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
             Vector3 translateVector = m_Pointer.transform.position - groundPosition;
@@ -151,7 +182,7 @@ public class Teleporter : MonoBehaviour
 
         SteamVR_Fade.Start(Color.black, m_FadeTime, true);
 
-        if (!longclic) {
+        if (!isMoving) {
             yield return new WaitForSeconds( m_FadeTime);
         }
             

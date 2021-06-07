@@ -26,6 +26,7 @@ public class DragDrop : MonoBehaviourPun
     public Transform MurR;
     public Texture tex;
     public Vector3 coordClic;
+    public Vector3 forwardClic;
     public int timer = 0;
 
     private string nameM = "";
@@ -65,13 +66,16 @@ public class DragDrop : MonoBehaviourPun
             //isMoving = true;
             ob = hit.transform.gameObject;
             coordClic = hit.transform.position;
+            forwardClic = transform.forward;
             Debug.Log(coordClic);
             wait = true;
 
         }
 
-        if (wait && Vector3.Distance(coordClic, hit.transform.position) > 0.000001 )
+        // if (wait && Vector3.Distance(coordClic, hit.transform.position) > 0.000001 )
+        if (wait && Vector3.Angle(forwardClic, transform.forward) > 2)
         {
+            Debug.Log("moins de 2*");
             isMoving = true;
             wait = false;
         }
@@ -86,7 +90,9 @@ public class DragDrop : MonoBehaviourPun
                 Debug.Log("long clic");
             }
         }
-        Move();
+        if (longclic)
+        { }
+            Move();
     }
 
     private void Move()
