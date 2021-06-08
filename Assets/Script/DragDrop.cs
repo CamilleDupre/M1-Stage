@@ -6,31 +6,38 @@ using Photon.Pun;
 
 public class DragDrop : MonoBehaviourPun
 {
+    // intersecion raycast and object
     public GameObject m_Pointer;
+    private bool m_HasPosition = false;
+    private RaycastHit hit;
+
+    //trigger
     public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");
 
+    //Pose
     private SteamVR_Behaviour_Pose m_pose = null;
-    private bool m_HasPosition = false;
+    
+    // State machine
     private bool isMoving = false;
     private bool wait = false;
     private bool longclic = false;
+    private float timer = 0;
+    public Vector3 coordClic;
+    public Vector3 forwardClic;
 
-    private RaycastHit hit;
+   //card to move
     private GameObject ob;
 
-    public Material initialColor ;
-    public Material selectedColor ;
-
+    //Room
     public Transform MurB;
     public Transform MurL;
     public Transform MurR;
+
+    //texture card
     public Texture tex;
-    public Vector3 coordClic;
-    public Vector3 forwardClic;
-    public int timer = 0;
-
+   
     private string nameM = "";
-
+    //player
     public GameObject player;
 
     // Start is called before the first frame update
@@ -49,6 +56,7 @@ public class DragDrop : MonoBehaviourPun
         {
             if (wait)
             {
+                //just a clic -> tag
                 player = GameObject.Find("Network Player(Clone)");
                 player.GetComponent<PhotonView>().RPC("ChangeTag", Photon.Pun.RpcTarget.AllBuffered, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
             }
@@ -62,36 +70,41 @@ public class DragDrop : MonoBehaviourPun
 
         if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "Card")
         {
+            //request multi user
             hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
-            //isMoving = true;
+            //card
             ob = hit.transform.gameObject;
+
+            //where is the clic
             coordClic = hit.transform.position;
             forwardClic = transform.forward;
-            Debug.Log(coordClic);
+            //Debug.Log(coordClic);
+
+            //start waiting
             wait = true;
+            timer = Time.time;
 
         }
 
-        // if (wait && Vector3.Distance(coordClic, hit.transform.position) > 0.000001 )
-        if (wait && Vector3.Angle(forwardClic, transform.forward) > 2)
+        if (wait && Vector3.Angle(forwardClic, transform.forward) > 2) //move more than 2* -> moving
         {
-            Debug.Log("moins de 2*");
             isMoving = true;
             wait = false;
         }
 
         if (wait)
         {
-            timer++; 
-            if (timer > 500)
+            if (Time.time - timer > 2) //  after 2s it is long clic
             {
                longclic = true;
                wait = false;
-                Debug.Log("long clic");
+               Debug.Log("long clic");
             }
         }
         if (longclic)
-        { }
+        { 
+            //maybe teleport card on the wall or menu
+        }
             Move();
     }
 
@@ -109,40 +122,38 @@ public class DragDrop : MonoBehaviourPun
 
         if (isMoving)
         {
+            //check the wall and if the card from one wall to another
             if (ob.transform.parent.name == "MUR L")
             {
-                ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / v.x , y, z);  // /10
-                if (hit.transform.name == "MUR B")
-                {
-                    nameM = hit.transform.name;
-                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM, ob.GetComponent<PhotonView>().ViewID);
-                }
+                //change
+                if (hit.transform.name == "MUR B")  {   nameM = hit.transform.name; }
+                //move on L
+                ob.transform.localPosition = new Vector3(m_Pointer.transform.position.z / v.x, y, z);  // /10
             }
 
             else if (ob.transform.parent.name == "MUR B")
             {
-                if (hit.transform.name == "MUR L")
-                {
-                    nameM = hit.transform.name;
-                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM, ob.GetComponent<PhotonView>().ViewID);
-                }
+                //change
+                if (hit.transform.name == "MUR L")  {   nameM = hit.transform.name; }
 
-                if (hit.transform.name == "MUR R")
-                {
-                    nameM = hit.transform.name;
-                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM, ob.GetComponent<PhotonView>().ViewID);
-                }
+                if (hit.transform.name == "MUR R")  {   nameM = hit.transform.name; }
+                // move on B
                 ob.transform.localPosition = new Vector3(x, y, z);
             }
 
             else if (ob.transform.parent.name == "MUR R")
             {
-                if (hit.transform.name == "MUR B")
-                {
-                    nameM = hit.transform.name;
-                    photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM , ob.GetComponent<PhotonView>().ViewID);
-                }
+                //change
+                if (hit.transform.name == "MUR B")  {   nameM = hit.transform.name; }
+                //move on R
                 ob.transform.localPosition = new Vector3( -m_Pointer.transform.position.z / v.x, y, z);
+            }
+
+            //if change then rpc change wall
+            if (nameM != "")
+            {
+                photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, nameM, ob.GetComponent<PhotonView>().ViewID);
+                nameM = "";
             }
         }
     }
@@ -150,15 +161,15 @@ public class DragDrop : MonoBehaviourPun
     private bool UpdatePointer()
     {
         Ray ray = new Ray(transform.position, transform.forward);
+
+        //check if there is a hit
         if (Physics.Raycast(ray, out hit))
         {
             if (hit.transform.tag == "Card" || hit.transform.tag == "Wall")
             {
-               // Debug.Log("test");
                 m_Pointer.transform.position = hit.point;
                 return true;
             }
-            m_Pointer.gameObject.SetActive(false);
         }
         return false;
     }
@@ -166,53 +177,37 @@ public class DragDrop : MonoBehaviourPun
     [PunRPC]
     void ChangeMur(string nameT, int OB)
     {
-        Debug.Log("nameT :  " + nameT);
-
         float w, h;
         float div = 2 * 1000f;
-       
+        Transform Mur;
+
+
+        //what wall
         if (nameT == "MUR L")
         {
-
-            Vector3 v = MurL.localScale;
-            h = tex.height / div;
-            w = tex.width / div;
-
-            w = w * (v.y / v.x);
-            Debug.Log("changement de mur L ");
-            PhotonView.Find(OB).gameObject.transform.parent = MurL;
-            PhotonView.Find(OB).gameObject.transform.rotation = MurL.rotation;
-
-            PhotonView.Find(OB).gameObject.transform.localScale = new Vector3(w, h, 1.0f);
+            Mur = MurL;
         }
         else if (nameT == "MUR B")
         {
-            Vector3 v = MurB.localScale;
-           
-            h = tex.height / div;
-            w = tex.width / div;
-            w = w * (v.y / v.x);
-
-            Debug.Log("changement de mur B ");
-            PhotonView.Find(OB).transform.parent = MurB;
-            PhotonView.Find(OB).transform.rotation = MurB.rotation;
-
-            PhotonView.Find(OB).transform.localScale = new Vector3(w, h, 1.0f);
+            Mur = MurB;
         }
-        else if (nameT == "MUR R")
+        else// if (nameT == "MUR R")
         {
-            Vector3 v = MurR.localScale;
-             Debug.Log("R scale: " + v);
-            h = tex.height / div;
-            w = tex.width / div;
-            w = w * (v.y / v.x);
-            Debug.Log("changement de mur R ");
-            PhotonView.Find(OB).transform.parent = MurR;
-            PhotonView.Find(OB).transform.rotation = MurR.rotation;
-
-            PhotonView.Find(OB).transform.localScale = new Vector3(w, h, 1.0f);
+            Mur = MurR;
 
         }
+
+        //teleport the card
+        Vector3 v = Mur.localScale;
+        h = tex.height / div;
+        w = tex.width / div;
+
+        w = w * (v.y / v.x);
+        Debug.Log("Changement de mur ");
+        PhotonView.Find(OB).gameObject.transform.parent = Mur;
+        PhotonView.Find(OB).gameObject.transform.rotation = Mur.rotation;
+
+        PhotonView.Find(OB).gameObject.transform.localScale = new Vector3(w, h, 1.0f);
     }
 
     }

@@ -58,7 +58,7 @@ public class Teleporter : MonoBehaviour
         {
             if (wait)
             { 
-                //just q clic -> normal teleportation
+                //just a clic -> normal teleportation
                 tryTeleport();
             }
            //Debug.Log("reset");
