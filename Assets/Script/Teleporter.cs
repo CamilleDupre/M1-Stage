@@ -5,24 +5,29 @@ using Valve.VR;
 
 public class Teleporter : MonoBehaviour
 {
-
+    // intersecion raycast and object
     public GameObject m_Pointer;
-    public SteamVR_Action_Boolean m_TeleportAction;
-
-    private SteamVR_Behaviour_Pose m_pose = null;
     private bool m_HasPosition = false;
-    private bool m_IsTeleportoting = false;
-    private float m_FadeTime = 0.5f;
     RaycastHit hit;
 
+    //clic touchpad
+    public SteamVR_Action_Boolean m_TeleportAction;
+
+    //Pose
+    private SteamVR_Behaviour_Pose m_pose = null;
+
+    //Teleportation parameters 
+    private bool m_IsTeleportoting = false;
+    private float m_FadeTime = 0.5f;
+    
+    // State machine
     private bool wait = false;
-    private bool longclic = false;
     private bool isMoving = false;
     private Vector3 coordClic;
     private Vector3 coordPrev;
     public Vector3 forwardClic;
     public int timer = 0;
-    public string longClicWallName;
+ 
 
     // Start is called before the first frame update
     void Awake()
@@ -43,7 +48,7 @@ public class Teleporter : MonoBehaviour
         {
             coordClic = coordPrev = m_Pointer.transform.position; //hit.transform.position;
             forwardClic = transform.forward;
-            Debug.Log("coordClic : " + coordClic);
+           // Debug.Log("coordClic : " + coordClic);
             wait = true;
 
         }
@@ -52,37 +57,33 @@ public class Teleporter : MonoBehaviour
         if (m_TeleportAction.GetStateUp(m_pose.inputSource))
         {
             if (wait)
-            {
+            { 
+                //just q clic -> normal teleportation
                 tryTeleport();
             }
-           // Debug.Log("wait :" + wait);
-           // Debug.Log("isMoving :" + isMoving);
-            
-            Debug.Log("reset");
-           
-            longclic = false;
+           //Debug.Log("reset");
             wait = false;
             isMoving = false;
             timer = 0;
 
         }
 
+        // check the angle to detect a mouvement
         if (wait && Vector3.Angle(forwardClic, transform.forward) > 2)
         {
             isMoving = true;
             wait = false;
-         
         }
 
         if (isMoving)
         {
-            // coordPrev = new Vector3(m_Pointer.transform.position);
-            dragTeleport(coordPrev, m_Pointer.transform.position);
+            //dragTeleport(coordPrev, m_Pointer.transform.position);
             coordPrev = m_Pointer.transform.position;
         }
 
     }
-
+     
+    /* try drag wall
     private void dragTeleport(Vector3 prev, Vector3 curr)
     {
         if (!m_HasPosition || m_IsTeleportoting)
@@ -120,75 +121,59 @@ public class Teleporter : MonoBehaviour
             }
         }
     }
+    */
 
     private void tryTeleport()
     {
+        //if no hit stop the fonction
         if (!m_HasPosition || m_IsTeleportoting)
             return;
 
+        // head position + camera rig
         Vector3 headPosition = SteamVR_Render.Top().head.position;
         Transform cameraRig = SteamVR_Render.Top().origin;
+        
+        //player possition
+        Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
 
-        if (hit.transform.tag == "Tp" && !longclic)
+        Vector3 translateVector;
+        if (hit.transform.tag == "Tp" )
         {
-            Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
-            Vector3 translateVector = m_Pointer.transform.position - groundPosition;
-
+            translateVector = m_Pointer.transform.position - groundPosition;
             StartCoroutine(MoveRig(cameraRig, translateVector));
         }
 
-        if (hit.transform.tag == "Wall" || hit.transform.tag == "Card")
-
+        else if (hit.transform.tag == "Wall" || hit.transform.tag == "Card")
         {
+            //check the wall
             if (hit.transform.name == "MUR B" || hit.transform.parent.name == "MUR B")
             {
-                if( !longclic || longClicWallName == "MUR B") {
-                    Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
-                    Vector3 translateVector = new Vector3(m_Pointer.transform.position.x - groundPosition.x, 0, 0);
-                    StartCoroutine(MoveRig(cameraRig, translateVector));
-                    Debug.Log("test ");
-                }
-               
-
+                 translateVector = new Vector3(m_Pointer.transform.position.x - groundPosition.x, 0, 0);
             }
             else if (hit.transform.name == "MUR R" || hit.transform.parent.name == "MUR R")
-            {
-                if (!longclic || longClicWallName == "MUR R")
-                {
-                    Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
-                    Vector3 translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - groundPosition.z);
-                    StartCoroutine(MoveRig(cameraRig, translateVector));
-                }
-              
+            { 
+                 translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - groundPosition.z);
             }
-            else if (hit.transform.name == "MUR L" || hit.transform.parent.name == "MUR L")
+            else //(hit.transform.name == "MUR L" || hit.transform.parent.name == "MUR L")
             {
-                if (!longclic || longClicWallName == "MUR L")
-                {
-                    Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
-                    Vector3 translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - groundPosition.z);
-                    StartCoroutine(MoveRig(cameraRig, translateVector));
-                }
-                
+                 translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - groundPosition.z); 
             }
+            //then teleport
+            StartCoroutine(MoveRig(cameraRig, translateVector));
         }
-
-       
     }
 
     private IEnumerator MoveRig(Transform cameraRig , Vector3 translation)
     {
         m_IsTeleportoting = true;
 
-        SteamVR_Fade.Start(Color.black, m_FadeTime, true);
+        SteamVR_Fade.Start(Color.black, m_FadeTime, true); // black screen
 
-        if (!isMoving) {
-            yield return new WaitForSeconds( m_FadeTime);
-        }
-            
-        cameraRig.position += translation;
+        yield return new WaitForSeconds( m_FadeTime); // fade time
+        
+        cameraRig.position += translation; // teleportation
 
-        SteamVR_Fade.Start(Color.clear, m_FadeTime, true);
+        SteamVR_Fade.Start(Color.clear, m_FadeTime, true); // normal screen
 
         m_IsTeleportoting = false;
 
@@ -198,6 +183,7 @@ public class Teleporter : MonoBehaviour
     {
         Ray ray = new Ray(transform.position, transform.forward);
        
+        //check if there is a hit
         if(Physics.Raycast(ray , out hit) )
         {
             if (hit.transform.tag == "Tp" || hit.transform.tag == "Card" || hit.transform.tag == "Wall")

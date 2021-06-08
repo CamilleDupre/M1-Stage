@@ -6,58 +6,35 @@ using Photon.Realtime;
 
 public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
 {
+    //Prefab card
     public GameObject pfCard;
+
+    //walls
     public Transform MurB;
     public Transform MurL;
     public Transform MurR;
+
+    //Card list
     public List<GameObject> cardList;
+
+    //List of textures
     public object[] textures;
 
     public class MyCard
     {
+        // Creation of the card 
         public GameObject goCard = null;
         public string tag = "";
         public PhotonView pv;
-        public Transform p;
+        public Transform parent;
        
 
-        public MyCard(Texture2D tex, Transform mur , int i )
+        public MyCard(Texture2D tex, Transform mur )
         {
             GameObject goCard = PhotonNetwork.InstantiateRoomObject("Quad (23)", mur.position, mur.rotation, 0, null);
             goCard.GetComponent<Renderer>().material.SetTexture("_MainTex", tex);
-            //goCard.transform.parent = mur;
-            p = mur;
-            //goCard.transform.rotation = mur.rotation;
+            parent = mur;
             pv = goCard.GetPhotonView();
-
-            /*
-            //Debug.Log("TEXTURES: " + tex.width + " " + tex.height);
-
-            float w, h;
-            Vector3 v = mur.localScale;
-
-            float div =  2 * 1000f; //GetDiv();
-
-            h = tex.height / div;
-            w = tex.width / div;
-
-            //Debug.Log("scale: " + v);
-            w = w * (v.y / v.x);
-
-            goCard.transform.localScale = new Vector3(w, h, 1.0f);
-            if (i < 10)
-            {
-                goCard.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * i, -1 * h, -0.001f);
-            }
-            else
-            {
-                i = i - 10;
-                goCard.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * i, 1 * h, -0.001f);
-            }
-
-            //PhotonView photonView = PhotonView.Get(goCard.GetComponent<PhotonView>());
-            //photonView.RPC("ChangeTag", Photon.Pun.RpcTarget.All, nameT, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
-            */
         }
     }
 
@@ -66,53 +43,38 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
     // Start is called before the first frame update
     void Awake()
     {
-        //StartCoroutine(waiter());
         textures = Resources.LoadAll("dixit_part2/", typeof(Texture2D));
     }
 
-    //public override void OnPlayerEnteredRoom(Player newPlayer)
-    //{
-       // Debug.Log("new player");
-        //base.OnPlayerEnteredRoom(newPlayer);
-    //}
-
     public override void OnCreatedRoom() { 
         
-        
-       // object[] textures = Resources.LoadAll("dixit_part1/", typeof(Texture2D));
-      
-
-        // Debug.Log("TEXTURES: " + textures.Length);
-
         Debug.Log("Creation carte " + PhotonNetwork.IsMasterClient);
 
         int nbcard = textures.Length;
+
+        Transform mur;
+        int pos;
         for (int i = 0 ; i < nbcard ; i++)
         {
+            // Slit the cqrd over the 3 walls
             if (i < nbcard / 3)
             {
-              MyCard c = new MyCard((Texture2D)textures[i], MurL, i);
-                // Material m = c.goCard.transform.GetChild(0).GetComponent<Renderer>().material;
-                // cardList.Add(PhotonView.Find(c.pv.ViewID).gameObject);
-                photonView.RPC("addListCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID);
-                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurL.GetComponent<PhotonView>().ViewID , i , i);//GetComponent<PhotonView>().ViewID);
+                mur = MurL;
+                pos = i ;
             }
             else if (i < 2* nbcard / 3)
             {
-               MyCard c = new MyCard((Texture2D)textures[i], MurB, i - nbcard / 3);
-                //cardList.Add(PhotonView.Find(c.pv.ViewID).gameObject);
-                photonView.RPC("addListCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID);
-                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurB.GetComponent<PhotonView>().ViewID, i - nbcard / 3, i);
+                mur = MurB;
+                pos = i - nbcard / 3;
             }
             else 
             {
-              MyCard c = new MyCard((Texture2D)textures[i], MurR, i - 2 * nbcard / 3);
-                cardList.Add(PhotonView.Find(c.pv.ViewID).gameObject);
-                photonView.RPC("addListCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID);
-                c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, MurR.GetComponent<PhotonView>().ViewID, i - 2 * nbcard / 3, i);
+                mur = MurR;
+                pos = i - 2 * nbcard / 3;
             }
-        
-        
+            MyCard c = new MyCard((Texture2D)textures[i], mur);
+            photonView.RPC("addListCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID);
+            c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, mur.GetComponent<PhotonView>().ViewID, pos, i);
         }
     }
 
@@ -123,51 +85,46 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
     }
 
     [PunRPC]
-
+    //Add card to the list of card
     void addListCard(int OB)
     {
         cardList.Add(PhotonView.Find(OB).gameObject);
     }
 
-
     [PunRPC]
+    // Teleport card tag
     void TeleportCard(string nameR, string murName)
     {
-         Debug.Log(" TeleportCard 1 ");
-
-        Debug.Log(nameR);
         float w, h;
         float div = 2 * 1000f;
         Texture tex= (Texture2D)textures[0];
-
         Transform mur;
-        if (murName == "MUR B")
-        { mur = MurB; }
-        else if (murName == "MUR L")
-        { mur = MurL; }
-        else
-        { mur = MurR; }
 
-        int j = 0;
+        //Check the walls
+        if (murName == "MUR B") { mur = MurB; }
+        else if (murName == "MUR L") { mur = MurL; }
+        else { mur = MurR; }
+
+        int j = 0; // number of card teleported
         for (int i = 0; i < cardList.Count; i++)
         {
-            Debug.Log(cardList[i].transform.GetChild(0).GetComponent<Renderer>().material.name);
+            // check the material to know if the card must be teleported
             if (cardList[i].transform.GetChild(0).GetComponent<Renderer>().material.name == nameR)
             {
-                Debug.Log(" TeleportCard 2 ");
+                // width heigth depending on the scale of the wall
                 Vector3 v = MurB.localScale;
-
                 h = tex.height / div;
                 w = tex.width / div;
                 w = w * (v.y / v.x);
 
-                Debug.Log("changement de mur B ");
+                //Set parent, rotation and localscale
                 PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.parent = mur;
                 PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.rotation = mur.rotation;
-
                 PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localScale = new Vector3(w, h, 1.0f);
+
+                //Set position depending on how many card teleported
                 PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * j, 0, -0.02f);
-                j++;
+                j++; // 1 card more teleported
             }
         }
     }

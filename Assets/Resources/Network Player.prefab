@@ -1012,11 +1012,11 @@ MonoBehaviour:
   head: {fileID: 1380188632808674591}
   leftHand: {fileID: 1380188632459107396}
   rightHand: {fileID: 1380188633311980316}
+  torse: {fileID: 5066587065602416366}
+  ray: {fileID: 5175505596137631447}
   headSphere: {fileID: 1380188632210726537}
   leftHandSphere: {fileID: 1380188632376095736}
   rightHandSphere: {fileID: 1380188633547862024}
-  torse: {fileID: 5066587065602416366}
-  ray: {fileID: 5175505596137631447}
   palette: {fileID: 6971465204408581961}
   rayCast: {fileID: 2261335539224480970}
   blue: {fileID: 2100000, guid: b2e475abc24c327479abc278aa407c2c, type: 2}

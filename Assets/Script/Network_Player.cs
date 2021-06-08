@@ -6,30 +6,33 @@ using Photon.Pun;
 
 public class Network_Player : MonoBehaviour
 {
+    // empty
     public Transform head;
     public Transform leftHand;
     public Transform rightHand;
+    public Transform torse;
+    public Transform ray;
 
+    //avatar
     public Transform headSphere;
     public Transform leftHandSphere;
     public Transform rightHandSphere;
-
-    public Transform torse;
-    public Transform ray;
     public Transform palette;
-
     public Transform rayCast;
 
+    //Tag color
     public Material blue;
     public Material Green;
     public Material white;
     public Material red;
     public Material none;
 
+    //camera tracker
     private GameObject headset;
     private GameObject right;
     private GameObject left;
 
+    //room + wall
     private GameObject salle;
 
     private PhotonView photonView;
@@ -45,6 +48,7 @@ public class Network_Player : MonoBehaviour
     {
         photonView = GetComponent<PhotonView>();
 
+        //room + wall + camera
         headset = GameObject.Find("Camera (eye)");
         right = GameObject.Find("/[CameraRig]/Controller (right)");
         left = GameObject.Find("/[CameraRig]/Controller (left)");
@@ -59,26 +63,28 @@ public class Network_Player : MonoBehaviour
     {
         if (photonView.IsMine)
         {
+            //don't show my avatar
             leftHand.gameObject.SetActive(false);
             rightHand.gameObject.SetActive(false);
             head.gameObject.SetActive(false);
             torse.gameObject.SetActive(false);
-            //  headSphere.GetComponent<Renderer>().material = blue;
-            //  leftHandSphere.GetComponent<Renderer>().material = blue;
-            //  rightHandSphere.GetComponent<Renderer>().material = blue;
+            
+            //but send the position and rotation over the network
             MapPosition();
         }
+
         Ray ray = new Ray(right.transform.position, right.transform.forward);
         if (Physics.Raycast(ray, out hit))
         {
-            // Debug.Log(" test 1 " + hit.transform.tag);
+       
+            //change tag color of the ray cast
             if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "tag")
             {
                 nameR = hit.transform.GetComponent<Renderer>().material.name;
                 photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
             }
            
-
+            //teleport the card tag with the color of the ray cast
             if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "Wall")
             {
                 nameT = rayCast.GetComponent<Renderer>().material.name;
@@ -90,29 +96,32 @@ public class Network_Player : MonoBehaviour
     //void MapPosition(Transform target, XRNode node)
     void MapPosition()
     {
+        // left hand 
         palette.position = left.transform.position;
         palette.rotation = left.transform.rotation;
 
         leftHand.position = left.transform.position;
         leftHand.rotation = left.transform.rotation;
 
+        // right hand
         rightHand.position = right.transform.position;
         rightHand.rotation = right.transform.rotation;
 
         ray.position = right.transform.position;
         ray.rotation = right.transform.rotation;
 
-
+        // head
         head.position = headset.transform.position;
         head.rotation = headset.transform.rotation;
-
+        
+        // body
         torse.position = headset.transform.position;
     }
 
     [PunRPC]
     void ChangeRayColour(string nameR)
     {
-        //Debug.Log("ChangeRayColour /" + name + "/");
+       // change the ray color 
         if (nameR == "blue (Instance)")
         {
             rayCast.GetComponent<Renderer>().material = blue;
@@ -139,8 +148,10 @@ public class Network_Player : MonoBehaviour
     void ChangeTag( int OB)
     {
         {
+            // change the tag color of a picture
+
             nameT = rayCast.GetComponent<Renderer>().material.name;
-            // Debug.Log("ChangeRayColour /" + nameT + "/");
+            
             if (nameT == "blue (Instance)")
               {
                 PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = blue;
