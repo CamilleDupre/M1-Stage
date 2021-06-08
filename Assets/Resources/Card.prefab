@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7099689790222019814}
   - component: {fileID: -8158985191078020004}
   m_Layer: 0
-  m_Name: Quad (23)
+  m_Name: Card
   m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

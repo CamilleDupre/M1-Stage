@@ -31,10 +31,11 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
 
         public MyCard(Texture2D tex, Transform mur )
         {
-            GameObject goCard = PhotonNetwork.InstantiateRoomObject("Quad (23)", mur.position, mur.rotation, 0, null);
+            GameObject goCard = PhotonNetwork.InstantiateRoomObject("Card", mur.position, mur.rotation, 0, null);
             goCard.GetComponent<Renderer>().material.SetTexture("_MainTex", tex);
             parent = mur;
             pv = goCard.GetPhotonView();
+            
         }
     }
 
@@ -75,6 +76,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
             MyCard c = new MyCard((Texture2D)textures[i], mur);
             photonView.RPC("addListCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID);
             c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, mur.GetComponent<PhotonView>().ViewID, pos, i);
+            //PhotonView.Find(i).gameObject.name = "Card " + i;
         }
     }
 
