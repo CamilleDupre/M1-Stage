@@ -35,6 +35,7 @@ public class LoadingCard : MonoBehaviour
 
         goCard.transform.parent = mur;
         goCard.transform.rotation = mur.rotation;
+        goCard.name = "Card " + t;
         float w, h;
         Vector3 v = mur.localScale;
 

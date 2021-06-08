@@ -35,7 +35,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
             goCard.GetComponent<Renderer>().material.SetTexture("_MainTex", tex);
             parent = mur;
             pv = goCard.GetPhotonView();
-            goCard.name = "Card " +i;
+            //goCard.name = "Card " +i;
 
 
         }
