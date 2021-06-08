@@ -35,9 +35,6 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
             goCard.GetComponent<Renderer>().material.SetTexture("_MainTex", tex);
             parent = mur;
             pv = goCard.GetPhotonView();
-            //goCard.name = "Card " +i;
-
-
         }
     }
 
@@ -78,7 +75,6 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
             MyCard c = new MyCard((Texture2D)textures[i], mur, i);
             photonView.RPC("addListCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID);
             c.pv.RPC("LoadCard", Photon.Pun.RpcTarget.AllBuffered, c.pv.ViewID, mur.GetComponent<PhotonView>().ViewID, pos, i);
-            //PhotonView.Find(i).gameObject.name = "Card " + i;
         }
     }
 
