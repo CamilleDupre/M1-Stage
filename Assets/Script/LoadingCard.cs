@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class test : MonoBehaviour
+public class LoadingCard : MonoBehaviour
 {
     object[] textures;
 
@@ -57,6 +57,6 @@ public class test : MonoBehaviour
             goCard.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * i, 1 * h, -0.001f);
         }
 
-        Debug.Log("rpc: ");
+       // Debug.Log("rpc: ");
     }
 }
