@@ -21,34 +21,35 @@ public class LoadingCard : MonoBehaviour
     [PunRPC]
     void LoadCard( int OB, int p , int i , int t)
     {
-        if (textures == null)
+        if (textures == null) // load one time the texture
         {
             textures = Resources.LoadAll("dixit_part2/", typeof(Texture2D));
         }
 
+        // wall + card
         Transform mur = PhotonView.Find(p).transform;
         GameObject goCard = PhotonView.Find(OB).gameObject;
-        Texture2D tex = (Texture2D)textures[t];
 
-        //GameObject goCard = PhotonNetwork.InstantiateRoomObject("Quad (23)", mur.position, mur.rotation, 0, null);
+
+        //set the texture
+        Texture2D tex = (Texture2D)textures[t];
         goCard.GetComponent<Renderer>().material.SetTexture("_MainTex", tex);
 
+        //height and width depending on the size of te wall
+        float w, h;
+        float div = 2 * 1000f; //GetDiv();
+        Vector3 v = mur.localScale;
+        h = tex.height / div;
+        w = tex.width / div;
+        w = w * (v.y / v.x);
+
+        //set parent, rotation , name , local scale
         goCard.transform.parent = mur;
         goCard.transform.rotation = mur.rotation;
         goCard.name = "Card " + t;
-        float w, h;
-        Vector3 v = mur.localScale;
-
-        float div = 2 * 1000f; //GetDiv();
        
-        h = tex.height / div;
-        w = tex.width / div;
-
-        //Debug.Log("scale: " + v);
-        w = w * (v.y / v.x);
-
         goCard.transform.localScale = new Vector3(w, h, 1.0f);
-        if (i < 10)
+        if (i < 10) //10 card per ligne
         {
             goCard.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * i, -1 * h, -0.001f);
         }
@@ -57,7 +58,5 @@ public class LoadingCard : MonoBehaviour
             i = i - 10;
             goCard.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * i, 1 * h, -0.001f);
         }
-
-       // Debug.Log("rpc: ");
     }
 }
