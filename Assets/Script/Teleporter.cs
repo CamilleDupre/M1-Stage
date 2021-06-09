@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
+using Photon.Pun;
 
 public class Teleporter : MonoBehaviour
 {
@@ -27,12 +28,16 @@ public class Teleporter : MonoBehaviour
     private Vector3 coordPrev;
     public Vector3 forwardClic;
     public int timer = 0;
- 
+
+
+    private PhotonView photonView;
+
 
     // Start is called before the first frame update
     void Awake()
     {
         m_pose = GetComponent<SteamVR_Behaviour_Pose>();
+        photonView = GetComponent<PhotonView>();
     }
 
     // Update is called once per frame
@@ -140,7 +145,8 @@ public class Teleporter : MonoBehaviour
         if (hit.transform.tag == "Tp" )
         {
             translateVector = m_Pointer.transform.position - groundPosition;
-            StartCoroutine(MoveRig(cameraRig, translateVector));
+            //StartCoroutine(MoveRig(cameraRig, translateVector));
+            photonView.RPC("MoveRig2", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
         }
 
         else if (hit.transform.tag == "Wall" || hit.transform.tag == "Card")
@@ -159,8 +165,18 @@ public class Teleporter : MonoBehaviour
                  translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - groundPosition.z); 
             }
             //then teleport
-            StartCoroutine(MoveRig(cameraRig, translateVector));
+            // 
+            Debug.Log("Camera " +cameraRig.GetComponent<PhotonView>());
+            //StartCoroutine(MoveRig(cameraRig, translateVector));
+            photonView.RPC("MoveRig2", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
         }
+    }
+
+    [PunRPC]
+    void MoveRig2(int cameraRig, Vector3 translation)
+    {
+        Debug.Log("test");
+        StartCoroutine(MoveRig(PhotonView.Find(cameraRig).transform, translation));
     }
 
     private IEnumerator MoveRig(Transform cameraRig , Vector3 translation)
