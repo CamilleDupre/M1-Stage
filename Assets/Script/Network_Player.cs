@@ -12,6 +12,7 @@ public class Network_Player : MonoBehaviour
     public Transform rightHand;
     public Transform torse;
     public Transform ray;
+    public Transform pos;
 
     //avatar
     public Transform headSphere;
@@ -19,6 +20,7 @@ public class Network_Player : MonoBehaviour
     public Transform rightHandSphere;
     public Transform palette;
     public Transform rayCast;
+    public Transform circle;
 
     //Tag color
     public Material blue;
@@ -114,7 +116,10 @@ public class Network_Player : MonoBehaviour
         // head
         head.position = headset.transform.position;
         head.rotation = headset.transform.rotation;
-        
+
+        // head
+        circle.position = new Vector3(headset.transform.position.x, 0 , headset.transform.position.z);
+
         // body
         torse.position = headset.transform.position;
     }
