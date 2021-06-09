@@ -32,11 +32,14 @@ public class DragDrop : MonoBehaviourPun
     public Transform MurB;
     public Transform MurL;
     public Transform MurR;
+    private GameObject salle;
+
 
     //texture card
     public Texture tex;
    
     private string nameM = "";
+    private string nameR = "";
     //player
     public GameObject player;
 
@@ -54,7 +57,7 @@ public class DragDrop : MonoBehaviourPun
 
         if (interactWithUI.GetStateUp(m_pose.inputSource))
         {
-            if (wait)
+            if (wait && ob!=null)
             {
                 //just a clic -> tag
                 player = GameObject.Find("Network Player(Clone)");
@@ -68,12 +71,15 @@ public class DragDrop : MonoBehaviourPun
             timer = 0;
         }
 
-        if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "Card")
+        if (interactWithUI.GetStateDown(m_pose.inputSource))
         {
-            //request multi user
-            hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
-            //card
-            ob = hit.transform.gameObject;
+            if (hit.transform.tag == "Card") {
+                //request multi user
+                hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
+                //card
+                ob = hit.transform.gameObject;
+            }
+           
 
             //where is the clic
             coordClic = hit.transform.position;
@@ -86,7 +92,7 @@ public class DragDrop : MonoBehaviourPun
 
         }
 
-        if (wait && Vector3.Angle(forwardClic, transform.forward) > 2) //move more than 2* -> moving
+        if (ob != null && wait && Vector3.Angle(forwardClic, transform.forward) > 2) //move more than 2* -> moving
         {
             isMoving = true;
             wait = false;
@@ -101,9 +107,13 @@ public class DragDrop : MonoBehaviourPun
                Debug.Log("long clic");
             }
         }
-        if (longclic)
-        { 
-            //maybe teleport card on the wall or menu
+        if (longclic && hit.transform.tag == "Wall")
+        {
+            //maybe teleport card on the wall or menuhit.transform.tag == "Wall")
+            {
+                salle = GameObject.Find("Salle");
+                salle.GetComponent<PhotonView>().RPC("TeleportCard", Photon.Pun.RpcTarget.All, nameR, hit.transform.name);
+            }
         }
             Move();
     }
@@ -210,4 +220,10 @@ public class DragDrop : MonoBehaviourPun
         PhotonView.Find(OB).gameObject.transform.localScale = new Vector3(w, h, 1.0f);
     }
 
+    [PunRPC]
+    void RayColour(string name)
+    {
+        nameR = name;
     }
+
+}

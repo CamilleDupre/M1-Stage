@@ -82,13 +82,14 @@ public class Network_Player : MonoBehaviour
             {
                 nameR = hit.transform.GetComponent<Renderer>().material.name;
                 photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
+                right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
             }
            
             //teleport the card tag with the color of the ray cast
             if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "Wall")
             {
                 nameT = rayCast.GetComponent<Renderer>().material.name;
-                salle.transform.GetComponent<PhotonView>().RPC("TeleportCard", Photon.Pun.RpcTarget.All, nameT , hit.transform.name);
+               // salle.transform.GetComponent<PhotonView>().RPC("TeleportCard", Photon.Pun.RpcTarget.All, nameT , hit.transform.name);
             }
         }
     }
