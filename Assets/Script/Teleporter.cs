@@ -13,8 +13,8 @@ public class Teleporter : MonoBehaviour
 
     //clic touchpad
     public SteamVR_Action_Boolean m_TeleportAction;
-    public SteamVR_Action_Boolean m_up;
-    public SteamVR_Action_Boolean m_down;
+    //public SteamVR_Action_Boolean m_up;
+    //public SteamVR_Action_Boolean m_down;
 
     //Pose
     private SteamVR_Behaviour_Pose m_pose = null;
@@ -52,22 +52,22 @@ public class Teleporter : MonoBehaviour
         //Teleport
 
 
-        if (m_up.GetStateDown(m_pose.inputSource))
+        /*if (m_up.GetStateDown(m_pose.inputSource))
         {
 
-            Debug.Log("up ");
+            //Debug.Log("up ");
 
         }
         else if (m_down.GetStateDown(m_pose.inputSource))
         {
 
-            Debug.Log("donw ");
+           // Debug.Log("donw ");
         }
-        else if (m_TeleportAction.GetStateDown(m_pose.inputSource))
+        else*/ if (m_TeleportAction.GetStateDown(m_pose.inputSource))
         {
             coordClic = coordPrev = m_Pointer.transform.position; //hit.transform.position;
             forwardClic = transform.forward;
-           // Debug.Log("coordClic : " + coordClic);
+            Debug.Log("coordClic : " + coordClic);
             wait = true;
 
         }

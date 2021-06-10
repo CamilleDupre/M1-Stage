@@ -17,6 +17,9 @@ public class test : MonoBehaviour
     Vector2 position;
     private bool wait = false;
 
+    public SteamVR_Action_Boolean m_up;
+   // public SteamVR_Action_Boolean m_down;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -31,8 +34,8 @@ public class test : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    { 
-        Transform cameraRig = SteamVR_Render.Top().origin;
+    {
+        /*Transform cameraRig = SteamVR_Render.Top().origin;
         
         if (SteamVR_Actions.default_touchPos.GetStateDown(m_pose.inputSource))
         {
@@ -65,7 +68,18 @@ public class test : MonoBehaviour
             wait = false;
         }
        // Debug.Log("wait " + wait);
+        */
+       if (m_up.GetStateDown(m_pose.inputSource))
+        {
 
+            Debug.Log("up ");
+
+        }
+        /*else if (m_down.GetStateDown(m_pose.inputSource))
+        {
+
+            Debug.Log("donw ");
+        }*/
     }
 }
 
