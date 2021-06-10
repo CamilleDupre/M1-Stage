@@ -54,6 +54,18 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/Pos",
+      "type": "vector2"
+    },
+    {
+      "name": "/actions/default/in/up",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/down",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },
@@ -161,20 +173,10 @@
   ],
   "localization": [
     {
-      "language_tag": "en_US",
-      "/actions/default/in/GrabGrip": "Grab Grip",
-      "/actions/default/in/GrabPinch": "Grab Pinch",
-      "/actions/default/in/HeadsetOnHead": "Headset on head (proximity sensor)",
-      "/actions/default/in/InteractUI": "Interact With UI",
-      "/actions/default/in/Pose": "Pose",
-      "/actions/default/in/SkeletonLeftHand": "Skeleton (Left)",
-      "/actions/default/in/SkeletonRightHand": "Skeleton (Right)",
-      "/actions/default/in/Teleport": "Teleport",
-      "/actions/default/out/Haptic": "Haptic",
-      "/actions/platformer/in/Jump": "Jump",
-      "/actions/default/in/SnapTurnLeft": "Snap Turn (Left)",
-      "/actions/default/in/SnapTurnRight": "Snap Turn (Right)",
-      "/actions/default/in/touchPos": "touchPos"
+      "language_tag": "new-language",
+      "/actions/default/in/Pos": "/actions/default/in/Pos",
+      "/actions/default/in/up": "up",
+      "/actions/default/in/down": "down"
     }
   ]
 }
