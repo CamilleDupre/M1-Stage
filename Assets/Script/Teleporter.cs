@@ -51,7 +51,19 @@ public class Teleporter : MonoBehaviour
 
         //Teleport
 
-        if (m_TeleportAction.GetStateDown(m_pose.inputSource))
+
+        if (m_up.GetStateDown(m_pose.inputSource))
+        {
+
+            Debug.Log("up ");
+
+        }
+        else if (m_down.GetStateDown(m_pose.inputSource))
+        {
+
+            Debug.Log("donw ");
+        }
+        else if (m_TeleportAction.GetStateDown(m_pose.inputSource))
         {
             coordClic = coordPrev = m_Pointer.transform.position; //hit.transform.position;
             forwardClic = transform.forward;
@@ -59,17 +71,7 @@ public class Teleporter : MonoBehaviour
             wait = true;
 
         }
-        if (m_up.GetStateDown(m_pose.inputSource))
-        {
-            
-            Debug.Log("up ");
-          
-        }
-        if ( m_down.GetStateDown(m_pose.inputSource))
-        {
-
-           Debug.Log("donw " );
-        }
+       
 
 
         if (m_TeleportAction.GetStateUp(m_pose.inputSource))
