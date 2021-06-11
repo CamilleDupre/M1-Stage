@@ -121,11 +121,11 @@ public class Teleporter : MonoBehaviour
 
         if (longclic && syncTeleportation)
         {
-           checkCube.SetActive(true);
+           checkCube.SetActive(true); // RPC ??
         }
         if (longclic && !syncTeleportation)
         {
-            checkCube.SetActive(false);
+            checkCube.SetActive(false); // RPC ??
         }
 
 
