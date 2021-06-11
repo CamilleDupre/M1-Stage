@@ -6,6 +6,8 @@ using Photon.Pun;
 
 public class Teleporter : MonoBehaviour
 {
+
+    public GameObject checkCube;
     // intersecion raycast and object
     public GameObject m_Pointer;
     private bool m_HasPosition = false;
@@ -31,6 +33,8 @@ public class Teleporter : MonoBehaviour
     private Vector3 coordPrev;
     public Vector3 forwardClic;
     public float timer = 0;
+
+    private bool syncTeleportation = false;
 
 
     private PhotonView photonView;
@@ -87,6 +91,7 @@ public class Teleporter : MonoBehaviour
             isMoving = false;
             timer = 0;
             longclic = false;
+           
 
         }
 
@@ -104,6 +109,7 @@ public class Teleporter : MonoBehaviour
                 longclic = true;
                 wait = false;
                 Debug.Log("long clic");
+                syncTeleportation = !syncTeleportation;
             }
         }
 
@@ -113,8 +119,18 @@ public class Teleporter : MonoBehaviour
             coordPrev = m_Pointer.transform.position;
         }
 
+        if (longclic && syncTeleportation)
+        {
+           checkCube.SetActive(true);
+        }
+        if (longclic && !syncTeleportation)
+        {
+            checkCube.SetActive(false);
+        }
+
+
     }
-     
+
     /* try drag wall
     private void dragTeleport(Vector3 prev, Vector3 curr)
     {
@@ -172,8 +188,15 @@ public class Teleporter : MonoBehaviour
         if (hit.transform.tag == "Tp" )
         {
             translateVector = m_Pointer.transform.position - groundPosition;
-            //StartCoroutine(MoveRig(cameraRig, translateVector));
-            photonView.RPC("MoveRig2", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
+
+            if (!syncTeleportation)
+            {
+                StartCoroutine(MoveRig(cameraRig, translateVector));
+            }
+            else {
+                photonView.RPC("MoveRig2", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
+            }
+            
         }
 
         else if (hit.transform.tag == "Wall" || hit.transform.tag == "Card")
@@ -194,8 +217,14 @@ public class Teleporter : MonoBehaviour
             //then teleport
             // 
             Debug.Log("Camera " +cameraRig.GetComponent<PhotonView>());
-            //StartCoroutine(MoveRig(cameraRig, translateVector));
-            photonView.RPC("MoveRig2", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
+            if (!syncTeleportation)
+            {
+                StartCoroutine(MoveRig(cameraRig, translateVector));
+            }
+            else
+            {
+                photonView.RPC("MoveRig2", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
+            }
         }
     }
 
