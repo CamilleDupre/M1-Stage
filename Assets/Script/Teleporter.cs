@@ -26,10 +26,11 @@ public class Teleporter : MonoBehaviour
     // State machine
     private bool wait = false;
     private bool isMoving = false;
+    private bool longclic = false;
     private Vector3 coordClic;
     private Vector3 coordPrev;
     public Vector3 forwardClic;
-    public int timer = 0;
+    public float timer = 0;
 
 
     private PhotonView photonView;
@@ -54,21 +55,21 @@ public class Teleporter : MonoBehaviour
 
         /*if (m_up.GetStateDown(m_pose.inputSource))
         {
-
             //Debug.Log("up ");
-
         }
         else if (m_down.GetStateDown(m_pose.inputSource))
         {
-
            // Debug.Log("donw ");
         }
-        else*/ if (m_TeleportAction.GetStateDown(m_pose.inputSource))
+        else*/ 
+        
+        if (m_TeleportAction.GetStateDown(m_pose.inputSource))
         {
             coordClic = coordPrev = m_Pointer.transform.position; //hit.transform.position;
             forwardClic = transform.forward;
             Debug.Log("coordClic : " + coordClic);
             wait = true;
+            timer = Time.time;
 
         }
        
@@ -85,6 +86,7 @@ public class Teleporter : MonoBehaviour
             wait = false;
             isMoving = false;
             timer = 0;
+            longclic = false;
 
         }
 
@@ -93,6 +95,16 @@ public class Teleporter : MonoBehaviour
         {
             isMoving = true;
             wait = false;
+        }
+
+        if (wait)
+        {
+            if (Time.time - timer > 2) //  after 2s it is long clic
+            {
+                longclic = true;
+                wait = false;
+                Debug.Log("long clic");
+            }
         }
 
         if (isMoving)
