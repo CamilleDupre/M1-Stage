@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class Teleporter : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Teleporter : MonoBehaviour
     public GameObject checkCube;
 
     public GameObject Menu;
+    public Text m_text;
     // intersecion raycast and object
     public GameObject m_Pointer;
     private bool m_HasPosition = false;
@@ -37,6 +39,7 @@ public class Teleporter : MonoBehaviour
     public float timer = 0;
 
     private bool syncTeleportation = false;
+    private string teleporationMode = "Not syncro";
 
 
     private PhotonView photonView;
@@ -114,6 +117,7 @@ public class Teleporter : MonoBehaviour
                 Debug.Log("long clic");
                 //syncTeleportation = !syncTeleportation;
                 Menu.SetActive(true);
+                m_text.text = "Teleportation mode : \n" + teleporationMode;
             }
         }
 
@@ -134,18 +138,26 @@ public class Teleporter : MonoBehaviour
 
         if (UpdatePointer() == true && hit.transform.name == "syncro")
         {
-            Debug.Log("Syncro");
+           // Debug.Log("Syncro");
             Menu.SetActive(false);
             syncTeleportation = true;
+            teleporationMode = "Syncro";
         }
 
         if (UpdatePointer() == true && hit.transform.name == "not syncro")
         {
-            Debug.Log("Not Syncro");
+           // Debug.Log("Not Syncro");
             Menu.SetActive(false);
             syncTeleportation = false;
+            teleporationMode = "Not syncro";
         }
-        
+
+        if (UpdatePointer() == true && hit.transform.name == "cancel")
+        {
+           // Debug.Log("Cancel");
+            Menu.SetActive(false);
+        }
+
 
 
     }
