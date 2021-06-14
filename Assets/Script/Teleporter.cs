@@ -8,6 +8,8 @@ public class Teleporter : MonoBehaviour
 {
 
     public GameObject checkCube;
+
+    public GameObject Menu;
     // intersecion raycast and object
     public GameObject m_Pointer;
     private bool m_HasPosition = false;
@@ -45,6 +47,7 @@ public class Teleporter : MonoBehaviour
     {
         m_pose = GetComponent<SteamVR_Behaviour_Pose>();
         photonView = GetComponent<PhotonView>();
+        Menu.SetActive(false);
     }
 
     // Update is called once per frame
@@ -109,7 +112,8 @@ public class Teleporter : MonoBehaviour
                 longclic = true;
                 wait = false;
                 Debug.Log("long clic");
-                syncTeleportation = !syncTeleportation;
+                //syncTeleportation = !syncTeleportation;
+                Menu.SetActive(true);
             }
         }
 
@@ -119,16 +123,36 @@ public class Teleporter : MonoBehaviour
             coordPrev = m_Pointer.transform.position;
         }
 
-        if (longclic && syncTeleportation)
+        if (syncTeleportation)
         {
            checkCube.SetActive(true); // RPC ??
         }
-        if (longclic && !syncTeleportation)
+        if (!syncTeleportation)
         {
             checkCube.SetActive(false); // RPC ??
         }
 
+        if (UpdatePointer() == true && hit.transform.name == "syncro")
+        {
+            Debug.Log("Syncro");
+            Menu.SetActive(false);
+            syncTeleportation = true;
+        }
 
+        if (UpdatePointer() == true && hit.transform.name == "not syncro")
+        {
+            Debug.Log("Not Syncro");
+            Menu.SetActive(false);
+            syncTeleportation = false;
+        }
+        
+
+
+    }
+
+    public void clic()
+    {
+        Debug.Log("clic");
     }
 
     /* try drag wall
@@ -258,7 +282,7 @@ public class Teleporter : MonoBehaviour
         //check if there is a hit
         if(Physics.Raycast(ray , out hit) )
         {
-            if (hit.transform.tag == "Tp" || hit.transform.tag == "Card" || hit.transform.tag == "Wall")
+            if (hit.transform.tag == "Tp" || hit.transform.tag == "Card" || hit.transform.tag == "Wall" || hit.transform.tag == "tag")
             {
                 m_Pointer.transform.position = hit.point;
                 return true;
