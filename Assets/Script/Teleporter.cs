@@ -264,7 +264,7 @@ public class Teleporter : MonoBehaviour
         Vector3 translateVector;
         if (n)
         {
-            translateVector = character.transform.forward * desiredDistance;
+            translateVector = character.transform.forward * desiredDistance; // fixer la hauteur de la camera
             StartCoroutine(MoveRig(cameraRig, translateVector));
         }
         else if (s)
