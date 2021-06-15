@@ -40,6 +40,15 @@ public class Teleporter : MonoBehaviour
 
     private bool syncTeleportation = false;
     private string teleporationMode = "Not syncro";
+    float desiredDistance = 1;
+
+
+    private bool n = false;
+    private bool s = false;
+
+    public Transform character;
+
+    Vector2 position;
 
 
     private PhotonView photonView;
@@ -73,15 +82,43 @@ public class Teleporter : MonoBehaviour
            // Debug.Log("donw ");
         }
         else*/
+        position = SteamVR_Actions.default_Pos.GetAxis(SteamVR_Input_Sources.Any);
+
 
         if (m_TeleportAction.GetStateDown(m_pose.inputSource))
         {
-            coordClic = coordPrev = m_Pointer.transform.position; //hit.transform.position;
-            forwardClic = transform.forward;
-            Debug.Log("coordClic : " + coordClic);
-            wait = true;
-            timer = Time.time;
 
+            if (position.y > 0.5)
+            {
+                Debug.Log("N");
+                //cameraRig.transform.position += character.transform.forward * desiredDistance;
+                n = true;
+                tryTeleport();
+            }
+            else if (position.y < -0.5)
+            {
+                Debug.Log("S");
+                //cameraRig.transform.position -= character.transform.forward * desiredDistance;
+                s = true;
+                tryTeleport();
+            }
+            else if (position.x > 0.5)
+            {
+                Debug.Log("E");
+            }
+            else if (position.x < -0.5)
+            {
+                Debug.Log("W");
+            }
+            else
+            {
+                Debug.Log("C");
+                coordClic = coordPrev = m_Pointer.transform.position; //hit.transform.position;
+                forwardClic = transform.forward;
+                Debug.Log("coordClic : " + coordClic);
+                wait = true;
+                timer = Time.time;
+            }
         }
        
 
@@ -98,6 +135,8 @@ public class Teleporter : MonoBehaviour
             isMoving = false;
             timer = 0;
             longclic = false;
+            n = false;
+            s = false;
            
 
         }
@@ -223,7 +262,17 @@ public class Teleporter : MonoBehaviour
         Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
 
         Vector3 translateVector;
-        if (hit.transform.tag == "Tp" )
+        if (n)
+        {
+            translateVector = character.transform.forward * desiredDistance;
+            StartCoroutine(MoveRig(cameraRig, translateVector));
+        }
+        else if (s)
+            {
+            translateVector =  - character.transform.forward * desiredDistance;
+            StartCoroutine(MoveRig(cameraRig, translateVector));
+        }
+        else if (hit.transform.tag == "Tp" )
         {
             translateVector = m_Pointer.transform.position - groundPosition;
 

@@ -10,12 +10,16 @@ public class test : MonoBehaviour
 
     public SteamVR_Action_Vector2 Pos;
     private SteamVR_Behaviour_Pose m_pose = null;
+    public SteamVR_Action_Boolean m_TeleportAction;
     private bool m_IsTeleportoting = false;
     private float m_FadeTime = 0.5f;
     RaycastHit hit;
     Vector2 initialPos;
     Vector2 position;
     private bool wait = false;
+
+    float desiredDistance = 1;
+    public Transform character;
 
     public SteamVR_Action_Boolean m_up;
    // public SteamVR_Action_Boolean m_down;
@@ -35,9 +39,9 @@ public class test : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*Transform cameraRig = SteamVR_Render.Top().origin;
+        Transform cameraRig = SteamVR_Render.Top().origin;
         
-        if (SteamVR_Actions.default_touchPos.GetStateDown(m_pose.inputSource))
+       /* if (SteamVR_Actions.default_touchPos.GetStateDown(m_pose.inputSource))
         {
             initialPos = SteamVR_Actions.default_Pos.GetAxis(SteamVR_Input_Sources.Any);
             Debug.Log("initialPos " + initialPos); 
@@ -51,8 +55,37 @@ public class test : MonoBehaviour
            // bool wait = false;
             //position = new Vector2();
         }
-
+        */
         position = SteamVR_Actions.default_Pos.GetAxis(SteamVR_Input_Sources.Any);
+
+        if (m_TeleportAction.GetStateDown(m_pose.inputSource))
+        {
+            if (position.y > 0.5)
+            {
+                Debug.Log("N");
+                cameraRig.transform.position += character.transform.forward * desiredDistance;
+            }
+            else if (position.y < -0.5)
+            {
+                Debug.Log("S");
+                cameraRig.transform.position -= character.transform.forward * desiredDistance;
+            }
+            else if (position.x > 0.5)
+            {
+                Debug.Log("E");
+            }
+            else if (position.x < -0.5)
+            {
+                Debug.Log("W");
+            }
+            else
+            {
+                Debug.Log("C");
+            }
+
+        }
+
+        /*
 
         if (position.y - initialPos.y > 1 && wait)
         {
@@ -68,8 +101,8 @@ public class test : MonoBehaviour
             wait = false;
         }
        // Debug.Log("wait " + wait);
-        */
-       if (m_up.GetStateDown(m_pose.inputSource))
+        
+       /*if (m_up.GetStateDown(m_pose.inputSource))
         {
 
             Debug.Log("up ");
