@@ -140,7 +140,8 @@ public class Teleporter : MonoBehaviour
         {
            // Debug.Log("Syncro");
             Menu.SetActive(false);
-            syncTeleportation = true;
+            //syncTeleportation = true;
+            photonView.RPC("teleportationMode", Photon.Pun.RpcTarget.All, syncTeleportation);
             teleporationMode = "Syncro";
         }
 
@@ -148,7 +149,8 @@ public class Teleporter : MonoBehaviour
         {
            // Debug.Log("Not Syncro");
             Menu.SetActive(false);
-            syncTeleportation = false;
+            //syncTeleportation = false;
+            photonView.RPC("teleportationMode", Photon.Pun.RpcTarget.All, syncTeleportation);
             teleporationMode = "Not syncro";
         }
 
@@ -269,6 +271,21 @@ public class Teleporter : MonoBehaviour
     {
         Debug.Log("test");
         StartCoroutine(MoveRig(PhotonView.Find(cameraRig).transform, translation));
+    }
+
+    [PunRPC]
+    void teleportationMode(bool tp)
+    {
+        Debug.Log("Change teleportation mode");
+        if (tp)
+        {
+            syncTeleportation = false;
+        }
+        else
+        {
+            syncTeleportation = true;
+        }
+        
     }
 
     private IEnumerator MoveRig(Transform cameraRig , Vector3 translation)
