@@ -58,6 +58,7 @@ public class Teleporter : MonoBehaviour
     {
         //Pointer
         m_HasPosition = UpdatePointer();
+        m_text.text = "Teleportation mode : \n" + teleporationMode;
         //m_Pointer.SetActive(m_HasPosition);
 
         //Teleport
@@ -71,8 +72,8 @@ public class Teleporter : MonoBehaviour
         {
            // Debug.Log("donw ");
         }
-        else*/ 
-        
+        else*/
+
         if (m_TeleportAction.GetStateDown(m_pose.inputSource))
         {
             coordClic = coordPrev = m_Pointer.transform.position; //hit.transform.position;
@@ -117,8 +118,7 @@ public class Teleporter : MonoBehaviour
                 Debug.Log("long clic");
                 //syncTeleportation = !syncTeleportation;
                 Menu.SetActive(true);
-                m_text.text = "Teleportation mode : \n" + teleporationMode;
-            }
+                }
         }
 
         if (isMoving)
