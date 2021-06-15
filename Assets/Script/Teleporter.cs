@@ -142,7 +142,7 @@ public class Teleporter : MonoBehaviour
             Menu.SetActive(false);
             //syncTeleportation = true;
             photonView.RPC("teleportationMode", Photon.Pun.RpcTarget.All, syncTeleportation);
-            teleporationMode = "Syncro";
+            //teleporationMode = "Syncro";
         }
 
         if (UpdatePointer() == true && hit.transform.name == "not syncro")
@@ -151,7 +151,7 @@ public class Teleporter : MonoBehaviour
             Menu.SetActive(false);
             //syncTeleportation = false;
             photonView.RPC("teleportationMode", Photon.Pun.RpcTarget.All, syncTeleportation);
-            teleporationMode = "Not syncro";
+           // teleporationMode = "Not syncro";
         }
 
         if (UpdatePointer() == true && hit.transform.name == "cancel")
@@ -280,10 +280,12 @@ public class Teleporter : MonoBehaviour
         if (tp)
         {
             syncTeleportation = false;
+            teleporationMode = "Not syncro";
         }
         else
         {
             syncTeleportation = true;
+            teleporationMode = "Syncro";
         }
         
     }
