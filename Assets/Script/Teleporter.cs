@@ -7,9 +7,6 @@ using UnityEngine.UI;
 
 public class Teleporter : MonoBehaviour
 {
-
-    public GameObject checkCube;
-
     public GameObject Menu;
     public Text m_text;
     // intersecion raycast and object
@@ -164,15 +161,6 @@ public class Teleporter : MonoBehaviour
         {
             //dragTeleport(coordPrev, m_Pointer.transform.position);
             coordPrev = m_Pointer.transform.position;
-        }
-
-        if (syncTeleportation)
-        {
-           checkCube.SetActive(true); // RPC ??
-        }
-        if (!syncTeleportation)
-        {
-            checkCube.SetActive(false); // RPC ??
         }
 
         if (UpdatePointer() == true && hit.transform.name == "syncro")
