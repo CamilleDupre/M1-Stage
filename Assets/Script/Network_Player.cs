@@ -105,6 +105,7 @@ public class Network_Player : MonoBehaviour
 
         //leftHand.position = left.transform.position;
         //leftHand.rotation = left.transform.rotation;
+        left.gameObject.SetActive(false);
 
         // right hand
         rightHand.position = right.transform.position;
