@@ -74,7 +74,7 @@ public class Network_Player : MonoBehaviour
             //but send the position and rotation over the network
             MapPosition();
         }
-
+        leftHand.gameObject.SetActive(false);
         Ray ray = new Ray(right.transform.position, right.transform.forward);
         if (Physics.Raycast(ray, out hit))
         {
@@ -105,7 +105,7 @@ public class Network_Player : MonoBehaviour
 
         //leftHand.position = left.transform.position;
         //leftHand.rotation = left.transform.rotation;
-        left.gameObject.SetActive(false);
+        //left.gameObject.SetActive(false);
 
         // right hand
         rightHand.position = right.transform.position;
