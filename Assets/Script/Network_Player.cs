@@ -103,8 +103,8 @@ public class Network_Player : MonoBehaviour
         palette.position = left.transform.position;
         palette.rotation = left.transform.rotation;
 
-        leftHand.position = left.transform.position;
-        leftHand.rotation = left.transform.rotation;
+        //leftHand.position = left.transform.position;
+        //leftHand.rotation = left.transform.rotation;
 
         // right hand
         rightHand.position = right.transform.position;
