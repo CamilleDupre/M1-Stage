@@ -97,7 +97,7 @@ public class DragDrop : MonoBehaviourPun
             isMoving = true;
             wait = false;
         }
-        if (ob != null & hit.transform.tag == "trash")
+        if (ob != null && UpdatePointer()  &&  hit.transform.tag == "trash")
         {
             Debug.Log("destroy");
             Destroy(ob);
