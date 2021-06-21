@@ -100,8 +100,9 @@ public class DragDrop : MonoBehaviourPun
         if (ob != null && UpdatePointer()  &&  hit.transform.tag == "trash")
         {
             Debug.Log("destroy");
-            Destroy(ob);
-            salle.GetComponent<PhotonView>().RPC("DestroyCard", Photon.Pun.RpcTarget.All, nameR, hit.transform.name);
+            //Destroy(ob);
+            salle = GameObject.Find("Salle");
+            salle.GetComponent<PhotonView>().RPC("DestroyCard", Photon.Pun.RpcTarget.All, ob.GetComponent<PhotonView>().ViewID);
             ob = null;
 
         }
