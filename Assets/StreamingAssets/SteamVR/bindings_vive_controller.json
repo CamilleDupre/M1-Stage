@@ -165,7 +165,7 @@
                      "output" : "/actions/default/in/teleport"
                   },
                   "east" : {
-                     "output" : "/actions/default/in/snapturnright"
+                     "output" : "/actions/default/in/teleport"
                   },
                   "north" : {
                      "output" : "/actions/default/in/teleport"
@@ -174,7 +174,7 @@
                      "output" : "/actions/default/in/teleport"
                   },
                   "west" : {
-                     "output" : "/actions/default/in/snapturnleft"
+                     "output" : "/actions/default/in/teleport"
                   }
                },
                "mode" : "dpad",
@@ -191,7 +191,7 @@
                      "output" : "/actions/default/in/teleport"
                   },
                   "east" : {
-                     "output" : "/actions/default/in/snapturnright"
+                     "output" : "/actions/default/in/teleport"
                   },
                   "north" : {
                      "output" : "/actions/default/in/teleport"
@@ -200,7 +200,7 @@
                      "output" : "/actions/default/in/teleport"
                   },
                   "west" : {
-                     "output" : "/actions/default/in/snapturnleft"
+                     "output" : "/actions/default/in/teleport"
                   }
                },
                "mode" : "dpad",

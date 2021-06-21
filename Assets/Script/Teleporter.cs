@@ -42,6 +42,8 @@ public class Teleporter : MonoBehaviour
 
     private bool n = false;
     private bool s = false;
+    private bool e = false;
+    private bool w = false;
 
     public Transform character;
 
@@ -102,10 +104,14 @@ public class Teleporter : MonoBehaviour
             else if (position.x > 0.5)
             {
                 Debug.Log("E");
+                e = true;
+                tryTeleport();
             }
             else if (position.x < -0.5)
             {
                 Debug.Log("W");
+                w = true;
+                tryTeleport();
             }
             else
             {
@@ -134,9 +140,11 @@ public class Teleporter : MonoBehaviour
             longclic = false;
             n = false;
             s = false;
-           
+            e = false;
+            w = false;
 
-        }
+
+}
 
         // check the angle to detect a mouvement
         if (wait && Vector3.Angle(forwardClic, transform.forward) > 2)
@@ -261,6 +269,20 @@ public class Teleporter : MonoBehaviour
             //translateVector =  - character.transform.forward * desiredDistance;
             translateVector = new Vector3(- character.transform.forward.x * desiredDistance, cameraRig.position.y, - character.transform.forward.z * desiredDistance);  //  y fix
             StartCoroutine(MoveRig(cameraRig, translateVector));
+        }
+        else if (e)
+        {
+            //translateVector =  character.transform.forward * desiredDistance;
+            //translateVector = new Vector3(character.transform.right.x * desiredDistance, cameraRig.position.y, character.transform.right.z * desiredDistance);  //  y fix
+            //StartCoroutine(MoveRig(cameraRig, translateVector));
+            cameraRig.Rotate(0.0f, 90.0f, 0.0f, Space.World);
+        }
+        else if (w)
+        {
+            //translateVector =  - character.transform.forward * desiredDistance;
+            //translateVector = new Vector3(-character.transform.right.x * desiredDistance, cameraRig.position.y, -character.transform.right.z * desiredDistance);  //  y fix
+            //StartCoroutine(MoveRig(cameraRig, translateVector));
+            cameraRig.Rotate( 0.0f,  -90.0f, 0.0f, Space.World);
         }
         else if (hit.transform.tag == "Tp" )
         {

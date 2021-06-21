@@ -97,6 +97,13 @@ public class DragDrop : MonoBehaviourPun
             isMoving = true;
             wait = false;
         }
+        if (ob != null & hit.transform.tag == "trash")
+        {
+            Debug.Log("destroy");
+            Destroy(ob);
+            ob = null;
+
+        }
 
         if (wait)
         {

@@ -11,8 +11,9 @@ TagManager:
   - projectile
   - FxTemporaire
   - Bullet
-  - baton
   - tag
+  - trash
+  - Red tag
   layers:
   - Default
   - TransparentFX
