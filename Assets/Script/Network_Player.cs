@@ -88,16 +88,18 @@ public class Network_Player : MonoBehaviour
                 //photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
                 //right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
 
-                if (!synctag)
+                if (!synctag && photonView.IsMine)
                 {
                     //StartCoroutine(MoveRig(cameraRig, translateVector));
                     rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
+                    Debug.Log("tag not sync");
                 }
                 else
                 {
                     nameR = hit.transform.GetComponent<Renderer>().material.name;
                     photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
                     right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
+                    Debug.Log("tag sync");
                 }
             }
            
