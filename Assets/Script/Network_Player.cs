@@ -211,6 +211,6 @@ public class Network_Player : MonoBehaviour
             synctag = true;
             //teleporationMode = "Syncro";
         }
-
+        Debug.Log(synctag);
     }
 }
