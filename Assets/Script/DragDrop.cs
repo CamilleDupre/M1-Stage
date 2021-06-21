@@ -101,6 +101,7 @@ public class DragDrop : MonoBehaviourPun
         {
             Debug.Log("destroy");
             Destroy(ob);
+            salle.GetComponent<PhotonView>().RPC("DestroyCard", Photon.Pun.RpcTarget.All, nameR, hit.transform.name);
             ob = null;
 
         }
@@ -137,7 +138,7 @@ public class DragDrop : MonoBehaviourPun
 
         if (!m_HasPosition) { return; }
 
-        if (isMoving)
+        if (isMoving && ob != null)
         {
             //check the wall and if the card from one wall to another
             if (ob.transform.parent.name == "MUR L")

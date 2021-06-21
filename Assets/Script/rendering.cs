@@ -128,4 +128,11 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
             }
         }
     }
+
+    [PunRPC]
+    //Add card to the list of card
+    void DestroyCard(int OB)
+    {
+        Destroy(PhotonView.Find(OB).gameObject); 
+    }
 }
