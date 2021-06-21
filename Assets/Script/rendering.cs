@@ -172,19 +172,19 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         // Undo.DestroyObjectImmediate(PhotonView.Find(OB).gameObject);
         PhotonView.Find(OB).gameObject.SetActive(true);
 
-        if (nbTrashs < 1)
+        if (nbTrashs <= 1)
         {
             trash1.SetActive(false);
         }
-        if (nbTrashs < 2)
+        if (nbTrashs <= 2)
         {
             trash2.SetActive(false);
         }
-        if (nbTrashs < 3)
+        if (nbTrashs <= 3)
         {
             trash3.SetActive(false);
         }
-        if (nbTrashs <4)
+        if (nbTrashs <=4)
         {
             trash4.SetActive(false);
         }
