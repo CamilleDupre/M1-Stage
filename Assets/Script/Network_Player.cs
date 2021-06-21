@@ -78,7 +78,7 @@ public class Network_Player : MonoBehaviour
             if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "tag")
             {
                 Debug.Log("tag not sync");
-                rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
+                rayCast.gameObject.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
             }
         }
         leftHand.gameObject.SetActive(false);
