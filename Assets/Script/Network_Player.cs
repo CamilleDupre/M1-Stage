@@ -72,9 +72,14 @@ public class Network_Player : MonoBehaviour
             rightHand.gameObject.SetActive(false);
             head.gameObject.SetActive(false);
             torse.gameObject.SetActive(false);
-            
+
             //but send the position and rotation over the network
             MapPosition();
+            if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "tag")
+            {
+                Debug.Log("tag not sync");
+                rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
+            }
         }
         leftHand.gameObject.SetActive(false);
         Ray ray = new Ray(right.transform.position, right.transform.forward);
@@ -92,14 +97,6 @@ public class Network_Player : MonoBehaviour
                 {
                    // rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
                     Debug.Log("tag not sync");
-                    if (photonView.IsMine)
-                    {
-                        rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
-                    }
-                    else
-                    {
-                        rayCast.GetComponent<Renderer>().material = white;
-                    }
                 }
                 else
                 {
