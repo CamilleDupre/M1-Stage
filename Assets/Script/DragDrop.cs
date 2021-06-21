@@ -113,7 +113,7 @@ public class DragDrop : MonoBehaviourPun
             ob = null;
 
         }
-        Debug.Log("Umdo list :" + obUndo);
+    
         if (obUndo != null && UpdatePointer() && hit.transform.tag == "trash" && interactWithUI.GetStateDown(m_pose.inputSource))
         {
             Debug.Log("undo");

@@ -51,6 +51,10 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
     void Awake()
     {
         textures = Resources.LoadAll("dixit_part2/", typeof(Texture2D));
+        trash1.SetActive(false);
+        trash2.SetActive(false);
+        trash3.SetActive(false);
+        trash4.SetActive(false);
     }
 
     public override void OnCreatedRoom() { 
@@ -59,10 +63,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
 
         int nbcard = textures.Length;
 
-        trash1.SetActive(false);
-        trash2.SetActive(false);
-        trash3.SetActive(false);
-        trash4.SetActive(false);
+       
 
         Transform mur;
         int pos;
