@@ -252,12 +252,14 @@ public class Teleporter : MonoBehaviour
         Vector3 translateVector;
         if (n)
         {
-            translateVector = character.transform.forward * desiredDistance; // fixer la hauteur de la camera
+            //translateVector =  character.transform.forward * desiredDistance; // y not fix
+            translateVector = new Vector3(character.transform.forward.x * desiredDistance, cameraRig.position.y, character.transform.forward.z * desiredDistance);  //  y fix
             StartCoroutine(MoveRig(cameraRig, translateVector));
         }
         else if (s)
             {
-            translateVector =  - character.transform.forward * desiredDistance;
+            //translateVector =  - character.transform.forward * desiredDistance;
+            translateVector = new Vector3(- character.transform.forward.x * desiredDistance, cameraRig.position.y, - character.transform.forward.z * desiredDistance);  //  y fix
             StartCoroutine(MoveRig(cameraRig, translateVector));
         }
         else if (hit.transform.tag == "Tp" )
