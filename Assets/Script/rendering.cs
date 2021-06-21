@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEditor;
 
 public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
 {
     //Prefab card
     public GameObject pfCard;
+
+    //trash
+    public GameObject trash1;
+    public GameObject trash2;
+    public GameObject trash3;
+    public GameObject trash4;
 
     //walls
     public Transform MurB;
@@ -51,6 +58,11 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         Debug.Log("Creation carte " + PhotonNetwork.IsMasterClient);
 
         int nbcard = textures.Length;
+
+        trash1.SetActive(false);
+        trash2.SetActive(false);
+        trash3.SetActive(false);
+        trash4.SetActive(false);
 
         Transform mur;
         int pos;
@@ -131,8 +143,50 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
 
     [PunRPC]
     //Add card to the list of card
-    void DestroyCard(int OB)
+    void DestroyCard(int OB, int nbTrashs)
     {
-        Destroy(PhotonView.Find(OB).gameObject); 
+        // Undo.DestroyObjectImmediate(PhotonView.Find(OB).gameObject);
+        PhotonView.Find(OB).gameObject.SetActive(false);
+        if (nbTrashs >= 1)
+        {
+            trash1.SetActive(true);
+        }
+        if (nbTrashs >= 2)
+        {
+            trash2.SetActive(true);
+        }
+        if (nbTrashs >= 3)
+        {
+            trash3.SetActive(true);
+        }
+        if (nbTrashs >= 4)
+        {
+            trash4.SetActive(true);
+        }
+    }
+
+    [PunRPC]
+    //Add card to the list of card
+    void UndoCard(int OB, int nbTrashs)
+    {
+        // Undo.DestroyObjectImmediate(PhotonView.Find(OB).gameObject);
+        PhotonView.Find(OB).gameObject.SetActive(true);
+
+        if (nbTrashs < 1)
+        {
+            trash1.SetActive(false);
+        }
+        if (nbTrashs < 2)
+        {
+            trash2.SetActive(false);
+        }
+        if (nbTrashs < 3)
+        {
+            trash3.SetActive(false);
+        }
+        if (nbTrashs <4)
+        {
+            trash4.SetActive(false);
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
 using Photon.Pun;
+using UnityEditor;
 
 public class DragDrop : MonoBehaviourPun
 {
@@ -27,6 +28,7 @@ public class DragDrop : MonoBehaviourPun
 
    //card to move
     private GameObject ob;
+    public List<GameObject> obUndo;
 
     //Room
     public Transform MurB;
@@ -78,6 +80,7 @@ public class DragDrop : MonoBehaviourPun
                 hit.transform.gameObject.GetComponent<PhotonView>().RequestOwnership();
                 //card
                 ob = hit.transform.gameObject;
+                
             }
            
 
@@ -101,11 +104,28 @@ public class DragDrop : MonoBehaviourPun
         {
             Debug.Log("destroy");
             //Destroy(ob);
+            
+
             salle = GameObject.Find("Salle");
-            salle.GetComponent<PhotonView>().RPC("DestroyCard", Photon.Pun.RpcTarget.All, ob.GetComponent<PhotonView>().ViewID);
+            salle.GetComponent<PhotonView>().RPC("DestroyCard", Photon.Pun.RpcTarget.All, ob.GetComponent<PhotonView>().ViewID, obUndo.Count - 1);
+            obUndo.Add(ob);
             ob = null;
 
         }
+        Debug.Log("Umdo list :" + obUndo);
+        if (obUndo != null && UpdatePointer() && hit.transform.tag == "trash" && interactWithUI.GetStateDown(m_pose.inputSource))
+        {
+            Debug.Log("undo");
+            //Undo.DestroyObjectImmediate(obUndo);
+
+            //Undo.PerformUndo();
+            GameObject temp = obUndo[obUndo.Count-1];
+            //temp.gameObject.SetActive(true);
+            obUndo.Remove(temp);
+            salle = GameObject.Find("Salle");
+            salle.GetComponent<PhotonView>().RPC("UndoCard", Photon.Pun.RpcTarget.All, temp.GetComponent<PhotonView>().ViewID , obUndo.Count - 1);
+        }
+      
 
         if (wait)
         {
