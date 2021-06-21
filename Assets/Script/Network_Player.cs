@@ -90,7 +90,7 @@ public class Network_Player : MonoBehaviour
 
                 if (!synctag)
                 {
-                    rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
+                   // rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
                     Debug.Log("tag not sync");
                     if (photonView.IsMine)
                     {
