@@ -45,6 +45,8 @@ public class Network_Player : MonoBehaviour
     private SteamVR_Behaviour_Pose m_pose = null;
     public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");
 
+    private bool synctag = true;
+
 
     void Start()
     {
@@ -85,6 +87,18 @@ public class Network_Player : MonoBehaviour
                 nameR = hit.transform.GetComponent<Renderer>().material.name;
                 photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
                 right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
+
+                if (!synctag)
+                {
+                    //StartCoroutine(MoveRig(cameraRig, translateVector));
+                    rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
+                }
+                else
+                {
+                    nameR = hit.transform.GetComponent<Renderer>().material.name;
+                    photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
+                    right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
+                }
             }
            
             //teleport the card tag with the color of the ray cast
@@ -179,6 +193,23 @@ public class Network_Player : MonoBehaviour
               {
                 PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = none;
               }
+        }
+
+    }
+
+    [PunRPC]
+    void tagMode(bool tag)
+    {
+        Debug.Log("Change tag mode");
+        if (tag)
+        {
+            synctag = false;
+            //teleporationMode = "Not syncro";
+        }
+        else
+        {
+            synctag = true;
+            //teleporationMode = "Syncro";
         }
 
     }

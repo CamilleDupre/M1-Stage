@@ -44,6 +44,7 @@ public class Teleporter : MonoBehaviour
     private bool s = false;
     private bool e = false;
     private bool w = false;
+    private bool synctag = true;
 
     public Transform character;
 
@@ -51,6 +52,8 @@ public class Teleporter : MonoBehaviour
 
 
     private PhotonView photonView;
+    //player
+    public GameObject player;
 
 
     // Start is called before the first frame update
@@ -187,6 +190,22 @@ public class Teleporter : MonoBehaviour
             //syncTeleportation = false;
             photonView.RPC("teleportationMode", Photon.Pun.RpcTarget.All, syncTeleportation);
            // teleporationMode = "Not syncro";
+        }
+
+        if (UpdatePointer() == true && hit.transform.name == "syncro tag")
+        {
+            // Debug.Log("Syncro");
+            Menu.SetActive(false);
+            player = GameObject.Find("Network Player(Clone)");
+            player.GetComponent<PhotonView>().RPC("tagMode", Photon.Pun.RpcTarget.AllBuffered, synctag);
+        }
+
+        if (UpdatePointer() == true && hit.transform.name == "not syncro tag")
+        {
+            // Debug.Log("Not Syncro");
+            Menu.SetActive(false);
+            player = GameObject.Find("Network Player(Clone)");
+            player.GetComponent<PhotonView>().RPC("tagMode", Photon.Pun.RpcTarget.AllBuffered, synctag);
         }
 
         if (UpdatePointer() == true && hit.transform.name == "cancel")
