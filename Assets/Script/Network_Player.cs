@@ -84,9 +84,9 @@ public class Network_Player : MonoBehaviour
             //change tag color of the ray cast
             if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "tag")
             {
-                nameR = hit.transform.GetComponent<Renderer>().material.name;
-                photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
-                right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
+                //nameR = hit.transform.GetComponent<Renderer>().material.name;
+                //photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
+                //right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
 
                 if (!synctag)
                 {
