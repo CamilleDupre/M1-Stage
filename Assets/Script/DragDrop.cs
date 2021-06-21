@@ -114,7 +114,7 @@ public class DragDrop : MonoBehaviourPun
                Debug.Log("long clic");
             }
         }
-        if (longclic && hit.transform.tag == "Wall")
+        if (longclic && UpdatePointer() && hit.transform.tag == "Wall")
         {
             //maybe teleport card on the wall or menuhit.transform.tag == "Wall")
             {
@@ -182,7 +182,7 @@ public class DragDrop : MonoBehaviourPun
         //check if there is a hit
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.transform.tag == "Card" || hit.transform.tag == "Wall")
+            if (hit.transform.tag == "Card" || hit.transform.tag == "Wall" || hit.transform.tag == "trash")
             {
                 m_Pointer.transform.position = hit.point;
                 return true;
