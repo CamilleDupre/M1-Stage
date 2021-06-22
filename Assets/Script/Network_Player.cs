@@ -96,6 +96,7 @@ public class Network_Player : MonoBehaviour
                    nameR = hit.transform.GetComponent<Renderer>().material.name;
                    ChangeRayColour(nameR);
                    Debug.Log("tag not sync");
+                   nameR = "";
                 }
                 else
                 {
