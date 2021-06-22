@@ -155,7 +155,6 @@ GameObject:
   - component: {fileID: 5335700974069573321}
   - component: {fileID: 9209913395087321989}
   - component: {fileID: 7877665048404040914}
-  - component: {fileID: 7861041212842577359}
   m_Layer: 2
   m_Name: Cylinder
   m_TagString: Untagged
@@ -240,22 +239,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &7861041212842577359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1129810201901089534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &1380188632210726542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1043,8 +1026,7 @@ MonoBehaviour:
   - {fileID: 2035094665561351205}
   - {fileID: 3355687662974408225}
   - {fileID: 0}
-  - {fileID: 7861041212842577359}
-  - {fileID: 5507753776463568932}
+  - {fileID: 0}
   sceneViewId: 11
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1567,7 +1549,6 @@ GameObject:
   - component: {fileID: 3751446630486052622}
   - component: {fileID: 3047688975861855893}
   - component: {fileID: 2512263379031407633}
-  - component: {fileID: 5507753776463568932}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -1652,22 +1633,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &5507753776463568932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5131012702905515222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &6921670369612344324
 GameObject:
   m_ObjectHideFlags: 0

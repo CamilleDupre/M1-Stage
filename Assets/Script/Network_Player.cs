@@ -74,21 +74,7 @@ public class Network_Player : MonoBehaviour
             torse.gameObject.SetActive(false);
 
             rightHandSphere.GetComponent<Renderer>().material = red;
-            if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "tag")
-            {
-                //nameR = hit.transform.GetComponent<Renderer>().material.name;
-                //photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
-                //right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
-
-                if (!synctag && photonView.IsMine)
-                {
-                    // rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
-                    // nameR = hit.transform.GetComponent<Renderer>().material.name;
-                    //ChangeRayColour(nameR);
-                    rayCast.GetComponent<Renderer>().material = red;
-                    Debug.Log("tag not sync");
-                }
-            }
+           
                 //but send the position and rotation over the network
                 MapPosition();
         }
@@ -107,9 +93,9 @@ public class Network_Player : MonoBehaviour
                 if (!synctag && photonView.IsMine)
                 {
                     // rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
-                   // nameR = hit.transform.GetComponent<Renderer>().material.name;
-                    //ChangeRayColour(nameR);
-                    //Debug.Log("tag not sync");
+                   nameR = hit.transform.GetComponent<Renderer>().material.name;
+                   ChangeRayColour(nameR);
+                   Debug.Log("tag not sync");
                 }
                 else
                 {
@@ -120,12 +106,6 @@ public class Network_Player : MonoBehaviour
                 }
             }
            
-            //teleport the card tag with the color of the ray cast
-            if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "Wall")
-            {
-                nameT = rayCast.GetComponent<Renderer>().material.name;
-               // salle.transform.GetComponent<PhotonView>().RPC("TeleportCard", Photon.Pun.RpcTarget.All, nameT , hit.transform.name);
-            }
         }
     }
 
