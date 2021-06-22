@@ -132,7 +132,7 @@ public class Network_Player : MonoBehaviour
         head.rotation = headset.transform.rotation;
 
         // circle
-        circle.position = new Vector3(headset.transform.position.x, 0 , headset.transform.position.z);
+        pos.position = new Vector3(headset.transform.position.x, 0 , headset.transform.position.z);
 
         // body
         torse.position = headset.transform.position;
