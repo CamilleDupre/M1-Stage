@@ -83,8 +83,9 @@ public class Network_Player : MonoBehaviour
                 if (!synctag && photonView.IsMine)
                 {
                     // rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
-                    nameR = hit.transform.GetComponent<Renderer>().material.name;
-                    ChangeRayColour(nameR);
+                    // nameR = hit.transform.GetComponent<Renderer>().material.name;
+                    //ChangeRayColour(nameR);
+                    rayCast.GetComponent<Renderer>().material = red;
                     Debug.Log("tag not sync");
                 }
             }
