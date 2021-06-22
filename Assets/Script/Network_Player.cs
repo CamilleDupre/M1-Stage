@@ -74,6 +74,7 @@ public class Network_Player : MonoBehaviour
             torse.gameObject.SetActive(false);
 
             rightHandSphere.GetComponent<Renderer>().material = red;
+            rayCast.GetComponent<Renderer>().material = red;
 
             //but send the position and rotation over the network
             MapPosition();
@@ -178,7 +179,7 @@ public class Network_Player : MonoBehaviour
 
             nameT = rayCast.GetComponent<Renderer>().material.name;
             
-            if (nameT == "blue (Instance)")
+              if (nameT == "blue (Instance)")
               {
                 PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = blue;
               }
