@@ -4,7 +4,7 @@ using UnityEngine;
 using Valve.VR;
 using Photon.Pun;
 
-public class Network_Player : MonoBehaviour
+public class Network_Player : MonoBehaviourPun
 {
     // empty
     public Transform head;
@@ -37,7 +37,7 @@ public class Network_Player : MonoBehaviour
     //room + wall
     private GameObject salle;
 
-    private PhotonView photonView;
+    //private PhotonView photonView;
 
     private RaycastHit hit;
     private string nameR="";
@@ -50,7 +50,7 @@ public class Network_Player : MonoBehaviour
 
     void Start()
     {
-        photonView = GetComponent<PhotonView>();
+        //photonView = GetComponent<PhotonView>();
 
         //room + wall + camera
         headset = GameObject.Find("Camera (eye)");
@@ -60,12 +60,9 @@ public class Network_Player : MonoBehaviour
         salle = GameObject.Find("Salle");
 
         m_pose = right.GetComponent<SteamVR_Behaviour_Pose>();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        Ray ray = new Ray(right.transform.position, right.transform.forward);
+        leftHand.gameObject.SetActive(false);
+
         if (photonView.IsMine)
         {
             //don't show my avatar
@@ -73,6 +70,22 @@ public class Network_Player : MonoBehaviour
             rightHand.gameObject.SetActive(false);
             head.gameObject.SetActive(false);
             torse.gameObject.SetActive(false);
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+       
+
+        Ray ray = new Ray(right.transform.position, right.transform.forward);
+        if (photonView.IsMine)
+        {
+            //don't show my avatar
+            /* leftHand.gameObject.SetActive(false);
+            rightHand.gameObject.SetActive(false);
+            head.gameObject.SetActive(false);
+            torse.gameObject.SetActive(false); */
 
             //rightHandSphere.GetComponent<Renderer>().material = red;
            
@@ -89,18 +102,20 @@ public class Network_Player : MonoBehaviour
                     //photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
                     //right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
 
-                    if (!synctag)
+                    if (false && !synctag)
                     {
                         nameR = hit.transform.GetComponent<Renderer>().material.name;
                         photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
+                        // ChangeRayColour(nameR);
                         right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
-                        Debug.Log("tag sync");
+                        Debug.Log("not tag sync");
                     }
                 }
 
             }
         }
-        leftHand.gameObject.SetActive(false);
+
+     
         
         if (Physics.Raycast(ray, out hit))
         {
@@ -115,6 +130,10 @@ public class Network_Player : MonoBehaviour
                     photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
                     right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
                     Debug.Log("tag sync");
+                }
+                else
+                {
+                    ChangeRayColour(nameR);
                 }
             }
 
@@ -216,16 +235,7 @@ public class Network_Player : MonoBehaviour
     void tagMode(bool tag)
     {
         Debug.Log("Change tag mode");
-        if (tag)
-        {
-            synctag = false;
-            //teleporationMode = "Not syncro";
-        }
-        else
-        {
-            synctag = true;
-            //teleporationMode = "Syncro";
-        }
+        synctag = tag;
         Debug.Log(synctag);
     }
 }
