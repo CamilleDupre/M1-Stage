@@ -101,7 +101,7 @@ public class Network_Player : MonoBehaviour
                 else if (synctag)
                 {
                     nameR = hit.transform.GetComponent<Renderer>().material.name;
-                    photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
+                   // photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
                     right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
                     Debug.Log("tag sync");
                 }
