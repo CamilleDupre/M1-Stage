@@ -4,7 +4,7 @@ using UnityEngine;
 using Valve.VR;
 using Photon.Pun;
 
-public class Network_Player : MonoBehaviourPun
+public class Network_Player : MonoBehaviour
 {
     // empty
     public Transform head;
@@ -69,9 +69,11 @@ public class Network_Player : MonoBehaviourPun
         {
             //don't show my avatar
             leftHand.gameObject.SetActive(false);
-            rightHand.gameObject.SetActive(false);
+           // rightHand.gameObject.SetActive(false);
             head.gameObject.SetActive(false);
             torse.gameObject.SetActive(false);
+
+            rightHandSphere.GetComponent<Renderer>().material = red;
 
             //but send the position and rotation over the network
             MapPosition();
