@@ -45,7 +45,7 @@ public class Network_Player : MonoBehaviourPun
     private SteamVR_Behaviour_Pose m_pose = null;
     public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");
 
-    private bool synctag = false;
+    private bool synctag = true;
 
 
     void Start()
@@ -81,32 +81,8 @@ public class Network_Player : MonoBehaviourPun
         Ray ray = new Ray(right.transform.position, right.transform.forward);
         if (photonView.IsMine)
         {
-           
-           
-            //but send the position and rotation over the network
+            // end the position and rotation over the network
             MapPosition();
-
-            if (Physics.Raycast(ray, out hit))
-            {
-
-                //change tag color of the ray cast
-                if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "tag")
-                {
-                    //nameR = hit.transform.GetComponent<Renderer>().material.name;
-                    //photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
-                    //right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
-
-                    if (false && !synctag)
-                    {
-                        nameR = hit.transform.GetComponent<Renderer>().material.name;
-                        photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
-                        // ChangeRayColour(nameR);
-                        right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
-                        Debug.Log("not tag sync");
-                    }
-                }
-
-            }
         }
 
      
