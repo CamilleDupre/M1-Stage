@@ -69,11 +69,11 @@ public class Network_Player : MonoBehaviour
         {
             //don't show my avatar
             leftHand.gameObject.SetActive(false);
-           // rightHand.gameObject.SetActive(false);
+            rightHand.gameObject.SetActive(false);
             head.gameObject.SetActive(false);
             torse.gameObject.SetActive(false);
 
-            rightHandSphere.GetComponent<Renderer>().material = red;
+            //rightHandSphere.GetComponent<Renderer>().material = red;
            
                 //but send the position and rotation over the network
                 MapPosition();
@@ -165,7 +165,7 @@ public class Network_Player : MonoBehaviour
         {
             rayCast.GetComponent<Renderer>().material = none;
         }
-
+        Debug.Log("nameR : " + nameR);
         Debug.Log("change");
     }
 
