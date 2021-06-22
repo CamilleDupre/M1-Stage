@@ -163,6 +163,8 @@ public class Network_Player : MonoBehaviour
         {
             rayCast.GetComponent<Renderer>().material = none;
         }
+
+        Debug.Log("change");
     }
 
     [PunRPC]
