@@ -81,16 +81,10 @@ public class Network_Player : MonoBehaviourPun
         Ray ray = new Ray(right.transform.position, right.transform.forward);
         if (photonView.IsMine)
         {
-            //don't show my avatar
-            /* leftHand.gameObject.SetActive(false);
-            rightHand.gameObject.SetActive(false);
-            head.gameObject.SetActive(false);
-            torse.gameObject.SetActive(false); */
-
-            //rightHandSphere.GetComponent<Renderer>().material = red;
            
-                //but send the position and rotation over the network
-                MapPosition();
+           
+            //but send the position and rotation over the network
+            MapPosition();
 
             if (Physics.Raycast(ray, out hit))
             {
@@ -133,6 +127,7 @@ public class Network_Player : MonoBehaviourPun
                 }
                 else
                 {
+                    nameR = hit.transform.GetComponent<Renderer>().material.name;
                     ChangeRayColour(nameR);
                 }
             }
