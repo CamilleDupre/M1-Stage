@@ -45,7 +45,7 @@ public class Network_Player : MonoBehaviourPun
     private SteamVR_Behaviour_Pose m_pose = null;
     public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");
 
-    private bool synctag = false;
+    private bool synctag = true;
 
 
     void Start()
@@ -118,7 +118,7 @@ public class Network_Player : MonoBehaviourPun
             if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "tag")
             {
                 
-                if (false && synctag)
+                if (synctag)
                 {
                     nameR = hit.transform.GetComponent<Renderer>().material.name;
                     photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
