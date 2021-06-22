@@ -4,7 +4,7 @@ using UnityEngine;
 using Valve.VR;
 using Photon.Pun;
 
-public class Network_Player : MonoBehaviour
+public class Network_Player : MonoBehaviourPun
 {
     // empty
     public Transform head;
@@ -88,7 +88,7 @@ public class Network_Player : MonoBehaviour
                 //photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
                 //right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
 
-                if (!synctag)
+                if (!synctag && photonView.IsMine)
                 {
                     // rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
                     nameR = hit.transform.GetComponent<Renderer>().material.name;
