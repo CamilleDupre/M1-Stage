@@ -155,6 +155,7 @@ public class Network_Player : MonoBehaviour
         }
         else if(nameR == "Red (Instance)")
         {
+            Debug.Log("REEEEEEEEEEEEEEEEEEEED");
             rayCast.GetComponent<Renderer>().material = red;
         }
         else if (nameR == "white (Instance)")
