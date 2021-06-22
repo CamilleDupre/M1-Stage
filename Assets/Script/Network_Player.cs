@@ -75,11 +75,6 @@ public class Network_Player : MonoBehaviour
 
             //but send the position and rotation over the network
             MapPosition();
-            if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "tag")
-            {
-                Debug.Log("tag not sync");
-                rayCast.gameObject.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
-            }
         }
         leftHand.gameObject.SetActive(false);
         Ray ray = new Ray(right.transform.position, right.transform.forward);
@@ -95,7 +90,9 @@ public class Network_Player : MonoBehaviour
 
                 if (!synctag)
                 {
-                   // rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
+                    // rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
+                    nameR = hit.transform.GetComponent<Renderer>().material.name;
+                    ChangeRayColour(nameR);
                     Debug.Log("tag not sync");
                 }
                 else
