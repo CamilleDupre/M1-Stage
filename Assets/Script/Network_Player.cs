@@ -65,6 +65,7 @@ public class Network_Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Ray ray = new Ray(right.transform.position, right.transform.forward);
         if (photonView.IsMine)
         {
             //don't show my avatar
@@ -78,7 +79,6 @@ public class Network_Player : MonoBehaviour
                 //but send the position and rotation over the network
                 MapPosition();
 
-            Ray ray = new Ray(right.transform.position, right.transform.forward);
             if (Physics.Raycast(ray, out hit))
             {
 
@@ -91,14 +91,6 @@ public class Network_Player : MonoBehaviour
 
                     if (!synctag)
                     {
-                        // rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
-                        nameR = hit.transform.GetComponent<Renderer>().material.name;
-                        ChangeRayColour(nameR);
-                        Debug.Log("tag not sync");
-                        nameR = "";
-                    }
-                    else if (synctag)
-                    {
                         nameR = hit.transform.GetComponent<Renderer>().material.name;
                         photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
                         right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
@@ -110,6 +102,24 @@ public class Network_Player : MonoBehaviour
         }
         leftHand.gameObject.SetActive(false);
         
+        if (Physics.Raycast(ray, out hit))
+        {
+
+            //change tag color of the ray cast
+            if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "tag")
+            {
+                
+                if (synctag)
+                {
+                    nameR = hit.transform.GetComponent<Renderer>().material.name;
+                    photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
+                    right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
+                    Debug.Log("tag sync");
+                }
+            }
+
+        }
+
     }
 
     //void MapPosition(Transform target, XRNode node)
