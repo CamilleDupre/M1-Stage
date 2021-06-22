@@ -127,8 +127,12 @@ public class Network_Player : MonoBehaviourPun
                 }
                 else
                 {
-                    nameR = hit.transform.GetComponent<Renderer>().material.name;
-                    ChangeRayColour(nameR);
+                    if (photonView.IsMine)
+                    {
+                        nameR = hit.transform.GetComponent<Renderer>().material.name;
+                        ChangeRayColour(nameR);
+                        Debug.Log("tag not sync");
+                    }
                 }
             }
 
