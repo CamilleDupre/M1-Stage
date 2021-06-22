@@ -1042,7 +1042,7 @@ MonoBehaviour:
   - {fileID: 528345850465377094}
   - {fileID: 2035094665561351205}
   - {fileID: 3355687662974408225}
-  - {fileID: 2818171792118037044}
+  - {fileID: 0}
   - {fileID: 7861041212842577359}
   - {fileID: 5507753776463568932}
   sceneViewId: 11
@@ -1377,7 +1377,6 @@ GameObject:
   - component: {fileID: 519462601460022924}
   - component: {fileID: 5398664862780468189}
   - component: {fileID: 8391576182402495887}
-  - component: {fileID: 2818171792118037044}
   m_Layer: 2
   m_Name: Ray Cast
   m_TagString: Untagged
@@ -1461,22 +1460,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2818171792118037044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4311107365005908232}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &5089804362516658468
 GameObject:
   m_ObjectHideFlags: 0
