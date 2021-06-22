@@ -74,10 +74,22 @@ public class Network_Player : MonoBehaviour
             torse.gameObject.SetActive(false);
 
             rightHandSphere.GetComponent<Renderer>().material = red;
-            rayCast.GetComponent<Renderer>().material = red;
+            if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "tag")
+            {
+                //nameR = hit.transform.GetComponent<Renderer>().material.name;
+                //photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
+                //right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
 
-            //but send the position and rotation over the network
-            MapPosition();
+                if (!synctag && photonView.IsMine)
+                {
+                    // rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
+                    nameR = hit.transform.GetComponent<Renderer>().material.name;
+                    ChangeRayColour(nameR);
+                    Debug.Log("tag not sync");
+                }
+            }
+                //but send the position and rotation over the network
+                MapPosition();
         }
         leftHand.gameObject.SetActive(false);
         Ray ray = new Ray(right.transform.position, right.transform.forward);
@@ -94,9 +106,9 @@ public class Network_Player : MonoBehaviour
                 if (!synctag && photonView.IsMine)
                 {
                     // rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
-                    nameR = hit.transform.GetComponent<Renderer>().material.name;
-                    ChangeRayColour(nameR);
-                    Debug.Log("tag not sync");
+                   // nameR = hit.transform.GetComponent<Renderer>().material.name;
+                    //ChangeRayColour(nameR);
+                    //Debug.Log("tag not sync");
                 }
                 else
                 {
