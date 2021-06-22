@@ -93,7 +93,7 @@ public class Network_Player : MonoBehaviour
                     {
                         // rayCast.GetComponent<Renderer>().material = hit.transform.GetComponent<Renderer>().material;
                         nameR = hit.transform.GetComponent<Renderer>().material.name;
-                        //ChangeRayColour(nameR);
+                        ChangeRayColour(nameR);
                         Debug.Log("tag not sync");
                         nameR = "";
                     }
