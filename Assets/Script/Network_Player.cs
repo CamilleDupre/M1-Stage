@@ -127,7 +127,7 @@ public class Network_Player : MonoBehaviourPun
                 }
                 else
                 {
-                    if (photonView.IsMine)
+                    //if (photonView.IsMine)
                     {
                         nameR = hit.transform.GetComponent<Renderer>().material.name;
                         ChangeRayColour(nameR);
