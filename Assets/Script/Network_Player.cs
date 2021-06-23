@@ -99,7 +99,7 @@ public class Network_Player : MonoBehaviourPun
                     nameR = hit.transform.GetComponent<Renderer>().material.name;
                     photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
                     right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
-                    Debug.Log("tag sync");
+                   // Debug.Log("tag sync");
                 }
                 else
                 {
@@ -108,11 +108,11 @@ public class Network_Player : MonoBehaviourPun
                         nameR = hit.transform.GetComponent<Renderer>().material.name;
                         //ChangeRayColour(nameR);
                         photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
-                        Debug.Log("tag not sync: photonView.IsMine");
+                       // Debug.Log("tag not sync: photonView.IsMine");
                     }
                     else
                     {
-                        Debug.Log("tag not sync");
+                      //  Debug.Log("tag not sync");
                     }
                 }
             }
@@ -174,8 +174,8 @@ public class Network_Player : MonoBehaviourPun
         {
             rayCast.GetComponent<Renderer>().material = none;
         }
-        Debug.Log("nameR : " + nameR);
-        Debug.Log("change");
+      //  Debug.Log("nameR : " + nameR);
+      //  Debug.Log("change");
     }
 
     [PunRPC]
@@ -211,10 +211,18 @@ public class Network_Player : MonoBehaviourPun
     }
 
     [PunRPC]
-    void tagMode(bool tag)
+    void tagMode(string tag)
     {
         Debug.Log("Change tag mode");
-        synctag = tag;
+        if ( tag == "syncro tag")
+        {
+            synctag = true;
+        }
+        else
+        {
+            synctag = false;
+        }
+      
         Debug.Log(synctag);
     }
 }
