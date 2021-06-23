@@ -191,7 +191,7 @@ public class Teleporter : MonoBehaviour
             {
                 longclic = true;
                 wait = false;
-                Debug.Log("long clic");
+                //Debug.Log("long clic");
                 //syncTeleportation = !syncTeleportation;
                 Menu.SetActive(true);
             }
@@ -205,20 +205,16 @@ public class Teleporter : MonoBehaviour
 
         if (UpdatePointer() == true && hit.transform.name == "syncro")
         {
-           // Debug.Log("Syncro");
-           Menu.SetActive(false);
-            //syncTeleportation = true;
+            // Debug.Log("Syncro");
+            Menu.SetActive(false);
             photonView.RPC("teleportationMode", Photon.Pun.RpcTarget.All, syncTeleportation);
-            //teleporationMode = "Syncro";
         }
 
         if (UpdatePointer() == true && hit.transform.name == "not syncro")
         {
             // Debug.Log("Not Syncro");
             Menu.SetActive(false);
-            //syncTeleportation = false;
             photonView.RPC("teleportationMode", Photon.Pun.RpcTarget.All, syncTeleportation);
-            // teleporationMode = "Not syncro";
         }
 
         if (UpdatePointer() == true && hit.transform.name == "syncro tag")
@@ -227,9 +223,7 @@ public class Teleporter : MonoBehaviour
             Menu.SetActive(false);
             player = GameObject.Find("Network Player(Clone)");
             synctag = true;
-            //player.GetComponent<PhotonView>().RPC("tagMode", Photon.Pun.RpcTarget.All, "syncro tag");
             photonView.RPC("tagMode", Photon.Pun.RpcTarget.All, synctag);
-
         }
 
         if (UpdatePointer() == true && hit.transform.name == "not syncro tag")
@@ -238,9 +232,7 @@ public class Teleporter : MonoBehaviour
             Menu.SetActive(false);
             player = GameObject.Find("Network Player(Clone)");
             synctag = false;
-            //player.GetComponent<PhotonView>().RPC("tagMode", Photon.Pun.RpcTarget.AllBuffered, "not syncro tag");
             photonView.RPC("tagMode", Photon.Pun.RpcTarget.All, synctag);
-
         }
 
         if (UpdatePointer() == true && hit.transform.name == "cancel")
