@@ -76,8 +76,8 @@ public class Network_Player : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-       
 
+        synctag = GameObject.Find("/[CameraRig]/Controller (right)").GetComponent<Teleporter>().synctag;
         Ray ray = new Ray(right.transform.position, right.transform.forward);
         if (photonView.IsMine)
         {
