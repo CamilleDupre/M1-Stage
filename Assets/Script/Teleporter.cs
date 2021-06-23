@@ -8,7 +8,15 @@ using UnityEngine.UI;
 public class Teleporter : MonoBehaviour
 {
     public GameObject Menu;
-    public Text m_text;
+
+    public GameObject tpsync;
+    public GameObject tpNotsync;
+    public GameObject tagsync;
+    public GameObject tagNotsync;
+
+
+    public Text m_text_tp;
+    public Text m_text_tag;
     // intersecion raycast and object
     public GameObject m_Pointer;
     private bool m_HasPosition = false;
@@ -69,9 +77,30 @@ public class Teleporter : MonoBehaviour
     {
         //Pointer
         m_HasPosition = UpdatePointer();
-        //m_text.text = "Teleportation mode : \n" + teleporationMode;
 
-        m_text.text = "tag mode : \n" + synctag;
+        if (syncTeleportation == true)
+        {
+            tpsync.SetActive(false);
+            tpNotsync.SetActive(true);
+        }
+        if (syncTeleportation == false)
+        {
+            tpNotsync.SetActive(false);
+            tpsync.SetActive(true);
+        }
+        if (synctag == true)
+        {
+            tagsync.SetActive(false);
+            tagNotsync.SetActive(true);
+        }
+        if (synctag == false)
+        {
+            tagNotsync.SetActive(false);
+            tagsync.SetActive(true);
+        }
+        //m_text_tp.text = "Teleportation mode : \n" + teleporationMode;
+
+        //m_text.text = "tag mode : \n" + synctag;
         //m_Pointer.SetActive(m_HasPosition);
 
         //Teleport
@@ -147,9 +176,7 @@ public class Teleporter : MonoBehaviour
             s = false;
             e = false;
             w = false;
-
-
-}
+        }
 
         // check the angle to detect a mouvement
         if (wait && Vector3.Angle(forwardClic, transform.forward) > 2)
@@ -167,7 +194,7 @@ public class Teleporter : MonoBehaviour
                 Debug.Log("long clic");
                 //syncTeleportation = !syncTeleportation;
                 Menu.SetActive(true);
-                }
+            }
         }
 
         if (isMoving)
@@ -179,7 +206,7 @@ public class Teleporter : MonoBehaviour
         if (UpdatePointer() == true && hit.transform.name == "syncro")
         {
            // Debug.Log("Syncro");
-            Menu.SetActive(false);
+           Menu.SetActive(false);
             //syncTeleportation = true;
             photonView.RPC("teleportationMode", Photon.Pun.RpcTarget.All, syncTeleportation);
             //teleporationMode = "Syncro";
@@ -187,11 +214,11 @@ public class Teleporter : MonoBehaviour
 
         if (UpdatePointer() == true && hit.transform.name == "not syncro")
         {
-           // Debug.Log("Not Syncro");
+            // Debug.Log("Not Syncro");
             Menu.SetActive(false);
             //syncTeleportation = false;
             photonView.RPC("teleportationMode", Photon.Pun.RpcTarget.All, syncTeleportation);
-           // teleporationMode = "Not syncro";
+            // teleporationMode = "Not syncro";
         }
 
         if (UpdatePointer() == true && hit.transform.name == "syncro tag")
@@ -210,15 +237,15 @@ public class Teleporter : MonoBehaviour
             // Debug.Log("Not Syncro");
             Menu.SetActive(false);
             player = GameObject.Find("Network Player(Clone)");
-           synctag = false;
+            synctag = false;
             player.GetComponent<PhotonView>().RPC("tagMode", Photon.Pun.RpcTarget.AllBuffered, "not syncro tag");
-           photonView.RPC("tagMode", Photon.Pun.RpcTarget.All, synctag);
+            photonView.RPC("tagMode", Photon.Pun.RpcTarget.All, synctag);
 
         }
 
         if (UpdatePointer() == true && hit.transform.name == "cancel")
         {
-           // Debug.Log("Cancel");
+            // Debug.Log("Cancel");
             Menu.SetActive(false);
         }
 
