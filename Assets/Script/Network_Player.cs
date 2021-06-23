@@ -85,8 +85,6 @@ public class Network_Player : MonoBehaviourPun
             MapPosition();
         }
 
-        Debug.Log("synctag" + synctag);
-
         if (Physics.Raycast(ray, out hit))
         {
 
