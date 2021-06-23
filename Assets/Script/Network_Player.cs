@@ -213,11 +213,6 @@ public class Network_Player : MonoBehaviourPun
     [PunRPC]
     void tagMode(string tag)
     {
-        tagMode2(tag);
-    }
-
-    void tagMode2(string tag)
-    {
         Debug.Log("Change tag mode");
         if (tag == "syncro tag")
         {
@@ -227,7 +222,7 @@ public class Network_Player : MonoBehaviourPun
         {
             synctag = false;
         }
-        Debug.Log("tag mode" + synctag);
+        Debug.Log("tag mode"+synctag);
     }
 
 }

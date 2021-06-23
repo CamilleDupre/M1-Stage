@@ -52,7 +52,7 @@ public class Teleporter : MonoBehaviour
     private bool s = false;
     private bool e = false;
     private bool w = false;
-    private bool synctag = true;
+    public bool synctag = true;
 
     public Transform character;
 
@@ -227,7 +227,7 @@ public class Teleporter : MonoBehaviour
             Menu.SetActive(false);
             player = GameObject.Find("Network Player(Clone)");
             synctag = true;
-            player.GetComponent<PhotonView>().RPC("tagMode", Photon.Pun.RpcTarget.All, "syncro tag");
+            //player.GetComponent<PhotonView>().RPC("tagMode", Photon.Pun.RpcTarget.All, "syncro tag");
             photonView.RPC("tagMode", Photon.Pun.RpcTarget.All, synctag);
 
         }
@@ -238,7 +238,7 @@ public class Teleporter : MonoBehaviour
             Menu.SetActive(false);
             player = GameObject.Find("Network Player(Clone)");
             synctag = false;
-            player.GetComponent<PhotonView>().RPC("tagMode", Photon.Pun.RpcTarget.AllBuffered, "not syncro tag");
+            //player.GetComponent<PhotonView>().RPC("tagMode", Photon.Pun.RpcTarget.AllBuffered, "not syncro tag");
             photonView.RPC("tagMode", Photon.Pun.RpcTarget.All, synctag);
 
         }
