@@ -126,7 +126,8 @@ public class DragDrop : MonoBehaviourPun
            
             salle = GameObject.Find("Salle");
             salle.GetComponent<PhotonView>().RPC("UndoCard", Photon.Pun.RpcTarget.All, temp.GetComponent<PhotonView>().ViewID , obUndo.Count);
-            obUndo.Remove(temp);
+            //obUndo.Remove(temp);
+            photonView.GetComponent<PhotonView>().RPC("RemoveobUndo", Photon.Pun.RpcTarget.All, temp.GetComponent<PhotonView>().ViewID);
         }
       
 
@@ -260,6 +261,12 @@ public class DragDrop : MonoBehaviourPun
 
     [PunRPC]
     void AddobUndo(int OB)
+    {
+        obUndo.Add(PhotonView.Find(OB).gameObject);
+    }
+
+    [PunRPC]
+    void RemoveobUndo(int OB)
     {
         obUndo.Add(PhotonView.Find(OB).gameObject);
     }
