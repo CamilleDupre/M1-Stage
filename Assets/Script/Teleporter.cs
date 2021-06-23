@@ -199,7 +199,8 @@ public class Teleporter : MonoBehaviour
             player = GameObject.Find("Network Player(Clone)");
             synctag = true;
             player.GetComponent<PhotonView>().RPC("tagMode", Photon.Pun.RpcTarget.AllBuffered, synctag);
-           
+            photonView.RPC("tagMode", Photon.Pun.RpcTarget.All, synctag);
+
         }
 
         if (UpdatePointer() == true && hit.transform.name == "not syncro tag")
@@ -209,7 +210,8 @@ public class Teleporter : MonoBehaviour
             player = GameObject.Find("Network Player(Clone)");
             synctag = false;
             player.GetComponent<PhotonView>().RPC("tagMode", Photon.Pun.RpcTarget.AllBuffered, synctag);
-            
+            photonView.RPC("tagMode", Photon.Pun.RpcTarget.All, synctag);
+
         }
 
         if (UpdatePointer() == true && hit.transform.name == "cancel")
@@ -372,6 +374,13 @@ public class Teleporter : MonoBehaviour
             teleporationMode = "Syncro";
         }
         
+    }
+    [PunRPC]
+    void tagMode(bool tag)
+    {
+       // Debug.Log("Change tag mode");
+        synctag = tag;
+        Debug.Log("teleport tag : "+synctag);
     }
 
     private IEnumerator MoveRig(Transform cameraRig , Vector3 translation)
