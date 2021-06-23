@@ -268,6 +268,6 @@ public class DragDrop : MonoBehaviourPun
     [PunRPC]
     void RemoveobUndo(int OB)
     {
-        obUndo.Add(PhotonView.Find(OB).gameObject);
+        obUndo.Remove(PhotonView.Find(OB).gameObject);
     }
 }
