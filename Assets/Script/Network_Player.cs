@@ -213,9 +213,10 @@ public class Network_Player : MonoBehaviourPun
     [PunRPC]
     void tagMode(string tag)
     {
-        tagMode2(tag);
+        photonView.RPC("tagMode2", Photon.Pun.RpcTarget.All, tag);
     }
 
+    [PunRPC]
     void tagMode2(string tag)
     {
         Debug.Log("Change tag mode");
