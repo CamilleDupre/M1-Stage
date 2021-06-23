@@ -335,14 +335,30 @@ public class Teleporter : MonoBehaviour
             //translateVector =  character.transform.forward * desiredDistance;
             //translateVector = new Vector3(character.transform.right.x * desiredDistance, cameraRig.position.y, character.transform.right.z * desiredDistance);  //  y fix
             //StartCoroutine(MoveRig(cameraRig, translateVector));
-            cameraRig.Rotate(0.0f, 90.0f, 0.0f, Space.World);
+            
+            if (!syncTeleportation)
+            {
+                cameraRig.Rotate(0.0f, 90.0f, 0.0f, Space.World);
+            }
+            else
+            {
+                photonView.RPC("MoveRig3", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, e);
+            }
         }
         else if (w)
         {
             //translateVector =  - character.transform.forward * desiredDistance;
             //translateVector = new Vector3(-character.transform.right.x * desiredDistance, cameraRig.position.y, -character.transform.right.z * desiredDistance);  //  y fix
             //StartCoroutine(MoveRig(cameraRig, translateVector));
-            cameraRig.Rotate( 0.0f,  -90.0f, 0.0f, Space.World);
+            
+            if (!syncTeleportation)
+            {
+                cameraRig.Rotate(0.0f, -90.0f, 0.0f, Space.World);
+            }
+            else
+            {
+                photonView.RPC("MoveRig3", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, w);
+            }
         }
         else if (hit.transform.tag == "Tp" )
         {
@@ -392,6 +408,20 @@ public class Teleporter : MonoBehaviour
     {
         Debug.Log("test");
         StartCoroutine(MoveRig(PhotonView.Find(cameraRig).transform, translation));
+    }
+
+    [PunRPC]
+    void MoveRig3(int cameraRig, string s)
+    {
+        if (s == "e")
+        {
+            PhotonView.Find(cameraRig).transform.Rotate(0.0f, 90.0f, 0.0f, Space.World);
+        }
+        else if (s == "w")
+        {
+            PhotonView.Find(cameraRig).transform.Rotate(0.0f, -90.0f, 0.0f, Space.World); ;
+        }
+        
     }
 
     [PunRPC]
