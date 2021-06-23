@@ -85,8 +85,8 @@ public class Network_Player : MonoBehaviourPun
             MapPosition();
         }
 
-     
-        
+        Debug.Log("synctag" + synctag);
+
         if (Physics.Raycast(ray, out hit))
         {
 
@@ -203,9 +203,9 @@ public class Network_Player : MonoBehaviourPun
                 PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = white;
               }
              else
-              {
+             {
                 PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = none;
-              }
+             }
         }
 
     }
@@ -222,7 +222,7 @@ public class Network_Player : MonoBehaviourPun
         {
             synctag = false;
         }
-        Debug.Log(synctag);
+        Debug.Log("tag mode"+synctag);
     }
 
 }

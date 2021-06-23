@@ -249,8 +249,6 @@ public class Teleporter : MonoBehaviour
             Menu.SetActive(false);
         }
 
-
-
     }
 
     public void clic()
@@ -409,7 +407,7 @@ public class Teleporter : MonoBehaviour
     {
        // Debug.Log("Change tag mode");
         synctag = tag;
-        Debug.Log("teleport tag : "+synctag);
+        //Debug.Log("teleport tag : "+synctag);
     }
 
     private IEnumerator MoveRig(Transform cameraRig , Vector3 translation)
