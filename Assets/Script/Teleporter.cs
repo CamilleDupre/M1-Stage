@@ -201,7 +201,7 @@ public class Teleporter : MonoBehaviour
             player = GameObject.Find("Network Player(Clone)");
             synctag = true;
             player.GetComponent<PhotonView>().RPC("tagMode", Photon.Pun.RpcTarget.AllBuffered, "syncro tag");
-           // photonView.RPC("tagMode", Photon.Pun.RpcTarget.All, synctag);
+            photonView.RPC("tagMode", Photon.Pun.RpcTarget.All, synctag);
 
         }
 
@@ -212,7 +212,7 @@ public class Teleporter : MonoBehaviour
             player = GameObject.Find("Network Player(Clone)");
            synctag = false;
             player.GetComponent<PhotonView>().RPC("tagMode", Photon.Pun.RpcTarget.AllBuffered, "not syncro tag");
-           // photonView.RPC("tagMode", Photon.Pun.RpcTarget.All, synctag);
+           photonView.RPC("tagMode", Photon.Pun.RpcTarget.All, synctag);
 
         }
 
