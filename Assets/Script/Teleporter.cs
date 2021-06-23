@@ -306,13 +306,29 @@ public class Teleporter : MonoBehaviour
         {
             //translateVector =  character.transform.forward * desiredDistance; // y not fix
             translateVector = new Vector3(character.transform.forward.x * desiredDistance, cameraRig.position.y, character.transform.forward.z * desiredDistance);  //  y fix
-            StartCoroutine(MoveRig(cameraRig, translateVector));
+           // StartCoroutine(MoveRig(cameraRig, translateVector));
+            if (!syncTeleportation)
+            {
+                StartCoroutine(MoveRig(cameraRig, translateVector));
+            }
+            else
+            {
+                photonView.RPC("MoveRig2", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
+            }
         }
         else if (s)
             {
             //translateVector =  - character.transform.forward * desiredDistance;
             translateVector = new Vector3(- character.transform.forward.x * desiredDistance, cameraRig.position.y, - character.transform.forward.z * desiredDistance);  //  y fix
-            StartCoroutine(MoveRig(cameraRig, translateVector));
+                                                                                                                                                                        //StartCoroutine(MoveRig(cameraRig, translateVector));
+            if (!syncTeleportation)
+            {
+                StartCoroutine(MoveRig(cameraRig, translateVector));
+            }
+            else
+            {
+                photonView.RPC("MoveRig2", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
+            }
         }
         else if (e)
         {
