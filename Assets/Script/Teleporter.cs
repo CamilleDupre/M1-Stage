@@ -175,8 +175,8 @@ public class Teleporter : MonoBehaviour
         // check the angle to detect a mouvement
         if (wait && Vector3.Angle(forwardClic, transform.forward) > 2)
         {
-            isMoving = true;
-            wait = false;
+            //isMoving = true;
+            //wait = false;
         }
 
         if (wait)
