@@ -51,6 +51,7 @@ public class Teleporter : MonoBehaviour
     private bool w = false;
     public bool synctag = true;
     public bool card1;
+    public bool training;
 
     public Transform character;
 
