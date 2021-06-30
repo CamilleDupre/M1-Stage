@@ -14,9 +14,6 @@ public class Teleporter : MonoBehaviour
     public GameObject tagsync;
     public GameObject tagNotsync;
 
-
-    public Text m_text_tp;
-    public Text m_text_tag;
     // intersecion raycast and object
     public GameObject m_Pointer;
     private bool m_HasPosition = false;
@@ -40,8 +37,8 @@ public class Teleporter : MonoBehaviour
     private bool longclic = false;
     private Vector3 coordClic;
     private Vector3 coordPrev;
-    public Vector3 forwardClic;
-    public float timer = 0;
+    private Vector3 forwardClic;
+    private float timer = 0;
 
     public bool syncTeleportation = false;
     private string teleporationMode = "Not syncro";
@@ -62,7 +59,7 @@ public class Teleporter : MonoBehaviour
 
     private PhotonView photonView;
     //player
-    public GameObject player;
+    private GameObject player;
 
 
     // Start is called before the first frame update
@@ -99,10 +96,6 @@ public class Teleporter : MonoBehaviour
             tagNotsync.SetActive(false);
             tagsync.SetActive(true);
         }
-        //m_text_tp.text = "Teleportation mode : \n" + teleporationMode;
-
-        //m_text.text = "tag mode : \n" + synctag;
-        //m_Pointer.SetActive(m_HasPosition);
 
         //Teleport
 
