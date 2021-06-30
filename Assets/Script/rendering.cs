@@ -23,6 +23,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
 
     //Card list
     public List<GameObject> cardList;
+    public List<GameObject> cardListToTeleport;
 
     //List of textures
     public object[] textures;
@@ -139,6 +140,8 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
             // check the material to know if the card must be teleported
             if (cardList[i].transform.GetChild(0).GetComponent<Renderer>().material.name == nameR)
             {
+                cardListToTeleport.Add(cardList[i]);
+                /*
                 // width heigth depending on the scale of the wall
                 Vector3 v = MurB.localScale;
                 h = tex.height / div;
@@ -153,7 +156,34 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
                 //Set position depending on how many card teleported
                 PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * j, 0, -0.02f);
                 j++; // 1 card more teleported
+                */
             }
+        }
+
+        for (int i = 0; i < cardListToTeleport.Count; i++)
+        {
+            int y;
+            // width heigth depending on the scale of the wall
+            Vector3 v = MurB.localScale;
+            h = tex.height / div;
+            w = tex.width / div;
+            w = w * (v.y / v.x);
+
+            //Set parent, rotation and localscale
+            PhotonView.Find(cardListToTeleport[i].GetComponent<PhotonView>().ViewID).transform.transform.parent = mur;
+            PhotonView.Find(cardListToTeleport[i].GetComponent<PhotonView>().ViewID).transform.transform.rotation = mur.rotation;
+            PhotonView.Find(cardListToTeleport[i].GetComponent<PhotonView>().ViewID).transform.transform.localScale = new Vector3(w, h, 1.0f);
+
+            if (i%2 == 0) //1st line
+            {
+                y = 1;
+            }
+           else // 2nd line
+            {
+               y = -1;
+            }
+
+            PhotonView.Find(cardListToTeleport[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = new Vector3(-0.35f + w + 1f * w * i, y, -0.02f);
         }
     }
 
