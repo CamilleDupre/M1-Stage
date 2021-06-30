@@ -43,7 +43,7 @@ public class Teleporter : MonoBehaviour
     public Vector3 forwardClic;
     public float timer = 0;
 
-    private bool syncTeleportation = false;
+    public bool syncTeleportation = false;
     private string teleporationMode = "Not syncro";
     float desiredDistance = 1;
 
@@ -53,6 +53,7 @@ public class Teleporter : MonoBehaviour
     private bool e = false;
     private bool w = false;
     public bool synctag = true;
+    public bool card1;
 
     public Transform character;
 

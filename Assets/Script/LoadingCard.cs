@@ -23,7 +23,15 @@ public class LoadingCard : MonoBehaviour
     {
         if (textures == null) // load one time the texture
         {
-            textures = Resources.LoadAll("dixit_part2/", typeof(Texture2D));
+            bool card1 = GameObject.Find("/[CameraRig]/Controller (right)").GetComponent<Teleporter>().card1;
+            if (card1)
+            {
+                textures = Resources.LoadAll("dixit_part1/", typeof(Texture2D));
+            }
+            else
+            {
+                textures = Resources.LoadAll("dixit_part2/", typeof(Texture2D));
+            }
         }
 
         // wall + card

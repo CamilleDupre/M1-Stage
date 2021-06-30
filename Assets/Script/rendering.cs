@@ -26,6 +26,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
 
     //List of textures
     public object[] textures;
+    public bool card1 = true;
 
     public class MyCard
     {
@@ -50,7 +51,16 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
     // Start is called before the first frame update
     void Awake()
     {
-        textures = Resources.LoadAll("dixit_part2/", typeof(Texture2D));
+       card1 = GameObject.Find("/[CameraRig]/Controller (right)").GetComponent<Teleporter>().card1;
+        if (card1)
+        {
+            textures = Resources.LoadAll("dixit_part1/", typeof(Texture2D));
+        }
+       else
+        {
+            textures = Resources.LoadAll("dixit_part2/", typeof(Texture2D));
+        }
+
         trash1.SetActive(false);
         trash2.SetActive(false);
         trash3.SetActive(false);
