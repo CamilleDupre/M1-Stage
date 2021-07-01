@@ -292,7 +292,7 @@ public class Teleporter : MonoBehaviour
         // head position + camera rig
         Vector3 headPosition = SteamVR_Render.Top().head.position;
         Transform cameraRig = SteamVR_Render.Top().origin;
-        
+      
         //player possition
         Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
 
@@ -408,13 +408,27 @@ public class Teleporter : MonoBehaviour
     [PunRPC]
     void MoveRig3(int cameraRig, string s)
     {
+        GameObject player = GameObject.Find("Network Player(Clone)");
+        Transform childPlayer = player.transform.Find("Head");
+
+        Vector3 headPosition = SteamVR_Render.Top().head.position;
+        Transform camera = SteamVR_Render.Top().origin;
+
+        //player possition
+        Vector3 groundPosition = new Vector3(headPosition.x, camera.position.y, headPosition.z);
+        Vector3 playerposition = new Vector3(childPlayer.position.x, 0, childPlayer.position.z);
+        Transform c;
         if (s == "e")
         {
-            PhotonView.Find(cameraRig).transform.Rotate(0.0f, 90.0f, 0.0f, Space.World);
+            PhotonView.Find(cameraRig).transform.Rotate(0.0f, 90.0f, 0.0f, Space.Self);
+            Vector3 groundPosition2 = new Vector3(headPosition.x, camera.position.y, headPosition.z);
+            Vector3 translation = groundPosition2 - groundPosition;
+            //camera.position += translation; //new Vector3(0, 0, 0);//groundPosition;
+            camera.position = playerposition;
         }
         else if (s == "w")
         {
-            PhotonView.Find(cameraRig).transform.Rotate(0.0f, -90.0f, 0.0f, Space.World); ;
+            PhotonView.Find(cameraRig).transform.Rotate(0.0f, -90.0f, 0.0f, Space.World);
         }
         
     }
