@@ -106,7 +106,8 @@ public class Network_Player : MonoBehaviourPun
                         nameR = hit.transform.GetComponent<Renderer>().material.name;
                         //ChangeRayColour(nameR);
                         photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
-                       // Debug.Log("tag not sync: photonView.IsMine");
+                        right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
+                        // Debug.Log("tag not sync: photonView.IsMine");
                     }
                     else
                     {
@@ -181,7 +182,8 @@ public class Network_Player : MonoBehaviourPun
     {
         {
             // change the tag color of a picture
-
+            if (PhotonView.Find(OB).gameObject.tag != "Card"){ return; }
+           
             nameT = rayCast.GetComponent<Renderer>().material.name;
             
               if (nameT == "blue (Instance)")
