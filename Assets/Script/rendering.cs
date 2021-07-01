@@ -137,8 +137,16 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         else { mur = MurR; }
 
         int j = 0; // number of card teleported
-       // int nbCardToTeleport = 0;
+        int nbCardToTeleport = 0;
+        for (int i = 0; i < cardList.Count; i++)
+        {
 
+            // check the material to know if the card must be teleported
+            if (cardList[i].transform.GetChild(0).GetComponent<Renderer>().material.name == nameR)
+            {
+                nbCardToTeleport++;
+            }
+        }
         for (int i = 0; i < cardList.Count; i++)
         {
 
@@ -189,8 +197,15 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
                     x = -m_Pointer.transform.position.z / v.x;
                     y += (m_Pointer.transform.position.y - p.y) / v.y;
                 }
-                
-                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = new Vector3(x + 1f * w * (j / 2), y , -0.02f); //+-0.35f + w
+
+                if(nbCardToTeleport == 1)
+                {
+                    PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = new Vector3(x + 1f * w * (j / 2), y - 0.15f, -0.02f); //+-0.35f + w
+                }
+                else
+                {
+                   PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = new Vector3(-w*(nbCardToTeleport/4) + x + 1f * w * (j / 2), y, -0.02f); //+-0.35f + w
+                }
                 j++; // 1 card more teleported
                 
                 
