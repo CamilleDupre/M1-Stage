@@ -14,6 +14,8 @@ public class Teleporter : MonoBehaviour
     public GameObject tagsync;
     public GameObject tagNotsync;
 
+    public GameObject Cube;
+
     // intersecion raycast and object
     public GameObject m_Pointer;
     private bool m_HasPosition = false;
@@ -420,14 +422,26 @@ public class Teleporter : MonoBehaviour
         Transform c;
         if (s == "e")
         {
-            PhotonView.Find(cameraRig).transform.Rotate(0.0f, 90.0f, 0.0f, Space.Self);
-            Vector3 groundPosition2 = new Vector3(headPosition.x, camera.position.y, headPosition.z);
-            Vector3 translation = groundPosition2 - groundPosition;
+            // Vector3 translateVector = new Vector3(-Cube.transform.forward.x * desiredDistance, Cube.transform.position.y, Cube.transform.forward.z);
+            //Cube.transform.position += translateVector;
+            //Cube.transform.Rotate(0.0f, 90.0f, 0.0f, Space.World);
+            //Cube.transform.position += translateVector;
+            Cube.transform.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
+            PhotonView.Find(cameraRig).transform.Rotate(0.0f, 90.0f, 0.0f, Space.World);
+            //Vector3 groundPosition2 = new Vector3(headPosition.x, camera.position.y, headPosition.z);
+            //Vector3 translation = groundPosition2 - groundPosition;
             //camera.position += translation; //new Vector3(0, 0, 0);//groundPosition;
-            camera.position = playerposition;
+            //camera.position = playerposition;
         }
         else if (s == "w")
         {
+
+            //Vector3 translateVector = new Vector3(Cube.transform.forward.x * desiredDistance, Cube.transform.position.y, Cube.transform.position.z);
+            //Cube.transform.position += translateVector;
+            //Cube.transform.Rotate(0.0f, -90.0f, 0.0f, Space.World);
+            Cube.transform.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, -90);
+            //Cube.transform.position += translateVector;
+
             PhotonView.Find(cameraRig).transform.Rotate(0.0f, -90.0f, 0.0f, Space.World);
         }
         
