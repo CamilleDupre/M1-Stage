@@ -112,7 +112,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        
+    
     }
 
     [PunRPC]
@@ -153,7 +153,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
             // check the material to know if the card must be teleported
             if (cardList[i].transform.GetChild(0).GetComponent<Renderer>().material.name == nameR)
             {               
-                float y;
+                float y = 0;
                 // width heigth depending on the scale of the wall
                 Vector3 v = MurB.localScale;
                 h = tex.height / div;
@@ -167,16 +167,23 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
                 PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localScale = new Vector3(w, h, 1.0f);
 
                 //Set position depending on how many card teleported
-               // PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * j, 0, -0.02f);
-                if (j % 2 == 0) //1st line
+                // PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * j, 0, -0.02f);
+
+                if (nbCardToTeleport > 1)
                 {
-                    y = 0.15f;
+                    if (j % 2 == 0) //1st line
+                    {
+                        y = 0.15f;
+                    }
+                    else // 2nd line
+                    {
+                        y = -0.15f;
+                    }
                 }
-                else // 2nd line
-                {
-                    y = -0.15f;
-                }
-                m_Pointer = GameObject.Find("/[CameraRig]/Controller (right)").GetComponent<DragDrop>().m_Pointer;
+                //
+               // m_Pointer = GameObject.Find("/[CameraRig]/Controller (right)").GetComponent<DragDrop>().m_Pointer;
+                Debug.Log("m_Pointer " + m_Pointer);
+
                 float x = 0;
 
                 if (mur.name == "MUR L")
@@ -189,7 +196,6 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
                 {
                     x = m_Pointer.transform.position.x / v.x;
                     y += (m_Pointer.transform.position.y - p.y) / v.y;
-                   // ob.transform.localPosition = new Vector3(x, y, z);
                 }
 
                 else if (mur.name == "MUR R")
@@ -198,14 +204,8 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
                     y += (m_Pointer.transform.position.y - p.y) / v.y;
                 }
 
-                if(nbCardToTeleport == 1)
-                {
-                    PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = new Vector3(x + 1f * w * (j / 2), y - 0.15f, -0.02f); //+-0.35f + w
-                }
-                else
-                {
-                   PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = new Vector3(-w*(nbCardToTeleport/4) + x + 1f * w * (j / 2), y, -0.02f); //+-0.35f + w
-                }
+                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = new Vector3(-w*(nbCardToTeleport/4) + x + 1f * w * (j / 2), y, -0.02f); //+-0.35f + w
+                
                 j++; // 1 card more teleported
                 
                 

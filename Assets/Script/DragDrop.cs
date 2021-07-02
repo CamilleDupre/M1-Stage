@@ -140,13 +140,19 @@ public class DragDrop : MonoBehaviourPun
                Debug.Log("long clic");
             }
         }
-        if (longclic && UpdatePointer() && hit.transform.tag == "Wall")
+        if (longclic && UpdatePointer() && (hit.transform.tag == "Wall" || hit.transform.tag == "Card"))
         {
-            //maybe teleport card on the wall or menuhit.transform.tag == "Wall")
+            string namewall = "";
+            if (hit.transform.tag == "Card")
             {
-                salle = GameObject.Find("Salle");
-                salle.GetComponent<PhotonView>().RPC("TeleportCard", Photon.Pun.RpcTarget.All, nameR, hit.transform.name);
+                namewall = hit.transform.parent.name;
             }
+            else 
+            {
+                namewall = hit.transform.name;
+            }
+            salle = GameObject.Find("Salle");
+            salle.GetComponent<PhotonView>().RPC("TeleportCard", Photon.Pun.RpcTarget.All, nameR, namewall);
         }
             Move();
     }
