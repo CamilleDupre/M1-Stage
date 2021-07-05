@@ -416,6 +416,9 @@ public class Teleporter : MonoBehaviour
         Vector3 headPosition = SteamVR_Render.Top().head.position;
         Transform camera = SteamVR_Render.Top().origin;
 
+        Transform cameraRig2 = SteamVR_Render.Top().origin;
+
+
         //player possition
         Vector3 groundPosition = new Vector3(headPosition.x, camera.position.y, headPosition.z);
         Vector3 playerposition = new Vector3(childPlayer.position.x, 0, childPlayer.position.z);
@@ -427,7 +430,8 @@ public class Teleporter : MonoBehaviour
             //Cube.transform.Rotate(0.0f, 90.0f, 0.0f, Space.World);
             //Cube.transform.position += translateVector;
             Cube.transform.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
-            PhotonView.Find(cameraRig).transform.Rotate(0.0f, 90.0f, 0.0f, Space.World);
+            cameraRig2.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
+            //PhotonView.Find(cameraRig).transform.Rotate(0.0f, 90.0f, 0.0f, Space.World);
             //Vector3 groundPosition2 = new Vector3(headPosition.x, camera.position.y, headPosition.z);
             //Vector3 translation = groundPosition2 - groundPosition;
             //camera.position += translation; //new Vector3(0, 0, 0);//groundPosition;
