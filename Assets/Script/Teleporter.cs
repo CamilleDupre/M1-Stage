@@ -339,6 +339,7 @@ public class Teleporter : MonoBehaviour
             }
             else
             {
+                
                 photonView.RPC("MoveRig3", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, "e");
             }
         }
@@ -354,7 +355,8 @@ public class Teleporter : MonoBehaviour
             }
             else
             {
-                photonView.RPC("MoveRig3", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, "w");
+                Transform cam = cameraRig.Find("Camera (eye)");
+                photonView.RPC("MoveRig3", Photon.Pun.RpcTarget.All, cam.gameObject.GetComponent<PhotonView>().ViewID, "w");
             }
         }
         else if (hit.transform.tag == "Tp" )
