@@ -418,19 +418,26 @@ public class Teleporter : MonoBehaviour
 
         Transform cameraRig2 = SteamVR_Render.Top().origin;
 
+        Transform cam = cameraRig2.Find("Camera (eye)");
+        Debug.Log("Camera : " + cam.position);
+        Debug.Log("Camera inverse : " + cam.InverseTransformPoint(transform.position));
+      
 
         //player possition
         Vector3 groundPosition = new Vector3(headPosition.x, camera.position.y, headPosition.z);
-        Vector3 playerposition = new Vector3(childPlayer.position.x, 0, childPlayer.position.z);
-        Transform c;
+        Vector3 playerposition = new Vector3(camera.position.x, 0, camera.position.z);
+
+
+        Transform cameraEye = cameraRig2.Find("Camera (eye)");
         if (s == "e")
         {
-            // Vector3 translateVector = new Vector3(-Cube.transform.forward.x * desiredDistance, Cube.transform.position.y, Cube.transform.forward.z);
-            //Cube.transform.position += translateVector;
-            //Cube.transform.Rotate(0.0f, 90.0f, 0.0f, Space.World);
-            //Cube.transform.position += translateVector;
-            Cube.transform.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
-            cameraRig2.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
+
+            //StartCoroutine(MoveRig(PhotonView.Find(cameraRig).transform, -cameraEye.position));
+
+            //Cube.transform.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
+            Cube.transform.RotateAround(cam.transform.position, Vector3.up, 90);
+            //cameraRig2.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
+            cameraRig2.RotateAround(cam.transform.position, Vector3.up, 90);
             //PhotonView.Find(cameraRig).transform.Rotate(0.0f, 90.0f, 0.0f, Space.World);
             //Vector3 groundPosition2 = new Vector3(headPosition.x, camera.position.y, headPosition.z);
             //Vector3 translation = groundPosition2 - groundPosition;
@@ -439,14 +446,9 @@ public class Teleporter : MonoBehaviour
         }
         else if (s == "w")
         {
-
-            //Vector3 translateVector = new Vector3(Cube.transform.forward.x * desiredDistance, Cube.transform.position.y, Cube.transform.position.z);
-            //Cube.transform.position += translateVector;
-            //Cube.transform.Rotate(0.0f, -90.0f, 0.0f, Space.World);
             Cube.transform.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, -90);
-            //Cube.transform.position += translateVector;
-
-            PhotonView.Find(cameraRig).transform.Rotate(0.0f, -90.0f, 0.0f, Space.World);
+            //PhotonView.Find(cameraRig).transform.Rotate(0.0f, -90.0f, 0.0f, Space.World);
+            cameraRig2.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, -90);
         }
         
     }
