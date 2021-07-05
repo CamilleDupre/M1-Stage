@@ -339,8 +339,8 @@ public class Teleporter : MonoBehaviour
             }
             else
             {
-                
-                photonView.RPC("MoveRig3", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, "e");
+                Transform cam = cameraRig.Find("Camera (eye)");
+                photonView.RPC("MoveRig3", Photon.Pun.RpcTarget.Others, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, cam.gameObject.GetComponent<PhotonView>().ViewID, "e");
             }
         }
         else if (w)
@@ -356,7 +356,7 @@ public class Teleporter : MonoBehaviour
             else
             {
                 Transform cam = cameraRig.Find("Camera (eye)");
-                photonView.RPC("MoveRig3", Photon.Pun.RpcTarget.All, cam.gameObject.GetComponent<PhotonView>().ViewID, "w");
+                photonView.RPC("MoveRig3", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, cam.gameObject.GetComponent<PhotonView>().ViewID, "w");
             }
         }
         else if (hit.transform.tag == "Tp" )
@@ -410,7 +410,7 @@ public class Teleporter : MonoBehaviour
     }
 
     [PunRPC]
-    void MoveRig3(int cameraRig, string s)
+    void MoveRig3(int cameraRig, int cameraEye, string s)
     {
         GameObject player = GameObject.Find("Network Player(Clone)");
         Transform childPlayer = player.transform.Find("Head");
@@ -430,27 +430,23 @@ public class Teleporter : MonoBehaviour
         Vector3 playerposition = new Vector3(camera.position.x, 0, camera.position.z);
 
 
-        Transform cameraEye = cameraRig2.Find("Camera (eye)");
+       //Transform cameraEye = cameraRig2.Find("Camera (eye)");
         if (s == "e")
         {
 
             //StartCoroutine(MoveRig(PhotonView.Find(cameraRig).transform, -cameraEye.position));
 
             //Cube.transform.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
-            Cube.transform.RotateAround(cam.transform.position, Vector3.up, 90);
+            Cube.transform.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
             //cameraRig2.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
-            cameraRig2.RotateAround(cam.transform.position, Vector3.up, 90);
-            //PhotonView.Find(cameraRig).transform.Rotate(0.0f, 90.0f, 0.0f, Space.World);
-            //Vector3 groundPosition2 = new Vector3(headPosition.x, camera.position.y, headPosition.z);
-            //Vector3 translation = groundPosition2 - groundPosition;
-            //camera.position += translation; //new Vector3(0, 0, 0);//groundPosition;
-            //camera.position = playerposition;
+            cameraRig2.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
+            
         }
         else if (s == "w")
         {
-            Cube.transform.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, -90);
+            Cube.transform.RotateAround(PhotonView.Find(cameraEye).transform.position, Vector3.up, -90);
             //PhotonView.Find(cameraRig).transform.Rotate(0.0f, -90.0f, 0.0f, Space.World);
-            cameraRig2.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, -90);
+            cameraRig2.RotateAround(PhotonView.Find(cameraEye).transform.position, Vector3.up, -90);
         }
         
     }
