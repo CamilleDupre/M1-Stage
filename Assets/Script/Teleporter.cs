@@ -447,7 +447,7 @@ public class Teleporter : MonoBehaviour
         {
             Cube.transform.RotateAround(PhotonView.Find(cameraEye).transform.position, Vector3.up, -90);
             //PhotonView.Find(cameraRig).transform.Rotate(0.0f, -90.0f, 0.0f, Space.World);
-            cameraRig2.RotateAround(PhotonView.Find(cameraEye).transform.position, Vector3.up, -90);
+            cameraRig2.RotateAround(cam.position, Vector3.up, -90);
         }
         
     }
