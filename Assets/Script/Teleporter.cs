@@ -335,7 +335,7 @@ public class Teleporter : MonoBehaviour
             }
             else
             {  
-                photonView.RPC("MoveRig3", Photon.Pun.RpcTarget.All, "e");
+                photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e");
             }
         }
         else if (w)
@@ -350,7 +350,7 @@ public class Teleporter : MonoBehaviour
             else
             {
                 
-                photonView.RPC("MoveRig3", Photon.Pun.RpcTarget.All, "w");
+                photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
             }
         }
         else if (hit.transform.tag == "Tp" )
@@ -372,15 +372,18 @@ public class Teleporter : MonoBehaviour
             //check the wall
             if (hit.transform.name == "MUR B" || hit.transform.parent.name == "MUR B")
             {
-                 translateVector = new Vector3(m_Pointer.transform.position.x - groundPosition.x, 0, 0);
+                //translateVector = new Vector3(m_Pointer.transform.position.x - groundPosition.x, 0, 0);
+                translateVector = new Vector3(m_Pointer.transform.position.x - Cube.transform.position.x, 0, 0);
             }
             else if (hit.transform.name == "MUR R" || hit.transform.parent.name == "MUR R")
-            { 
-                 translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - groundPosition.z);
+            {
+                //translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - groundPosition.z);
+                translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - Cube.transform.position.z);
             }
             else //(hit.transform.name == "MUR L" || hit.transform.parent.name == "MUR L")
             {
-                 translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - groundPosition.z); 
+                //translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - groundPosition.z); 
+                translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - Cube.transform.position.z);
             }
             //then teleport
             // 
@@ -404,7 +407,7 @@ public class Teleporter : MonoBehaviour
     }
 
     [PunRPC]
-    void MoveRig3(string s)
+    void RotationRigRPC(string s)
     {
         Transform cameraRig2 = SteamVR_Render.Top().origin;
 
