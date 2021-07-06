@@ -340,7 +340,7 @@ public class Teleporter : MonoBehaviour
             else
             {
                 Transform cam = cameraRig.Find("Camera (eye)");
-                photonView.RPC("MoveRig3", Photon.Pun.RpcTarget.Others, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, cam.gameObject.GetComponent<PhotonView>().ViewID, "e");
+                photonView.RPC("MoveRig3", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, cam.gameObject.GetComponent<PhotonView>().ViewID, "e");
             }
         }
         else if (w)
@@ -424,11 +424,12 @@ public class Teleporter : MonoBehaviour
             //StartCoroutine(MoveRig(PhotonView.Find(cameraRig).transform, -cameraEye.position));
 
             //Cube.transform.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
-            Cube.transform.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
+            Cube.transform.RotateAround(PhotonView.Find(cameraEye).transform.position, Vector3.up, 90);
             //cameraRig2.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
             //cameraRig2.RotateAround(cam.transform.position, Vector3.up, 90);
-            cameraRig2.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
-            
+            //cameraRig2.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
+            cameraRig2.RotateAround(cam.position, Vector3.up, 90);
+
         }
         else if (s == "w")
         {
