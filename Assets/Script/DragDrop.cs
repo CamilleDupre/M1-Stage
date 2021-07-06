@@ -156,8 +156,8 @@ public class DragDrop : MonoBehaviourPun
             }
             salle = GameObject.Find("Salle");
             //salle.GetComponent<PhotonView>().RPC("TeleportCard", Photon.Pun.RpcTarget.All, nameR, namewall);
-            photonView.RPC("TeleportCard", Photon.Pun.RpcTarget.All, nameR, namewall);
-            //TeleportCard(nameR, namewall);
+            //photonView.RPC("TeleportCard", Photon.Pun.RpcTarget.All, nameR, namewall);
+            TeleportCard(nameR, namewall);
         }
 
         Move();
@@ -197,6 +197,7 @@ public class DragDrop : MonoBehaviourPun
             // check the material to know if the card must be teleported
             if (cardList[i].transform.GetChild(0).GetComponent<Renderer>().material.name == nameR)
             {
+                /*
                 float y = 0;
                 // width heigth depending on the scale of the wall
                 Vector3 v = MurB.localScale;
@@ -204,12 +205,13 @@ public class DragDrop : MonoBehaviourPun
                 w = tex.width / div;
                 w = w * (v.y / v.x);
                 Vector3 p = mur.position;
-
-                //Set parent, rotation and localscale
+                // ICI RPC ?
+                //Set parent, rotation and localscale 
                 PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.parent = mur;
                 PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.rotation = mur.rotation;
                 PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localScale = new Vector3(w, h, 1.0f);
-
+                */
+                photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, murName, cardList[i].GetComponent<PhotonView>().ViewID);
                 //Set position depending on how many card teleported
                 // PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * j, 0, -0.02f);
 
