@@ -310,7 +310,7 @@ public class Teleporter : MonoBehaviour
             }
             else
             {
-                photonView.RPC("MoveRig2", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
+                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
             }
         }
         else if (s)
@@ -324,39 +324,33 @@ public class Teleporter : MonoBehaviour
             }
             else
             {
-                photonView.RPC("MoveRig2", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
+                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
             }
         }
         else if (e)
         {
-            //translateVector =  character.transform.forward * desiredDistance;
-            //translateVector = new Vector3(character.transform.right.x * desiredDistance, cameraRig.position.y, character.transform.right.z * desiredDistance);  //  y fix
-            //StartCoroutine(MoveRig(cameraRig, translateVector));
-            
-            if (!syncTeleportation)
-            {
-                cameraRig.Rotate(0.0f, 90.0f, 0.0f, Space.World);
+            Transform cam = cameraRig.Find("Camera (eye)");
+            if (!syncTeleportation) { 
+                cameraRig.RotateAround(cam.transform.position, Vector3.up, 90);
             }
             else
-            {
-                Transform cam = cameraRig.Find("Camera (eye)");
-                photonView.RPC("MoveRig3", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, cam.gameObject.GetComponent<PhotonView>().ViewID, "e");
+            {  
+                photonView.RPC("MoveRig3", Photon.Pun.RpcTarget.All, "e");
             }
         }
         else if (w)
         {
-            //translateVector =  - character.transform.forward * desiredDistance;
-            //translateVector = new Vector3(-character.transform.right.x * desiredDistance, cameraRig.position.y, -character.transform.right.z * desiredDistance);  //  y fix
-            //StartCoroutine(MoveRig(cameraRig, translateVector));
-            
+            Transform cam = cameraRig.Find("Camera (eye)");
+           
             if (!syncTeleportation)
             {
-                cameraRig.Rotate(0.0f, -90.0f, 0.0f, Space.World);
+                //cameraRig.Rotate(0.0f, -90.0f, 0.0f, Space.World);
+                cameraRig.RotateAround(cam.transform.position, Vector3.up, 90);
             }
             else
             {
-                Transform cam = cameraRig.Find("Camera (eye)");
-                photonView.RPC("MoveRig3", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, cam.gameObject.GetComponent<PhotonView>().ViewID, "w");
+                
+                photonView.RPC("MoveRig3", Photon.Pun.RpcTarget.All, "w");
             }
         }
         else if (hit.transform.tag == "Tp" )
@@ -368,7 +362,7 @@ public class Teleporter : MonoBehaviour
                 StartCoroutine(MoveRig(cameraRig, translateVector));
             }
             else {
-                photonView.RPC("MoveRig2", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
+                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
             }
             
         }
@@ -397,20 +391,20 @@ public class Teleporter : MonoBehaviour
             }
             else
             {
-                photonView.RPC("MoveRig2", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
+                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
             }
         }
     }
 
     [PunRPC]
-    void MoveRig2(int cameraRig, Vector3 translation)
+    void MoveRigRPC(int cameraRig, Vector3 translation)
     {
         Debug.Log("test");
         StartCoroutine(MoveRig(PhotonView.Find(cameraRig).transform, translation));
     }
 
     [PunRPC]
-    void MoveRig3(int cameraRig, int cameraEye, string s)
+    void MoveRig3(string s)
     {
         Transform cameraRig2 = SteamVR_Render.Top().origin;
 
@@ -420,14 +414,7 @@ public class Teleporter : MonoBehaviour
       
         if (s == "e")
         {
-
-            //StartCoroutine(MoveRig(PhotonView.Find(cameraRig).transform, -cameraEye.position));
-
             Cube.transform.RotateAround(Cube.transform.position, Vector3.up, 90);
-            //Cube.transform.RotateAround(PhotonView.Find(cameraEye).transform.position, Vector3.up, 90);
-            //cameraRig2.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
-            //cameraRig2.RotateAround(cam.transform.position, Vector3.up, 90);
-            //cameraRig2.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
             cameraRig2.RotateAround(Cube.transform.position, Vector3.up, 90);
 
         }
@@ -457,6 +444,7 @@ public class Teleporter : MonoBehaviour
         }
         
     }
+
     [PunRPC]
     void tagMode(bool tag)
     {
@@ -474,7 +462,10 @@ public class Teleporter : MonoBehaviour
         yield return new WaitForSeconds( m_FadeTime); // fade time
         
         cameraRig.position += translation; // teleportation
-        Cube.transform.position += translation; // teleportation
+        if (syncTeleportation)
+        {
+            Cube.transform.position += translation; // teleportation
+        }
 
         SteamVR_Fade.Start(Color.clear, m_FadeTime, true); // normal screen
 
