@@ -423,7 +423,7 @@ public class Teleporter : MonoBehaviour
 
             //StartCoroutine(MoveRig(PhotonView.Find(cameraRig).transform, -cameraEye.position));
 
-            //Cube.transform.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
+            Cube.transform.RotateAround(Cube.transform.position, Vector3.up, 90);
             //Cube.transform.RotateAround(PhotonView.Find(cameraEye).transform.position, Vector3.up, 90);
             //cameraRig2.RotateAround(PhotonView.Find(cameraRig).transform.position, Vector3.up, 90);
             //cameraRig2.RotateAround(cam.transform.position, Vector3.up, 90);
@@ -433,7 +433,7 @@ public class Teleporter : MonoBehaviour
         }
         else if (s == "w")
         {
-            //Cube.transform.RotateAround(PhotonView.Find(cameraEye).transform.position, Vector3.up, -90);
+            Cube.transform.RotateAround(Cube.transform.position, Vector3.up, -90);
             //PhotonView.Find(cameraRig).transform.Rotate(0.0f, -90.0f, 0.0f, Space.World);
             cameraRig2.RotateAround(Cube.transform.position, Vector3.up, -90);
             
@@ -474,6 +474,7 @@ public class Teleporter : MonoBehaviour
         yield return new WaitForSeconds( m_FadeTime); // fade time
         
         cameraRig.position += translation; // teleportation
+        Cube.transform.position += translation; // teleportation
 
         SteamVR_Fade.Start(Color.clear, m_FadeTime, true); // normal screen
 
