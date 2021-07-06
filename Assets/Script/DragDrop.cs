@@ -65,6 +65,8 @@ public class DragDrop : MonoBehaviourPun
                 player = GameObject.Find("Network Player(Clone)");
                 player.GetComponent<PhotonView>().RPC("ChangeTag", Photon.Pun.RpcTarget.AllBuffered, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
             }
+
+            
             isMoving = false;
             ob = null;
             wait = false;
@@ -140,6 +142,7 @@ public class DragDrop : MonoBehaviourPun
                Debug.Log("long clic");
             }
         }
+
         if (longclic && UpdatePointer() && (hit.transform.tag == "Wall" || hit.transform.tag == "Card"))
         {
             string namewall = "";
@@ -147,14 +150,110 @@ public class DragDrop : MonoBehaviourPun
             {
                 namewall = hit.transform.parent.name;
             }
-            else 
+            else
             {
                 namewall = hit.transform.name;
             }
             salle = GameObject.Find("Salle");
-            salle.GetComponent<PhotonView>().RPC("TeleportCard", Photon.Pun.RpcTarget.All, nameR, namewall);
+            //salle.GetComponent<PhotonView>().RPC("TeleportCard", Photon.Pun.RpcTarget.All, nameR, namewall);
+            TeleportCard(nameR, namewall);
         }
-            Move();
+
+        Move();
+    }
+
+    void TeleportCard(string nameR, string murName)
+    {
+
+        salle = GameObject.Find("Salle");
+        List<GameObject> cardList = salle.GetComponent<rendering>().cardList;
+
+        float w, h;
+        float div = 2 * 1000f;
+        //Texture tex = (Texture2D)textures[0];
+        Transform mur;
+
+        //Check the walls
+        if (murName == "MUR B") { mur = MurB; }
+        else if (murName == "MUR L") { mur = MurL; }
+        else { mur = MurR; }
+
+        int j = 0; // number of card teleported
+        int nbCardToTeleport = 0;
+        for (int i = 0; i < cardList.Count; i++)
+        {
+
+            // check the material to know if the card must be teleported
+            if (cardList[i].transform.GetChild(0).GetComponent<Renderer>().material.name == nameR)
+            {
+                nbCardToTeleport++;
+            }
+        }
+        for (int i = 0; i < cardList.Count; i++)
+        {
+
+            // check the material to know if the card must be teleported
+            if (cardList[i].transform.GetChild(0).GetComponent<Renderer>().material.name == nameR)
+            {
+                float y = 0;
+                // width heigth depending on the scale of the wall
+                Vector3 v = MurB.localScale;
+                h = tex.height / div;
+                w = tex.width / div;
+                w = w * (v.y / v.x);
+                Vector3 p = mur.position;
+
+                //Set parent, rotation and localscale
+                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.parent = mur;
+                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.rotation = mur.rotation;
+                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localScale = new Vector3(w, h, 1.0f);
+
+                //Set position depending on how many card teleported
+                // PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * j, 0, -0.02f);
+
+                if (nbCardToTeleport > 1)
+                {
+                    if (j % 2 == 0) //1st line
+                    {
+                        y = 0.15f;
+                    }
+                    else // 2nd line
+                    {
+                        y = -0.15f;
+                    }
+                }
+                //
+                // m_Pointer = GameObject.Find("/[CameraRig]/Controller (right)").GetComponent<DragDrop>().m_Pointer;
+                Debug.Log("m_Pointer " + m_Pointer);
+
+                float x = 0;
+
+                if (mur.name == "MUR L")
+                {
+                    x = m_Pointer.transform.position.z / v.x;
+                    y += (m_Pointer.transform.position.y - p.y) / v.y;
+                }
+
+                else if (mur.name == "MUR B")
+                {
+                    x = m_Pointer.transform.position.x / v.x;
+                    y += (m_Pointer.transform.position.y - p.y) / v.y;
+                }
+
+                else if (mur.name == "MUR R")
+                {
+                    x = -m_Pointer.transform.position.z / v.x;
+                    y += (m_Pointer.transform.position.y - p.y) / v.y;
+                }
+
+                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = new Vector3(-w * (nbCardToTeleport / 4) + x + 1f * w * (j / 2), y, -0.02f); //+-0.35f + w
+
+                j++; // 1 card more teleported
+
+
+            }
+        }
+
     }
 
     private void Move()

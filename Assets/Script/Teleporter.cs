@@ -287,16 +287,51 @@ public class Teleporter : MonoBehaviour
 
     private void tryTeleport()
     {
+
         //if no hit stop the fonction
-        if (!m_HasPosition || m_IsTeleportoting)
+        if ( m_IsTeleportoting) //!m_HasPosition ||
             return;
 
         // head position + camera rig
         Vector3 headPosition = SteamVR_Render.Top().head.position;
         Transform cameraRig = SteamVR_Render.Top().origin;
-      
+
         //player possition
         Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
+        if (e)
+        {
+            Transform cam = cameraRig.Find("Camera (eye)");
+            if (!syncTeleportation)
+            {
+                cameraRig.RotateAround(cam.transform.position, Vector3.up, 90);
+            }
+            else
+            {
+                photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e");
+            }
+            return;
+        }
+        else if (w)
+        {
+            Transform cam = cameraRig.Find("Camera (eye)");
+
+            if (!syncTeleportation)
+            {
+                //cameraRig.Rotate(0.0f, -90.0f, 0.0f, Space.World);
+                cameraRig.RotateAround(cam.transform.position, Vector3.up, 90);
+            }
+            else
+            {
+
+                photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
+            }
+            return;
+        }
+
+
+        if (!m_HasPosition) // ||
+            return;
+
 
         Vector3 translateVector;
         if (n)
@@ -327,32 +362,7 @@ public class Teleporter : MonoBehaviour
                 photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
             }
         }
-        else if (e)
-        {
-            Transform cam = cameraRig.Find("Camera (eye)");
-            if (!syncTeleportation) { 
-                cameraRig.RotateAround(cam.transform.position, Vector3.up, 90);
-            }
-            else
-            {  
-                photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e");
-            }
-        }
-        else if (w)
-        {
-            Transform cam = cameraRig.Find("Camera (eye)");
-           
-            if (!syncTeleportation)
-            {
-                //cameraRig.Rotate(0.0f, -90.0f, 0.0f, Space.World);
-                cameraRig.RotateAround(cam.transform.position, Vector3.up, 90);
-            }
-            else
-            {
-                
-                photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
-            }
-        }
+        
         else if (hit.transform.tag == "Tp" )
         {
             translateVector = m_Pointer.transform.position - groundPosition;
@@ -432,9 +442,7 @@ public class Teleporter : MonoBehaviour
         Transform cameraRig2 = SteamVR_Render.Top().origin;
 
         Transform cam = cameraRig2.Find("Camera (eye)");
-        Debug.Log("Camera : " + cam.position);
-        Debug.Log("Camera inverse : " + cam.InverseTransformPoint(transform.position));
-      
+              
         if (s == "e")
         {
             Cube.transform.RotateAround(Cube.transform.position, Vector3.up, 90);
