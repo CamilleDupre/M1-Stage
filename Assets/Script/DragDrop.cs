@@ -156,12 +156,14 @@ public class DragDrop : MonoBehaviourPun
             }
             salle = GameObject.Find("Salle");
             //salle.GetComponent<PhotonView>().RPC("TeleportCard", Photon.Pun.RpcTarget.All, nameR, namewall);
-            TeleportCard(nameR, namewall);
+            photonView.RPC.RPC("TeleportCard", Photon.Pun.RpcTarget.All, nameR, namewall);
+            //TeleportCard(nameR, namewall);
         }
 
         Move();
     }
 
+    [PunRPC]
     void TeleportCard(string nameR, string murName)
     {
 
