@@ -372,18 +372,38 @@ public class Teleporter : MonoBehaviour
             //check the wall
             if (hit.transform.name == "MUR B" || hit.transform.parent.name == "MUR B")
             {
-                //translateVector = new Vector3(m_Pointer.transform.position.x - groundPosition.x, 0, 0);
-                translateVector = new Vector3(m_Pointer.transform.position.x - Cube.transform.position.x, 0, 0);
+                if (syncTeleportation)
+                {
+                    translateVector = new Vector3(m_Pointer.transform.position.x - Cube.transform.position.x, 0, 0);
+                }
+                else
+                {
+                    translateVector = new Vector3(m_Pointer.transform.position.x - groundPosition.x, 0, 0);
+                }
             }
             else if (hit.transform.name == "MUR R" || hit.transform.parent.name == "MUR R")
             {
-                //translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - groundPosition.z);
-                translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - Cube.transform.position.z);
+                if (syncTeleportation)
+                {
+                    translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - Cube.transform.position.z);
+                }
+                else
+                {
+                    translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - groundPosition.z);
+                }
             }
+        
             else //(hit.transform.name == "MUR L" || hit.transform.parent.name == "MUR L")
             {
-                //translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - groundPosition.z); 
-                translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - Cube.transform.position.z);
+                if (syncTeleportation)
+                {
+                    translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - Cube.transform.position.z);
+                }
+                else
+                {
+                    translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - groundPosition.z);
+                }
+        
             }
             //then teleport
             // 
