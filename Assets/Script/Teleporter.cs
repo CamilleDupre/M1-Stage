@@ -412,25 +412,12 @@ public class Teleporter : MonoBehaviour
     [PunRPC]
     void MoveRig3(int cameraRig, int cameraEye, string s)
     {
-        GameObject player = GameObject.Find("Network Player(Clone)");
-        Transform childPlayer = player.transform.Find("Head");
-
-        Vector3 headPosition = SteamVR_Render.Top().head.position;
-        Transform camera = SteamVR_Render.Top().origin;
-
         Transform cameraRig2 = SteamVR_Render.Top().origin;
 
         Transform cam = cameraRig2.Find("Camera (eye)");
         Debug.Log("Camera : " + cam.position);
         Debug.Log("Camera inverse : " + cam.InverseTransformPoint(transform.position));
       
-
-        //player possition
-        Vector3 groundPosition = new Vector3(headPosition.x, camera.position.y, headPosition.z);
-        Vector3 playerposition = new Vector3(camera.position.x, 0, camera.position.z);
-
-
-       //Transform cameraEye = cameraRig2.Find("Camera (eye)");
         if (s == "e")
         {
 
@@ -447,8 +434,8 @@ public class Teleporter : MonoBehaviour
         {
             Cube.transform.RotateAround(PhotonView.Find(cameraEye).transform.position, Vector3.up, -90);
             //PhotonView.Find(cameraRig).transform.Rotate(0.0f, -90.0f, 0.0f, Space.World);
-            //cameraRig2.RotateAround(cam.position, Vector3.up, -90);
-            cam.RotateAround(PhotonView.Find(cameraEye).transform.position, Vector3.up, 90);
+            cameraRig2.RotateAround(cam.position, Vector3.up, -90);
+            
         }
         
     }
