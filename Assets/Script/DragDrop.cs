@@ -197,14 +197,16 @@ public class DragDrop : MonoBehaviourPun
             // check the material to know if the card must be teleported
             if (cardList[i].transform.GetChild(0).GetComponent<Renderer>().material.name == nameR)
             {
-                /*
+                
                 float y = 0;
+                
                 // width heigth depending on the scale of the wall
                 Vector3 v = MurB.localScale;
                 h = tex.height / div;
                 w = tex.width / div;
                 w = w * (v.y / v.x);
                 Vector3 p = mur.position;
+                /*
                 // ICI RPC ?
                 //Set parent, rotation and localscale 
                 PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.parent = mur;
