@@ -20,6 +20,7 @@ public class Teleporter : MonoBehaviour
     public GameObject m_Pointer;
     private bool m_HasPosition = false;
     RaycastHit hit;
+    RaycastHit objectHit;
 
     //clic touchpad
     public SteamVR_Action_Boolean m_TeleportAction;
@@ -149,7 +150,7 @@ public class Teleporter : MonoBehaviour
                 Debug.Log("C");
                 coordClic = coordPrev = m_Pointer.transform.position; //hit.transform.position;
                 forwardClic = transform.forward;
-                Debug.Log("coordClic : " + coordClic);
+                //Debug.Log("coordClic : " + coordClic);
                 wait = true;
                 timer = Time.time;
             }
@@ -382,38 +383,111 @@ public class Teleporter : MonoBehaviour
             //check the wall
             if (hit.transform.name == "MUR B" || hit.transform.parent.name == "MUR B")
             {
+                //rotation pour etre face au "bon" mur  
                 if (syncTeleportation)
                 {
                     translateVector = new Vector3(m_Pointer.transform.position.x - Cube.transform.position.x, 0, 0);
+
+                    if (Physics.Raycast(Cube.transform.position, Cube.transform.forward, out objectHit))
+                    {
+                        Debug.Log("objHit : " + objectHit.transform.name);
+                        //do something if hit object ie
+
+                        if (objectHit.transform.name == "MUR L" || objectHit.transform.parent.name == "MUR L")
+                        {
+                            Debug.Log("need to rotate e 1 time");
+                            photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e");
+                        }
+                        else if (objectHit.transform.name == "MUR R" || objectHit.transform.parent.name == "MUR R")
+                        {
+                            // Debug.Log("ok");
+                            Debug.Log("need to rotate w 1 time");
+                            photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
+                           
+                        }
+                        else
+                        {
+                            //photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
+                        }
+                    }
                 }
                 else
                 {
                     translateVector = new Vector3(m_Pointer.transform.position.x - groundPosition.x, 0, 0);
                 }
+                
             }
             else if (hit.transform.name == "MUR R" || hit.transform.parent.name == "MUR R")
             {
                 if (syncTeleportation)
                 {
                     translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - Cube.transform.position.z);
+
+                        if (Physics.Raycast(Cube.transform.position, Cube.transform.forward, out objectHit))
+                        {
+                        Debug.Log("objHit : " +objectHit.transform.name);
+                        //do something if hit object ie
+                        
+                            if(objectHit.transform.name == "MUR B" || objectHit.transform.parent.name == "MUR B")
+                            {
+                                Debug.Log("need to rotate e 1 time");
+                                photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e");
+                            }
+                            else if (objectHit.transform.name == "MUR L" || objectHit.transform.parent.name == "MUR L")
+                            {
+                            // Debug.Log("ok");
+                                Debug.Log("need to rotate e 2 times");
+                                photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e"); 
+                                photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e");
+                            }
+                            else
+                            {
+                                //photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
+                            }
+                        }
+                   
+                    //
                 }
                 else
                 {
                     translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - groundPosition.z);
                 }
             }
-        
+
             else //(hit.transform.name == "MUR L" || hit.transform.parent.name == "MUR L")
             {
                 if (syncTeleportation)
                 {
                     translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - Cube.transform.position.z);
+
+                    if (Physics.Raycast(Cube.transform.position, Cube.transform.forward, out objectHit))
+                    {
+                        Debug.Log("objHit : " + objectHit.transform.name);
+                        //do something if hit object ie
+
+                        if (objectHit.transform.name == "MUR B" || objectHit.transform.parent.name == "MUR B")
+                        {
+                            Debug.Log("need to rotate w 1 time");
+                            photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
+                        }
+                        else if (objectHit.transform.name == "MUR R" || objectHit.transform.parent.name == "MUR R")
+                        {
+                            // Debug.Log("ok");
+                            Debug.Log("need to rotate w 2 times");
+                            photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
+                            photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
+                        }
+                        else
+                        {
+                            //photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
+                        }
+                    }
                 }
                 else
                 {
                     translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - groundPosition.z);
                 }
-        
+
             }
             //then teleport
             // 
@@ -432,7 +506,6 @@ public class Teleporter : MonoBehaviour
     [PunRPC]
     void MoveRigRPC(int cameraRig, Vector3 translation)
     {
-        Debug.Log("test");
         StartCoroutine(MoveRig(PhotonView.Find(cameraRig).transform, translation));
     }
 
@@ -442,15 +515,17 @@ public class Teleporter : MonoBehaviour
         Transform cameraRig2 = SteamVR_Render.Top().origin;
 
         Transform cam = cameraRig2.Find("Camera (eye)");
-              
+        Debug.Log("test ");
         if (s == "e")
         {
+            Debug.Log("test 1 ");
             Cube.transform.RotateAround(Cube.transform.position, Vector3.up, 90);
             cameraRig2.RotateAround(Cube.transform.position, Vector3.up, 90);
 
         }
         else if (s == "w")
         {
+            Debug.Log("test 2 ");
             Cube.transform.RotateAround(Cube.transform.position, Vector3.up, -90);
             //PhotonView.Find(cameraRig).transform.Rotate(0.0f, -90.0f, 0.0f, Space.World);
             cameraRig2.RotateAround(Cube.transform.position, Vector3.up, -90);
