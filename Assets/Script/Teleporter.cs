@@ -403,13 +403,19 @@ public class Teleporter : MonoBehaviour
                             // Debug.Log("ok");
                             Debug.Log("need to rotate w 1 time");
                             photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
-                           
-                        }
-                        else
-                        {
-                            //photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
+
                         }
                     }
+                    else if (Physics.Raycast(Cube.transform.position, -Cube.transform.forward, out objectHit))
+                    {
+                        if (objectHit.transform.name == "MUR B" || objectHit.transform.parent.name == "MUR B")
+                        {
+                            Debug.Log("need to rotate e 2 time");
+                            photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e");
+                            photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e");
+                        }
+                    }
+                    
                 }
                 else
                 {
@@ -440,12 +446,16 @@ public class Teleporter : MonoBehaviour
                                 photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e"); 
                                 photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e");
                             }
-                            else
-                            {
-                                //photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
-                            }
                         }
-                   
+                    else if (Physics.Raycast(Cube.transform.position, -Cube.transform.forward, out objectHit))
+                    {
+                        if (objectHit.transform.name == "MUR B" || objectHit.transform.parent.name == "MUR B")
+                        {
+                            Debug.Log("need to rotate e 2 time");
+                            photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
+                        }
+                    }
+
                     //
                 }
                 else
@@ -477,9 +487,13 @@ public class Teleporter : MonoBehaviour
                             photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
                             photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
                         }
-                        else
+                    }
+                    else if (Physics.Raycast(Cube.transform.position, -Cube.transform.forward, out objectHit))
+                    {
+                        if (objectHit.transform.name == "MUR B" || objectHit.transform.parent.name == "MUR B")
                         {
-                            //photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
+                            Debug.Log("need to rotate e 2 time");
+                            photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
                         }
                     }
                 }
