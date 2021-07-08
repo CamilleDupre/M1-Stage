@@ -197,7 +197,7 @@ public class DragDrop : MonoBehaviourPun
             // check the material to know if the card must be teleported
             if (cardList[i].transform.GetChild(0).GetComponent<Renderer>().material.name == nameR)
             {
-                
+                cardList[i].GetComponent<PhotonView>().RequestOwnership();
                 float y = 0;
                 
                 // width heigth depending on the scale of the wall
