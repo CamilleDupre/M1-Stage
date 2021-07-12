@@ -85,12 +85,14 @@ public class Teleporter : MonoBehaviour
         {
             tpsync.SetActive(false);
             tpNotsync.SetActive(true);
+            Cube.SetActive(true);
         }
         if (syncTeleportation == false)
         {
             tpNotsync.SetActive(false);
             tpsync.SetActive(true);
             Cube.SetActive(false);
+
         }
         if (synctag == true)
         {
