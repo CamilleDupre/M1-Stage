@@ -90,6 +90,7 @@ public class Teleporter : MonoBehaviour
         {
             tpNotsync.SetActive(false);
             tpsync.SetActive(true);
+            Cube.SetActive(false);
         }
         if (synctag == true)
         {
@@ -455,13 +456,13 @@ public class Teleporter : MonoBehaviour
                         {
                             Debug.Log("need to rotate w 1 time");
                             cameraRig.RotateAround(cam.transform.position, Vector3.up, 90);
-                            translateVector = new Vector3(m_Pointer.transform.position.x - cameraRig.transform.position.x, 0, z + Mathf.Abs(x));
+                            translateVector = new Vector3(m_Pointer.transform.position.x - groundPosition.x, 0, z + Mathf.Abs(x));
                         }
                         else if (objectHit[i].transform.name == "MUR R" || objectHit[i].transform.parent.name == "MUR R")
                         {
                             Debug.Log("need to rotate w 1 times");
                             cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
-                            translateVector = new Vector3(m_Pointer.transform.position.x - cameraRig.transform.position.x, 0, z + Mathf.Abs(x));
+                            translateVector = new Vector3(m_Pointer.transform.position.x - groundPosition.x, 0, z + Mathf.Abs(x));
                         }
                     }
                     objectHit = Physics.RaycastAll(cameraRig.transform.position, -cameraRig.transform.forward, 100.0F);
@@ -537,13 +538,13 @@ public class Teleporter : MonoBehaviour
                         {
                             Debug.Log("need to rotate e 1 time");
                             cameraRig.RotateAround(cam.transform.position, Vector3.up, 90);
-                            translateVector = new Vector3(x + Mathf.Abs(z), 0, m_Pointer.transform.position.z - cameraRig.transform.position.z);
+                            translateVector = new Vector3(x + Mathf.Abs(z), 0, m_Pointer.transform.position.z - groundPosition.z);
                         }
                         else if (objectHit[i].transform.name == "MUR L" || objectHit[i].transform.parent.name == "MUR L")
                         {
                             Debug.Log("need to rotate w 2 times");
                             cameraRig.RotateAround(cam.transform.position, Vector3.up, 180);
-                            translateVector = new Vector3(-2 * cameraRig.transform.position.x, 0, m_Pointer.transform.position.z - cameraRig.transform.position.z);
+                            translateVector = new Vector3(-2 * groundPosition.x, 0, m_Pointer.transform.position.z - groundPosition.z);
                         }
                     }
                     objectHit = Physics.RaycastAll(cameraRig.transform.position, -cameraRig.transform.forward, 100.0F);
@@ -622,13 +623,13 @@ public class Teleporter : MonoBehaviour
                             Debug.Log("need to rotate w 1 time");
                             
                             cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
-                            translateVector = new Vector3(x - Mathf.Abs(z), 0, m_Pointer.transform.position.z - cameraRig.transform.position.z);
+                            translateVector = new Vector3(x - Mathf.Abs(z), 0, m_Pointer.transform.position.z - groundPosition.z);
                         }
                         else if (objectHit[i].transform.name == "MUR R" || objectHit[i].transform.parent.name == "MUR R")
                         {
                             Debug.Log("need to rotate w 2 times");
                             cameraRig.RotateAround(cam.transform.position, Vector3.up, 180);
-                            translateVector = new Vector3(-2 * cameraRig.transform.position.x, 0, m_Pointer.transform.position.z - cameraRig.transform.position.z);
+                            translateVector = new Vector3(-2 * groundPosition.x, 0, m_Pointer.transform.position.z - groundPosition.z);
                         }
                     }
                     objectHit = Physics.RaycastAll(cameraRig.transform.position, -cameraRig.transform.forward, 100.0F);
