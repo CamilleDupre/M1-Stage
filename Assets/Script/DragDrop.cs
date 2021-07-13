@@ -109,6 +109,8 @@ public class DragDrop : MonoBehaviourPun
 
             //obUndo.Add(ob);
             photonView.GetComponent<PhotonView>().RPC("AddobUndo", Photon.Pun.RpcTarget.All, ob.GetComponent<PhotonView>().ViewID);
+            player = GameObject.Find("Network Player(Clone)");
+            player.GetComponent<PhotonView>().RPC("removeTag", Photon.Pun.RpcTarget.AllBuffered, ob.GetComponent<PhotonView>().ViewID);
 
             salle = GameObject.Find("Salle");
             salle.GetComponent<PhotonView>().RPC("DestroyCard", Photon.Pun.RpcTarget.All, ob.GetComponent<PhotonView>().ViewID, obUndo.Count);
@@ -206,17 +208,8 @@ public class DragDrop : MonoBehaviourPun
                 w = tex.width / div;
                 w = w * (v.y / v.x);
                 Vector3 p = mur.position;
-                /*
-                // ICI RPC ?
-                //Set parent, rotation and localscale 
-                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.parent = mur;
-                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.rotation = mur.rotation;
-                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localScale = new Vector3(w, h, 1.0f);
-                */
                 photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, murName, cardList[i].GetComponent<PhotonView>().ViewID);
-                //Set position depending on how many card teleported
-                // PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = new Vector3(-0.35f + w + 1.5f * w * j, 0, -0.02f);
-
+                
                 if (nbCardToTeleport > 1)
                 {
                     if (j % 2 == 0) //1st line

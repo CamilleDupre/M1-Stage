@@ -209,6 +209,14 @@ public class Network_Player : MonoBehaviourPun
         }
 
     }
+    [PunRPC]
+    void removeTag(int OB)
+    {
+        if (PhotonView.Find(OB).gameObject.tag != "Card") { return; }
+
+        PhotonView.Find(OB).gameObject.transform.GetChild(0).GetComponent<Renderer>().material = none;
+     
+    }
 
     [PunRPC]
     void tagMode(string tag)
