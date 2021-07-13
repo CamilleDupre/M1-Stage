@@ -85,12 +85,8 @@ public class DragDrop : MonoBehaviourPun
                 
             }
            
-
-            //where is the clic
             coordClic = hit.transform.position;
             forwardClic = transform.forward;
-            //Debug.Log(coordClic);
-
             //start waiting
             wait = true;
             timer = Time.time;
@@ -168,7 +164,8 @@ public class DragDrop : MonoBehaviourPun
     [PunRPC]
     void TeleportCard(string nameR, string murName)
     {
-
+        Debug.Log("nameR " + nameR);
+        if (nameR == "transparent (Instance)") { return; }
         salle = GameObject.Find("Salle");
         List<GameObject> cardList = salle.GetComponent<rendering>().cardList;
 
