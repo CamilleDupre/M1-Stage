@@ -3040,8 +3040,8 @@ MonoBehaviour:
     needsReinit: 0
   syncTeleportation: 1
   synctag: 1
-  card1: 1
-  training: 0
+  card1: 0
+  training: 1
   character: {fileID: 1559653166}
 --- !u!114 &1460276371
 MonoBehaviour:
