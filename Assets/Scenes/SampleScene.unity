@@ -2272,11 +2272,11 @@ PrefabInstance:
     - target: {fileID: 2348914, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1813100233}
+      objectReference: {fileID: 1794550506}
     - target: {fileID: 3380982, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 2090427407}
+      objectReference: {fileID: 1979591078}
     - target: {fileID: 11417168, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -3040,8 +3040,8 @@ MonoBehaviour:
     needsReinit: 0
   syncTeleportation: 0
   synctag: 0
-  card1: 0
-  training: 1
+  card1: 1
+  training: 0
   character: {fileID: 1559653166}
 --- !u!114 &1460276371
 MonoBehaviour:
@@ -3619,7 +3619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ad1e469d4e3e04489f9a36419f1a4f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!21 &1813100233
+--- !u!21 &1794550506
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -4064,7 +4064,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1933903326}
   m_CullTransparentMesh: 1
---- !u!43 &2090427407
+--- !u!43 &1979591078
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
