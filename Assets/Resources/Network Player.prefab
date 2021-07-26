@@ -1057,6 +1057,7 @@ MonoBehaviour:
   white: {fileID: 2100000, guid: 8d5b411f3b7f06c46823332377e3ffba, type: 2}
   red: {fileID: 2100000, guid: e0b801c75c8a5304e970777a323032c8, type: 2}
   none: {fileID: 2100000, guid: a4ce0e8f0688f71449afec0c97a57823, type: 2}
+  nameR: 
   interactWithUI:
     actionPath: /actions/default/in/GrabPinch
     needsReinit: 0
