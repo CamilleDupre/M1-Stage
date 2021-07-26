@@ -148,7 +148,6 @@ public class DragDrop : MonoBehaviourPun
             }
             salle = GameObject.Find("Salle");
             player = GameObject.Find("Network Player(Clone)");
-           // nameR = player.GetComponent<Network_Player>().nameR;
             TeleportCard(player.GetComponent<Network_Player>().nameR, namewall);
         }
 
