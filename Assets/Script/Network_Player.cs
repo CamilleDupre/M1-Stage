@@ -40,7 +40,7 @@ public class Network_Player : MonoBehaviourPun
     //private PhotonView photonView;
 
     private RaycastHit hit;
-    private string nameR="";
+    public string nameR="";
     private string nameT="";
     private SteamVR_Behaviour_Pose m_pose = null;
     public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");

@@ -147,6 +147,8 @@ public class DragDrop : MonoBehaviourPun
                 namewall = hit.transform.name;
             }
             salle = GameObject.Find("Salle");
+            player = GameObject.Find("Network Player(Clone)");
+            nameR = player.GetComponent<Network_Player>().nameR;
             TeleportCard(nameR, namewall);
         }
 
@@ -349,7 +351,7 @@ public class DragDrop : MonoBehaviourPun
     [PunRPC]
     void RayColour(string name)
     {
-        nameR = name;
+        //nameR = name;
         Debug.Log("nameR" + nameR);
     }
 
