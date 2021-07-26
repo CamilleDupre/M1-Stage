@@ -7,16 +7,6 @@ public class LoadingCard : MonoBehaviour
 {
     object[] textures;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     [PunRPC]
     void LoadCard( int OB, int p , int i , int t)
