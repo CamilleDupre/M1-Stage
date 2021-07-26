@@ -350,6 +350,7 @@ public class DragDrop : MonoBehaviourPun
     void RayColour(string name)
     {
         nameR = name;
+        Debug.Log("nameR" + nameR);
     }
 
     [PunRPC]
