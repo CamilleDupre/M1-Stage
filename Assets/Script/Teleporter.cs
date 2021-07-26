@@ -106,17 +106,6 @@ public class Teleporter : MonoBehaviour
         }
 
         //Teleport
-
-
-        /*if (m_up.GetStateDown(m_pose.inputSource))
-        {
-            //Debug.Log("up ");
-        }
-        else if (m_down.GetStateDown(m_pose.inputSource))
-        {
-           // Debug.Log("donw ");
-        }
-        else*/
         position = SteamVR_Actions.default_Pos.GetAxis(SteamVR_Input_Sources.Any);
 
 
@@ -131,14 +120,12 @@ public class Teleporter : MonoBehaviour
             else if(position.y > 0.5)
             {
                 Debug.Log("N");
-                //cameraRig.transform.position += character.transform.forward * desiredDistance;
                 n = true;
                 tryTeleport();
             }
             else if (position.y < -0.5)
             {
                 Debug.Log("S");
-                //cameraRig.transform.position -= character.transform.forward * desiredDistance;
                 s = true;
                 tryTeleport();
             }
@@ -160,13 +147,11 @@ public class Teleporter : MonoBehaviour
                 Debug.Log("C");
                 coordClic = coordPrev = m_Pointer.transform.position; //hit.transform.position;
                 forwardClic = transform.forward;
-                //Debug.Log("coordClic : " + coordClic);
                 wait = true;
                 timer = Time.time;
             }
         }
        
-
 
         if (m_TeleportAction.GetStateUp(m_pose.inputSource))
         {
@@ -187,23 +172,23 @@ public class Teleporter : MonoBehaviour
         }
 
         // check the angle to detect a mouvement
-        if (wait && Vector3.Angle(forwardClic, transform.forward) > 2)
+       /* if (wait && Vector3.Angle(forwardClic, transform.forward) > 2)
         {
             //isMoving = true;
             //wait = false;
         }
-
+        */
+        /*
         if (wait)
         {
-            if (Time.time - timer > 2) //  after 2s it is long clic
+            if (Time.time - timer > 1.5) //  after 1.5s it is long clic
             {
                 longclic = true;
                 wait = false;
                 //Debug.Log("long clic");
-                //syncTeleportation = !syncTeleportation;
-                Menu.SetActive(true);
+                //Menu.SetActive(true);
             }
-        }
+        }*/
 
         if (isMoving)
         {
@@ -211,6 +196,8 @@ public class Teleporter : MonoBehaviour
             coordPrev = m_Pointer.transform.position;
         }
 
+
+        // MENU //
         if (UpdatePointer() == true && hit.transform.name == "syncro")
         {
             // Debug.Log("Syncro");
@@ -249,11 +236,6 @@ public class Teleporter : MonoBehaviour
             Menu.SetActive(false);
         }
 
-    }
-
-    public void clic()
-    {
-        Debug.Log("clic");
     }
 
     /* try drag wall
@@ -328,12 +310,10 @@ public class Teleporter : MonoBehaviour
 
             if (!syncTeleportation)
             {
-                //cameraRig.Rotate(0.0f, -90.0f, 0.0f, Space.World);
                 cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
             }
             else
             {
-
                 photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
             }
             return;
@@ -414,14 +394,14 @@ public class Teleporter : MonoBehaviour
 
                         else if (objectHit[i].transform.name == "MUR L" || objectHit[i].transform.parent.name == "MUR L")
                         {
-                            Debug.Log("need to rotate e 1 time");
+                            //Debug.Log("need to rotate e 1 time");
                             photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e");
                             translateVector = new Vector3(m_Pointer.transform.position.x - Cube.transform.position.x, 0, z+Mathf.Abs(x));
                             
                         }
                         else if (objectHit[i].transform.name == "MUR R" || objectHit[i].transform.parent.name == "MUR R")
                         {
-                            Debug.Log("need to rotate w 1 time");
+                            //Debug.Log("need to rotate w 1 time");
                             photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
                             translateVector = new Vector3(m_Pointer.transform.position.x - Cube.transform.position.x, 0, z + Mathf.Abs(x));
                         }
@@ -431,7 +411,7 @@ public class Teleporter : MonoBehaviour
                     {
                         if (objectHit[i].transform.name == "MUR B" || objectHit[i].transform.parent.name == "MUR B")
                         {
-                            Debug.Log("need to rotate e 2 time");
+                            //Debug.Log("need to rotate e 2 time");
                             photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e");
                             photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e");
                         }
@@ -447,22 +427,20 @@ public class Teleporter : MonoBehaviour
 
                     for (int i = 0; i < objectHit.Length; i++)
                     {
-                        Debug.Log("objHit : " + objectHit[i].transform.name);
-                        //do something if hit object ie
-
+                        //Debug.Log("objHit : " + objectHit[i].transform.name);
                         if (objectHit[i].transform.name == "MUR B" || objectHit[i].transform.parent.name == "MUR B")
                         {
                             translateVector = new Vector3(m_Pointer.transform.position.x - groundPosition.x, 0, 0);
                         }
                         else if (objectHit[i].transform.name == "MUR L" || objectHit[i].transform.parent.name == "MUR L")
                         {
-                            Debug.Log("need to rotate w 1 time");
+                            //Debug.Log("need to rotate w 1 time");
                             cameraRig.RotateAround(cam.transform.position, Vector3.up, 90);
                             translateVector = new Vector3(m_Pointer.transform.position.x - groundPosition.x, 0, z + Mathf.Abs(x));
                         }
                         else if (objectHit[i].transform.name == "MUR R" || objectHit[i].transform.parent.name == "MUR R")
                         {
-                            Debug.Log("need to rotate w 1 times");
+                           // Debug.Log("need to rotate w 1 times");
                             cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
                             translateVector = new Vector3(m_Pointer.transform.position.x - groundPosition.x, 0, z + Mathf.Abs(x));
                         }
@@ -488,7 +466,7 @@ public class Teleporter : MonoBehaviour
                     float z = -Cube.transform.position.z;
                     for (int i = 0; i < objectHit.Length; i++)
                     {
-                        Debug.Log("objHit : " + objectHit[i].transform.name);
+                        //Debug.Log("objHit : " + objectHit[i].transform.name);
                         
                             if (objectHit[i].transform.name == "MUR R" || objectHit[i].transform.parent.name == "MUR R")
                             {
@@ -497,24 +475,24 @@ public class Teleporter : MonoBehaviour
 
                             else if (objectHit[i].transform.name == "MUR B" || objectHit[i].transform.parent.name == "MUR B")
                             {
-                                Debug.Log("need to rotate e 1 time");
+                                //Debug.Log("need to rotate e 1 time");
                                 photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e");
                                 translateVector = new Vector3(x + Mathf.Abs(z), 0, m_Pointer.transform.position.z - Cube.transform.position.z);
                             }
                             else if (objectHit[i].transform.name == "MUR L" || objectHit[i].transform.parent.name == "MUR L")
                             {
-                                Debug.Log("need to rotate e 2 times");
+                                //Debug.Log("need to rotate e 2 times");
                                 photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e"); 
                                 photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e");
                                 translateVector = new Vector3(-2*Cube.transform.position.x, 0, m_Pointer.transform.position.z - Cube.transform.position.z);
-                        }
-                        }
+                            }
+                    }
                     objectHit = Physics.RaycastAll(Cube.transform.position, -Cube.transform.forward, 100.0F);
                     for (int i = 0; i < objectHit.Length; i++)
                     { 
                         if (objectHit[i].transform.name == "MUR B" || objectHit[i].transform.parent.name == "MUR B")
                         {
-                            Debug.Log("need to rotate e 2 time");
+                            //Debug.Log("need to rotate e 2 time");
                             photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
                         }
                     }
@@ -529,7 +507,7 @@ public class Teleporter : MonoBehaviour
 
                     for (int i = 0; i < objectHit.Length; i++)
                     { 
-                        Debug.Log("objHit : " + objectHit[i].transform.name);
+                        //Debug.Log("objHit : " + objectHit[i].transform.name);
                    
                         if (objectHit[i].transform.name == "MUR R" || objectHit[i].transform.parent.name == "MUR R")
                         {
@@ -538,13 +516,13 @@ public class Teleporter : MonoBehaviour
 
                         if (objectHit[i].transform.name == "MUR B" || objectHit[i].transform.parent.name == "MUR B")
                         {
-                            Debug.Log("need to rotate e 1 time");
+                            //Debug.Log("need to rotate e 1 time");
                             cameraRig.RotateAround(cam.transform.position, Vector3.up, 90);
                             translateVector = new Vector3(x + Mathf.Abs(z), 0, m_Pointer.transform.position.z - groundPosition.z);
                         }
                         else if (objectHit[i].transform.name == "MUR L" || objectHit[i].transform.parent.name == "MUR L")
                         {
-                            Debug.Log("need to rotate w 2 times");
+                            //Debug.Log("need to rotate w 2 times");
                             cameraRig.RotateAround(cam.transform.position, Vector3.up, 180);
                             translateVector = new Vector3(-2 * groundPosition.x, 0, m_Pointer.transform.position.z - groundPosition.z);
                         }
@@ -571,7 +549,7 @@ public class Teleporter : MonoBehaviour
 
                     for (int i = 0; i < objectHit.Length; i++)
                     {
-                        Debug.Log("objHit : " + objectHit[i].transform.name);
+                        //Debug.Log("objHit : " + objectHit[i].transform.name);
                        
                         if (objectHit[i].transform.name == "MUR L" || objectHit[i].transform.parent.name == "MUR L")
                         {
@@ -580,13 +558,13 @@ public class Teleporter : MonoBehaviour
 
                         if (objectHit[i].transform.name == "MUR B" || objectHit[i].transform.parent.name == "MUR B")
                         {
-                            Debug.Log("need to rotate w 1 time");
+                            //Debug.Log("need to rotate w 1 time");
                             photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
                             translateVector = new Vector3(x - Mathf.Abs(z), 0, m_Pointer.transform.position.z - Cube.transform.position.z);
                         }
                         else if (objectHit[i].transform.name == "MUR R" || objectHit[i].transform.parent.name == "MUR R")
                         {
-                            Debug.Log("need to rotate w 2 times");
+                            //Debug.Log("need to rotate w 2 times");
                             photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
                             photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "w");
                             translateVector = new Vector3(-2 * Cube.transform.position.x, 0, m_Pointer.transform.position.z - Cube.transform.position.z);
@@ -597,7 +575,7 @@ public class Teleporter : MonoBehaviour
                     { 
                         if (objectHit[i].transform.name == "MUR B" || objectHit[i].transform.parent.name == "MUR B")
                         {
-                            Debug.Log("need to rotate e 1 time");
+                            //Debug.Log("need to rotate e 1 time");
                             photonView.RPC("RotationRigRPC", Photon.Pun.RpcTarget.All, "e");
                         }
                     }
@@ -613,7 +591,7 @@ public class Teleporter : MonoBehaviour
                     for (int i = 0; i < objectHit.Length; i++)
                     {
                         
-                        Debug.Log("objHit : " + objectHit[i].transform.name);
+                        //Debug.Log("objHit : " + objectHit[i].transform.name);
                         
                         if (objectHit[i].transform.name == "MUR L" || objectHit[i].transform.parent.name == "MUR L")
                         {
@@ -622,14 +600,14 @@ public class Teleporter : MonoBehaviour
 
                         if (objectHit[i].transform.name == "MUR B" || objectHit[i].transform.parent.name == "MUR B")
                         {
-                            Debug.Log("need to rotate w 1 time");
+                            //Debug.Log("need to rotate w 1 time");
                             
                             cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
                             translateVector = new Vector3(x - Mathf.Abs(z), 0, m_Pointer.transform.position.z - groundPosition.z);
                         }
                         else if (objectHit[i].transform.name == "MUR R" || objectHit[i].transform.parent.name == "MUR R")
                         {
-                            Debug.Log("need to rotate w 2 times");
+                            //Debug.Log("need to rotate w 2 times");
                             cameraRig.RotateAround(cam.transform.position, Vector3.up, 180);
                             translateVector = new Vector3(-2 * groundPosition.x, 0, m_Pointer.transform.position.z - groundPosition.z);
                         }
@@ -646,7 +624,6 @@ public class Teleporter : MonoBehaviour
 
             }
             //then teleport
-            // 
             if (!syncTeleportation)
             {
                 StartCoroutine(MoveRig(cameraRig, translateVector));
@@ -680,9 +657,7 @@ public class Teleporter : MonoBehaviour
         else if (s == "w")
         {
             Cube.transform.RotateAround(Cube.transform.position, Vector3.up, -90);
-            //PhotonView.Find(cameraRig).transform.Rotate(0.0f, -90.0f, 0.0f, Space.World);
             cameraRig2.RotateAround(Cube.transform.position, Vector3.up, -90);
-            
         }
         
     }
@@ -709,7 +684,6 @@ public class Teleporter : MonoBehaviour
     {
        // Debug.Log("Change tag mode");
         synctag = tag;
-        //Debug.Log("teleport tag : "+synctag);
     }
 
     private IEnumerator MoveRig(Transform cameraRig , Vector3 translation)

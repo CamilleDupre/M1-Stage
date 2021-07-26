@@ -87,11 +87,9 @@ public class Network_Player : MonoBehaviourPun
 
         if (Physics.Raycast(ray, out hit))
         {
-
             //change tag color of the ray cast
             if (interactWithUI.GetStateDown(m_pose.inputSource) && hit.transform.tag == "tag")
             {
-                
                 if (synctag)
                 {
                     nameR = hit.transform.GetComponent<Renderer>().material.name;
@@ -104,14 +102,9 @@ public class Network_Player : MonoBehaviourPun
                     if (photonView.IsMine)
                     {
                         nameR = hit.transform.GetComponent<Renderer>().material.name;
-                        //ChangeRayColour(nameR);
                         photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
                         right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
                         // Debug.Log("tag not sync: photonView.IsMine");
-                    }
-                    else
-                    {
-                      //  Debug.Log("tag not sync");
                     }
                 }
             }
@@ -120,16 +113,12 @@ public class Network_Player : MonoBehaviourPun
 
     }
 
-    //void MapPosition(Transform target, XRNode node)
     void MapPosition()
     {
         // left hand 
         palette.position = left.transform.position;
         palette.rotation = left.transform.rotation;
 
-        //leftHand.position = left.transform.position;
-        //leftHand.rotation = left.transform.rotation;
-        //left.gameObject.SetActive(false);
 
         // right hand
         rightHand.position = right.transform.position;
@@ -173,8 +162,6 @@ public class Network_Player : MonoBehaviourPun
         {
             rayCast.GetComponent<Renderer>().material = none;
         }
-      //  Debug.Log("nameR : " + nameR);
-      //  Debug.Log("change");
     }
 
     [PunRPC]

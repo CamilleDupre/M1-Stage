@@ -65,13 +65,12 @@ public class DragDrop : MonoBehaviourPun
                 player = GameObject.Find("Network Player(Clone)");
                 player.GetComponent<PhotonView>().RPC("ChangeTag", Photon.Pun.RpcTarget.AllBuffered, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
             }
-
-            
+                        
             isMoving = false;
             ob = null;
             wait = false;
             longclic = false;
-            Debug.Log("reset");
+            //Debug.Log("reset");
             timer = 0;
         }
 
@@ -98,12 +97,11 @@ public class DragDrop : MonoBehaviourPun
             isMoving = true;
             wait = false;
         }
+
+        //destroy a card a remove the tag
         if (ob != null && UpdatePointer()  &&  hit.transform.tag == "trash")
         {
-            Debug.Log("destroy");
-            //Destroy(ob);
-
-            //obUndo.Add(ob);
+            //Debug.Log("destroy");
             photonView.GetComponent<PhotonView>().RPC("AddobUndo", Photon.Pun.RpcTarget.All, ob.GetComponent<PhotonView>().ViewID);
             player = GameObject.Find("Network Player(Clone)");
             player.GetComponent<PhotonView>().RPC("removeTag", Photon.Pun.RpcTarget.AllBuffered, ob.GetComponent<PhotonView>().ViewID);
@@ -115,25 +113,20 @@ public class DragDrop : MonoBehaviourPun
 
         }
     
+        //undo the last destroy action
         if (obUndo != null && UpdatePointer() && hit.transform.tag == "trash" && interactWithUI.GetStateDown(m_pose.inputSource))
         {
             Debug.Log("undo");
-            //Undo.DestroyObjectImmediate(obUndo);
-
-            //Undo.PerformUndo();
             GameObject temp = obUndo[obUndo.Count-1];
-            //temp.gameObject.SetActive(true);
-           
             salle = GameObject.Find("Salle");
             salle.GetComponent<PhotonView>().RPC("UndoCard", Photon.Pun.RpcTarget.All, temp.GetComponent<PhotonView>().ViewID , obUndo.Count);
-            //obUndo.Remove(temp);
             photonView.GetComponent<PhotonView>().RPC("RemoveobUndo", Photon.Pun.RpcTarget.All, temp.GetComponent<PhotonView>().ViewID);
         }
       
 
         if (wait)
         {
-            if (Time.time - timer > 2) //  after 2s it is long clic
+            if (Time.time - timer > 1.5) //  after 1.5s it is long clic
             {
                longclic = true;
                wait = false;
@@ -141,6 +134,7 @@ public class DragDrop : MonoBehaviourPun
             }
         }
 
+        //long clic -> move cards with tag 
         if (longclic && UpdatePointer() && (hit.transform.tag == "Wall" || hit.transform.tag == "Card"))
         {
             string namewall = "";
@@ -153,8 +147,6 @@ public class DragDrop : MonoBehaviourPun
                 namewall = hit.transform.name;
             }
             salle = GameObject.Find("Salle");
-            //salle.GetComponent<PhotonView>().RPC("TeleportCard", Photon.Pun.RpcTarget.All, nameR, namewall);
-            //photonView.RPC("TeleportCard", Photon.Pun.RpcTarget.All, nameR, namewall);
             TeleportCard(nameR, namewall);
         }
 
@@ -171,7 +163,7 @@ public class DragDrop : MonoBehaviourPun
 
         float w, h;
         float div = 2 * 1000f;
-        //Texture tex = (Texture2D)textures[0];
+
         Transform mur;
 
         //Check the walls
@@ -358,6 +350,7 @@ public class DragDrop : MonoBehaviourPun
     void RayColour(string name)
     {
         nameR = name;
+        Debug.Log("nameR" + nameR);
     }
 
     [PunRPC]
