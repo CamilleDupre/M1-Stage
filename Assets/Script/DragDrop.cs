@@ -76,7 +76,8 @@ public class DragDrop : MonoBehaviourPun
 
                 for (int i = 0; i<children; i++)
                 {
-                    emptyToMoveCard.transform.GetChild(0).transform.parent = emptyToMoveCard.transform.parent;
+                   photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, emptyToMoveCard.transform.parent.name, emptyToMoveCard.transform.GetChild(0).GetComponent<PhotonView>().ViewID);
+                  //  emptyToMoveCard.transform.GetChild(0).transform.parent = emptyToMoveCard.transform.parent;
                 }
                 Destroy(emptyToMoveCard);
                 cardSeletedForGroupMove = false;
