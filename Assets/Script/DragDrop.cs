@@ -174,7 +174,8 @@ public class DragDrop : MonoBehaviourPun
             player = GameObject.Find("Network Player(Clone)");
 
             if (emptyToMoveCard == null){
-                emptyToMoveCard = new GameObject("TempEmptyToMove");
+                emptyToMoveCard = PhotonNetwork.Instantiate("Network Player", transform.position, transform.rotation);
+                //emptyToMoveCard = new GameObject("TempEmptyToMove");
                 emptyToMoveCard.transform.parent = hit.transform;
                 emptyToMoveCard.transform.rotation = hit.transform.rotation;
                 emptyToMoveCard.transform.localPosition = new Vector3(0, 0, 0);
