@@ -180,7 +180,7 @@ public class DragDrop : MonoBehaviourPun
             if (emptyToMoveCard == null){
                 emptyToMoveCard = PhotonNetwork.Instantiate("emptyToMoveCard", transform.position, transform.rotation);
                 //emptyToMoveCard = new GameObject("TempEmptyToMove");
-                photonView.RPC("Initempty", Photon.Pun.RpcTarget.All, player.GetComponent<Network_Player>().nameR, namewall);
+                photonView.RPC("Initempty", Photon.Pun.RpcTarget.All, player.GetComponent<Network_Player>().nameR, namewall, emptyToMoveCard.GetComponent<PhotonView>().ViewID);
 
             }
            TeleportCard(player.GetComponent<Network_Player>().nameR, namewall);
@@ -193,7 +193,7 @@ public class DragDrop : MonoBehaviourPun
     }
 
     [PunRPC]
-    void Initempty(string nameR, string murName)
+    void Initempty(string nameR, string murName, int OB)
     {
         Transform mur;
         if (murName == "MUR B") { mur = MurB; }
@@ -201,10 +201,10 @@ public class DragDrop : MonoBehaviourPun
         else { mur = MurR; }
 
 
-        emptyToMoveCard.transform.parent = mur;
-        emptyToMoveCard.transform.rotation = mur.rotation;
-        emptyToMoveCard.transform.localPosition = new Vector3(0, 0, 0);
-        emptyToMoveCard.transform.localScale = new Vector3(1, 1, 1);
+        PhotonView.Find(OB).transform.parent = mur;
+        PhotonView.Find(OB).transform.rotation = mur.rotation;
+        PhotonView.Find(OB).transform.localPosition = new Vector3(0, 0, 0);
+        PhotonView.Find(OB).transform.localScale = new Vector3(1, 1, 1);
 
         Vector3 v = MurB.localScale;
         float w;
@@ -227,9 +227,9 @@ public class DragDrop : MonoBehaviourPun
                     cardList[i].GetComponent<PhotonView>().RequestOwnership();
                 }
 
-                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).gameObject.transform.parent = emptyToMoveCard.transform;
-                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).gameObject.transform.rotation = emptyToMoveCard.transform.rotation;
-                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition =
+                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).gameObject.transform.parent = PhotonView.Find(OB).transform;
+                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).gameObject.transform.rotation = PhotonView.Find(OB).transform.rotation;
+                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.localPosition =
                     new Vector3(w * nbCardToTeleport,
                     0,
                     -0.02f);
