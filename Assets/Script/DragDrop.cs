@@ -180,10 +180,7 @@ public class DragDrop : MonoBehaviourPun
             if (emptyToMoveCard == null){
                 emptyToMoveCard = PhotonNetwork.Instantiate("emptyToMoveCard", transform.position, transform.rotation);
                 //emptyToMoveCard = new GameObject("TempEmptyToMove");
-                emptyToMoveCard.transform.parent = hit.transform;
-                emptyToMoveCard.transform.rotation = hit.transform.rotation;
-                emptyToMoveCard.transform.localPosition = new Vector3(0, 0, 0);
-                emptyToMoveCard.transform.localScale = new Vector3(1, 1, 1);
+                
             }
             TeleportCard(player.GetComponent<Network_Player>().nameR, namewall);
             
@@ -200,6 +197,8 @@ public class DragDrop : MonoBehaviourPun
         salle = GameObject.Find("Salle");
         List<GameObject> cardList = salle.GetComponent<rendering>().cardList;
 
+        
+
         float w, h;
         float div = 2 * 1000f;
 
@@ -209,6 +208,12 @@ public class DragDrop : MonoBehaviourPun
         if (murName == "MUR B") { mur = MurB; }
         else if (murName == "MUR L") { mur = MurL; }
         else { mur = MurR; }
+
+
+        emptyToMoveCard.transform.parent = mur;
+        emptyToMoveCard.transform.rotation = mur.rotation;
+        emptyToMoveCard.transform.localPosition = new Vector3(0, 0, 0);
+        emptyToMoveCard.transform.localScale = new Vector3(1, 1, 1);
 
         int j = 0; // number of card teleported
         int nbCardToTeleport = 0;
