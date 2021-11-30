@@ -161,6 +161,7 @@ public class Teleporter : MonoBehaviour
                 Debug.Log("DOOBLE CLICK");
                 doubleclick = true;
                 wait = false;
+                
             }
 
             if (Time.time - timer > 0.2f)
@@ -168,20 +169,24 @@ public class Teleporter : MonoBehaviour
                 wait = false;
                 timer = 0;
                 nbClick = 0;
-                
+                tryTeleport();
+                syncTeleportation = false;
+                doubleclick = false;
+
             }
         }
 
         if (doubleclick)
         {
             syncTeleportation = true;
+            tryTeleport();
+            syncTeleportation = false;
+            doubleclick = false;
         }
 
         if (m_TeleportAction.GetStateUp(m_pose.inputSource))
         {
-            tryTeleport();
-            syncTeleportation = false;
-
+          
             //Debug.Log("reset");
 
             isMoving = false;
