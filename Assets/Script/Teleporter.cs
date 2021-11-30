@@ -39,6 +39,7 @@ public class Teleporter : MonoBehaviour
     private bool wait = false;
     private bool isMoving = false;
     private bool longclic = false;
+    private bool doubleclick = false;
     private Vector3 coordClic;
     private Vector3 coordPrev;
     private Vector3 forwardClic;
@@ -53,9 +54,12 @@ public class Teleporter : MonoBehaviour
     private bool s = false;
     private bool e = false;
     private bool w = false;
+    
     public bool synctag = true;
     public bool card1;
     public bool training;
+
+    int nbClick = 0;
 
     public Transform character;
 
@@ -117,6 +121,7 @@ public class Teleporter : MonoBehaviour
                 w = true;
                 tryTeleport();
             }
+            /*
             else if(position.y > 0.5)
             {
                 Debug.Log("N");
@@ -129,12 +134,7 @@ public class Teleporter : MonoBehaviour
                 s = true;
                 tryTeleport();
             }
-            else if (position.x < -0.5)
-            {
-                Debug.Log("W");
-                w = true;
-                tryTeleport();
-            }
+            */
             else if (position.x > 0.5)
             {
                 Debug.Log("E");
@@ -144,6 +144,7 @@ public class Teleporter : MonoBehaviour
             
             else
             {
+                nbClick++;
                 Debug.Log("C");
                 coordClic = coordPrev = m_Pointer.transform.position; //hit.transform.position;
                 forwardClic = transform.forward;
@@ -151,19 +152,40 @@ public class Teleporter : MonoBehaviour
                 timer = Time.time;
             }
         }
-       
+
+        if (wait)
+        {
+            //just a clic -> normal teleportation
+            if (nbClick == 2)
+            {
+                Debug.Log("DOOBLE CLICK");
+                doubleclick = true;
+                wait = false;
+            }
+
+            if (Time.time - timer > 0.2f)
+            {
+                wait = false;
+                timer = 0;
+                nbClick = 0;
+                
+            }
+        }
+
+        if (doubleclick)
+        {
+            syncTeleportation = true;
+        }
 
         if (m_TeleportAction.GetStateUp(m_pose.inputSource))
         {
-            if (wait)
-            { 
-                //just a clic -> normal teleportation
-                tryTeleport();
-            }
-           //Debug.Log("reset");
-            wait = false;
+            tryTeleport();
+            syncTeleportation = false;
+
+            //Debug.Log("reset");
+
             isMoving = false;
-            timer = 0;
+            
             longclic = false;
             n = false;
             s = false;
@@ -171,24 +193,7 @@ public class Teleporter : MonoBehaviour
             w = false;
         }
 
-        // check the angle to detect a mouvement
-       /* if (wait && Vector3.Angle(forwardClic, transform.forward) > 2)
-        {
-            //isMoving = true;
-            //wait = false;
-        }
-        */
-        /*
-        if (wait)
-        {
-            if (Time.time - timer > 1.5) //  after 1.5s it is long clic
-            {
-                longclic = true;
-                wait = false;
-                //Debug.Log("long clic");
-                //Menu.SetActive(true);
-            }
-        }*/
+   
 
         if (isMoving)
         {
@@ -319,6 +324,7 @@ public class Teleporter : MonoBehaviour
             return;
         }
         Vector3 translateVector;
+        /*
         if (n)
         {
             //translateVector =  character.transform.forward * desiredDistance; // y not fix
@@ -347,7 +353,7 @@ public class Teleporter : MonoBehaviour
                 photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
             }
         }
-
+        */
         if (!m_HasPosition) // ||
             return;
 
