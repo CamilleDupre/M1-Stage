@@ -180,14 +180,63 @@ public class DragDrop : MonoBehaviourPun
             if (emptyToMoveCard == null){
                 emptyToMoveCard = PhotonNetwork.Instantiate("emptyToMoveCard", transform.position, transform.rotation);
                 //emptyToMoveCard = new GameObject("TempEmptyToMove");
-                
+                photonView.RPC("Initempty", Photon.Pun.RpcTarget.All, player.GetComponent<Network_Player>().nameR, namewall);
+
             }
            TeleportCard(player.GetComponent<Network_Player>().nameR, namewall);
-           // photonView.RPC("TeleportCard", Photon.Pun.RpcTarget.All, player.GetComponent<Network_Player>().nameR, namewall);
+            // photonView.RPC("TeleportCard", Photon.Pun.RpcTarget.All, player.GetComponent<Network_Player>().nameR, namewall);
+           
 
         }
      
         Move();
+    }
+
+    [PunRPC]
+    void Initempty(string nameR, string murName)
+    {
+        Transform mur;
+        if (murName == "MUR B") { mur = MurB; }
+        else if (murName == "MUR L") { mur = MurL; }
+        else { mur = MurR; }
+
+
+        emptyToMoveCard.transform.parent = mur;
+        emptyToMoveCard.transform.rotation = mur.rotation;
+        emptyToMoveCard.transform.localPosition = new Vector3(0, 0, 0);
+        emptyToMoveCard.transform.localScale = new Vector3(1, 1, 1);
+
+        Vector3 v = MurB.localScale;
+        float w;
+        float div = 2 * 1000f;
+        w = tex.width / div;
+        w = w * (v.y / v.x);
+
+        salle = GameObject.Find("Salle");
+        List<GameObject> cardList = salle.GetComponent<rendering>().cardList;
+        int nbCardToTeleport = 0;
+        for (int i = 0; i < cardList.Count; i++)
+        {
+
+            // check the material to know if the card must be teleported
+            if (cardList[i].transform.GetChild(0).GetComponent<Renderer>().material.name == nameR)
+            {
+                nbCardToTeleport++;
+                if (cardSeletedForGroupMove == false)
+                {
+                    cardList[i].GetComponent<PhotonView>().RequestOwnership();
+                }
+
+                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).gameObject.transform.parent = emptyToMoveCard.transform;
+                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).gameObject.transform.rotation = emptyToMoveCard.transform.rotation;
+                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition =
+                    new Vector3(w * nbCardToTeleport,
+                    0,
+                    -0.02f);
+
+            }
+
+        }
     }
 
     [PunRPC]
@@ -210,12 +259,6 @@ public class DragDrop : MonoBehaviourPun
         else if (murName == "MUR L") { mur = MurL; }
         else { mur = MurR; }
 
-
-        emptyToMoveCard.transform.parent = mur;
-        emptyToMoveCard.transform.rotation = mur.rotation;
-        emptyToMoveCard.transform.localPosition = new Vector3(0, 0, 0);
-        emptyToMoveCard.transform.localScale = new Vector3(1, 1, 1);
-
         int j = 0; // number of card teleported
         int nbCardToTeleport = 0;
 
@@ -224,7 +267,7 @@ public class DragDrop : MonoBehaviourPun
         w = tex.width / div;
         w = w * (v.y / v.x);
         Vector3 p = mur.position;
-
+        /*
         for (int i = 0; i < cardList.Count; i++)
         {
             
@@ -247,6 +290,7 @@ public class DragDrop : MonoBehaviourPun
             }
             
         }
+        */
         cardSeletedForGroupMove = true;
         if (murName != emptyToMoveCard.transform.parent.name)
         {
