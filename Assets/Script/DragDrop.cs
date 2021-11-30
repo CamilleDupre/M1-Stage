@@ -279,7 +279,7 @@ public class DragDrop : MonoBehaviourPun
         cardSeletedForGroupMove = true;
         if (murName != emptyToMoveCard.transform.parent.name)
         {
-            photonView.RPC("ChangeMur2", Photon.Pun.RpcTarget.All, murName);
+            photonView.RPC("ChangeMur2", Photon.Pun.RpcTarget.All, murName , emptyToMoveCard.GetComponent<PhotonView>().ViewID);
         }
        
         for (int i = 0; i < cardList.Count; i++)
@@ -414,7 +414,7 @@ public class DragDrop : MonoBehaviourPun
         PhotonView.Find(OB).gameObject.transform.localScale = new Vector3(w, h, 1.0f);
     }
     [PunRPC]
-    void ChangeMur2(string nameT)
+    void ChangeMur2(string nameT, int OB)
     {
         float w, h;
         float div = 2 * 1000f;
@@ -443,9 +443,9 @@ public class DragDrop : MonoBehaviourPun
 
         w = w * (v.y / v.x);
         //Debug.Log("Changement de mur " + nameT);
-        emptyToMoveCard.gameObject.transform.parent = Mur;
-        emptyToMoveCard.gameObject.transform.localScale = new Vector3(1, 1, 1);
-        emptyToMoveCard.gameObject.transform.rotation = Mur.rotation;
+        PhotonView.Find(OB).gameObject.transform.parent = Mur;
+        PhotonView.Find(OB).gameObject.transform.localScale = new Vector3(1, 1, 1);
+        PhotonView.Find(OB).gameObject.transform.rotation = Mur.rotation;
 
        
     }
