@@ -182,8 +182,8 @@ public class DragDrop : MonoBehaviourPun
                 //emptyToMoveCard = new GameObject("TempEmptyToMove");
                 
             }
-           // TeleportCard(player.GetComponent<Network_Player>().nameR, namewall);
-            photonView.RPC("TeleportCard", Photon.Pun.RpcTarget.All, player.GetComponent<Network_Player>().nameR, namewall);
+           TeleportCard(player.GetComponent<Network_Player>().nameR, namewall);
+           // photonView.RPC("TeleportCard", Photon.Pun.RpcTarget.All, player.GetComponent<Network_Player>().nameR, namewall);
 
         }
      
