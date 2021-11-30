@@ -267,38 +267,15 @@ public class DragDrop : MonoBehaviourPun
         else if (murName == "MUR L") { mur = MurL; }
         else { mur = MurR; }
 
-        int j = 0; // number of card teleported
-        int nbCardToTeleport = 0;
+     
 
         Vector3 v = MurB.localScale;
         h = tex.height / div;
         w = tex.width / div;
         w = w * (v.y / v.x);
         Vector3 p = mur.position;
-        /*
-        for (int i = 0; i < cardList.Count; i++)
-        {
-            
-            // check the material to know if the card must be teleported
-            if (cardList[i].transform.GetChild(0).GetComponent<Renderer>().material.name == nameR)
-            {
-                nbCardToTeleport++;
-                if (cardSeletedForGroupMove == false)
-                {
-                    cardList[i].GetComponent<PhotonView>().RequestOwnership();
-                }
-
-                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).gameObject.transform.parent = emptyToMoveCard.transform;
-                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).gameObject.transform.rotation = emptyToMoveCard.transform.rotation;
-                PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = 
-                    new Vector3( w * nbCardToTeleport, 
-                    0, 
-                    -0.02f);
-                
-            }
-            
-        }
-        */
+       
+      
         cardSeletedForGroupMove = true;
         if (murName != emptyToMoveCard.transform.parent.name)
         {
@@ -311,61 +288,28 @@ public class DragDrop : MonoBehaviourPun
             // check the material to know if the card must be teleported
             if (cardList[i].transform.GetChild(0).GetComponent<Renderer>().material.name == nameR)
             {
-                float y = 0;
+        
                 cardList[i].transform.localScale = new Vector3(w, h, 1.0f);
 
                 // width heigth depending on the scale of the wall
 
-                //photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, murName, cardList[i].GetComponent<PhotonView>().ViewID);
-
-
-
-                if (nbCardToTeleport > 1)
-                {
-                    if (j % 2 == 0) //1st line
-                    {
-                        y = 0.15f;
-                    }
-                    else // 2nd line
-                    {
-                        y = -0.15f;
-                    }
-                }
-                //
-                // m_Pointer = GameObject.Find("/[CameraRig]/Controller (right)").GetComponent<DragDrop>().m_Pointer;
-                /*
-                float x = 0;
-
-                if (mur.name == "MUR L")
-                {
-                    x = m_Pointer.transform.position.z / v.x;
-                    y += (m_Pointer.transform.position.y - p.y) / v.y;
-                }
-
-                else if (mur.name == "MUR B")
-                {
-                    x = m_Pointer.transform.position.x / v.x;
-                    y += (m_Pointer.transform.position.y - p.y) / v.y;
-                }
-
-                else if (mur.name == "MUR R")
-                {
-                    x = -m_Pointer.transform.position.z / v.x;
-                    y += (m_Pointer.transform.position.y - p.y) / v.y;
-                }
-                */
+                //photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, murName, cardList[i].GetComponent<PhotonView>().View
 
                 //PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.transform.localPosition = new Vector3(-w * (nbCardToTeleport / 4) + x + 1f * w * (j / 2), y, -0.02f); //+-0.35f + w
                 //emptyToMoveCard.transform.localPosition = new Vector3( x , y, 0); //+-0.35f + w
                 float x = mur.InverseTransformPoint(m_Pointer.transform.position).x;
                 float q = mur.InverseTransformPoint(m_Pointer.transform.position).y;
-                emptyToMoveCard.transform.localPosition = new Vector3(x, q, 0);
-                j++; // 1 card more teleported
 
-
+                photonView.RPC("MoveEmpty", Photon.Pun.RpcTarget.All, emptyToMoveCard.GetComponent<PhotonView>().ViewID , x , q);
             }
         }
 
+    }
+
+    [PunRPC]
+    void MoveEmpty(int OB, float x, float q)
+    {
+        PhotonView.Find(OB).gameObject.transform.localPosition = new Vector3(x, q, 0);
     }
 
     private void Move()
