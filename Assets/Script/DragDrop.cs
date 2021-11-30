@@ -83,7 +83,9 @@ public class DragDrop : MonoBehaviourPun
                     }
 
                 }
-                Destroy(emptyToMoveCard);
+                photonView.RPC("Desroyempty", Photon.Pun.RpcTarget.All, emptyToMoveCard.GetComponent<PhotonView>().ViewID);
+
+               // Destroy(emptyToMoveCard);
                 cardSeletedForGroupMove = false;
             }
 
@@ -190,6 +192,12 @@ public class DragDrop : MonoBehaviourPun
         }
      
         Move();
+    }
+
+    [PunRPC]
+    void Desroyempty(int OB)
+    {
+        Destroy(PhotonView.Find(OB).gameObject);
     }
 
     [PunRPC]
@@ -490,7 +498,7 @@ public class DragDrop : MonoBehaviourPun
         w = tex.width / div;
 
         w = w * (v.y / v.x);
-        Debug.Log("Changement de mur " + nameT);
+        //Debug.Log("Changement de mur " + nameT);
         emptyToMoveCard.gameObject.transform.parent = Mur;
         emptyToMoveCard.gameObject.transform.localScale = new Vector3(1, 1, 1);
         emptyToMoveCard.gameObject.transform.rotation = Mur.rotation;
