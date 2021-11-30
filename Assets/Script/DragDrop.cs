@@ -76,8 +76,12 @@ public class DragDrop : MonoBehaviourPun
 
                 for (int i = 0; i<children; i++)
                 {
-                   photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, emptyToMoveCard.transform.parent.name, emptyToMoveCard.transform.GetChild(0).GetComponent<PhotonView>().ViewID);
-                  //  emptyToMoveCard.transform.GetChild(0).transform.parent = emptyToMoveCard.transform.parent;
+                    if (emptyToMoveCard.GetComponent<PhotonView>().IsMine)
+                    {
+                        photonView.RPC("ChangeMur", Photon.Pun.RpcTarget.All, emptyToMoveCard.transform.parent.name, emptyToMoveCard.transform.GetChild(0).GetComponent<PhotonView>().ViewID);
+                        //  emptyToMoveCard.transform.GetChild(0).transform.parent = emptyToMoveCard.transform.parent;
+                    }
+
                 }
                 Destroy(emptyToMoveCard);
                 cardSeletedForGroupMove = false;
@@ -174,7 +178,7 @@ public class DragDrop : MonoBehaviourPun
             player = GameObject.Find("Network Player(Clone)");
 
             if (emptyToMoveCard == null){
-                emptyToMoveCard = PhotonNetwork.Instantiate("Network Player", transform.position, transform.rotation);
+                emptyToMoveCard = PhotonNetwork.Instantiate("emptyToMoveCard", transform.position, transform.rotation);
                 //emptyToMoveCard = new GameObject("TempEmptyToMove");
                 emptyToMoveCard.transform.parent = hit.transform;
                 emptyToMoveCard.transform.rotation = hit.transform.rotation;
