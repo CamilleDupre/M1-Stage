@@ -215,8 +215,9 @@ public class DragDrop : MonoBehaviourPun
         PhotonView.Find(OB).transform.localScale = new Vector3(1, 1, 1);
 
         Vector3 v = MurB.localScale;
-        float w;
+        float w,h;
         float div = 2 * 1000f;
+        h = tex.height / div;
         w = tex.width / div;
         w = w * (v.y / v.x);
 
@@ -235,12 +236,23 @@ public class DragDrop : MonoBehaviourPun
                     cardList[i].GetComponent<PhotonView>().RequestOwnership();
                 }
 
+                float y = 0;
+                float x = 0;
+
+                if (nbCardToTeleport % 2 == 0){
+
+                    y = -1.25f*h;
+                    x = 0;
+                }
+                else
+                {
+                    x = w / 2;
+                }
+
                 PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).gameObject.transform.parent = PhotonView.Find(OB).transform;
                 PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).gameObject.transform.rotation = PhotonView.Find(OB).transform.rotation;
                 PhotonView.Find(cardList[i].GetComponent<PhotonView>().ViewID).transform.localPosition =
-                    new Vector3(w * nbCardToTeleport,
-                    0,
-                    -0.02f);
+                    new Vector3(w * nbCardToTeleport /2 + x, y , -0.02f);
 
             }
 
