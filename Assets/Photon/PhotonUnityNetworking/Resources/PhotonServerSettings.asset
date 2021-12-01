@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AppSettings:
     AppIdRealtime: 023c93b1-19eb-4700-b3c2-05a13231faa1
+    AppIdFusion: 
     AppIdChat: 
-    AppIdVoice: 
+    AppIdVoice: 40fb8ab3-359b-4531-8118-d2e8b16a9bf9
     AppVersion: 
     UseNameServer: 1
     FixedRegion: 
@@ -32,7 +33,35 @@ MonoBehaviour:
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
-  RpcList: []
+  RpcList:
+  - addListCard
+  - AddobUndo
+  - CantHearYou
+  - ChangeColour
+  - ChangeMur
+  - ChangeMur2
+  - ChangeRayColour
+  - ChangeTag
+  - ClickRpc
+  - Desroyempty
+  - DestroyCard
+  - DestroyRpc
+  - DestroySpaceship
+  - Fire
+  - HeresWhy
+  - Initempty
+  - LoadCard
+  - MoveEmpty
+  - MoveRigRPC
+  - RayColour
+  - RemoveobUndo
+  - removeTag
+  - RespawnSpaceship
+  - RotationRigRPC
+  - tagMode
+  - teleportationMode
+  - TeleportCard
+  - UndoCard
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
+  ShowSettings: 1
   DevRegionSetOnce: 1
