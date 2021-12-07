@@ -469,6 +469,8 @@ public class DragDrop : MonoBehaviourPun
             {
                 PhotonView.Find(OB).transform.GetChild(i).transform.localScale = new Vector3(w, h, 1.0f);
                 //  emptyToMoveCard.transform.GetChild(0).transform.parent = emptyToMoveCard.transform.parent;
+
+                Debug.Log(PhotonView.Find(OB).transform.GetChild(i));
             }
 
         }
