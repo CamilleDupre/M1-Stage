@@ -454,12 +454,26 @@ public class DragDrop : MonoBehaviourPun
         w = tex.width / div;
 
         w = w * (v.y / v.x);
+
         //Debug.Log("Changement de mur " + nameT);
         PhotonView.Find(OB).gameObject.transform.parent = Mur;
-        PhotonView.Find(OB).gameObject.transform.localScale = new Vector3(1, 1, 1);
+        
         PhotonView.Find(OB).gameObject.transform.rotation = Mur.rotation;
+        PhotonView.Find(OB).gameObject.transform.localScale = new Vector3(1, 1, 1);
 
-       
+        int children = PhotonView.Find(OB).transform.childCount;
+
+        for (int i = 0; i < children; i++)
+        {
+            if (PhotonView.Find(OB).GetComponent<PhotonView>().IsMine)
+            {
+                PhotonView.Find(OB).transform.GetChild(i).transform.localScale = new Vector3(w, h, 1.0f);
+                //  emptyToMoveCard.transform.GetChild(0).transform.parent = emptyToMoveCard.transform.parent;
+            }
+
+        }
+
+
     }
 
     [PunRPC]
