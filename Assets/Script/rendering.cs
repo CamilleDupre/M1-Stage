@@ -21,6 +21,8 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
     public Transform MurL;
     public Transform MurR;
 
+    public Transform room;
+
     //Card list
     public List<GameObject> cardList;
     public List<GameObject> cardListToTeleport;
@@ -30,6 +32,8 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
     public bool card1 = true;
 
     public GameObject m_Pointer;
+
+    private bool trialEnCours = false ;
 
     public class MyCard
     {
@@ -51,10 +55,18 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && trialEnCours == false)
         {
             print("space key was pressed");
             CardCreation();
+            trialEnCours = true;
+            expe expe = new expe("01");
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.E) && trialEnCours == true)
+        {
+            print("End");
         }
     }
 
