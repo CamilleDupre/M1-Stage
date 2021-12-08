@@ -60,7 +60,8 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
             print("space key was pressed");
             CardCreation();
             trialEnCours = true;
-            expe expe = new expe("01");
+            photonView.RPC("startExpe", Photon.Pun.RpcTarget.AllBuffered);
+
         }
 
 
@@ -132,6 +133,13 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
     void addListCard(int OB)
     {
         cardList.Add(PhotonView.Find(OB).gameObject);
+    }
+
+    [PunRPC]
+    //Add card to the list of card
+    void startExpe()
+    {
+        expe expe = new expe("01");
     }
 
     [PunRPC]
