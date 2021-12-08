@@ -49,6 +49,15 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         }
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            print("space key was pressed");
+            CardCreation();
+        }
+    }
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -73,7 +82,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         trash4.SetActive(false);
     }
 
-    public override void OnCreatedRoom() { 
+    public void CardCreation() { 
         
         Debug.Log("Creation carte " + PhotonNetwork.IsMasterClient);
 
