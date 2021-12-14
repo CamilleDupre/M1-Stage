@@ -30,10 +30,15 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
     //List of textures
     public object[] textures;
     public bool card1 = true;
+    public bool training;
+
+    //who to load
+    public string participant = "p01";
 
     public GameObject m_Pointer;
 
     private bool trialEnCours = false ;
+    expe expe;
 
     public class MyCard
     {
@@ -58,9 +63,11 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         if (Input.GetKeyDown(KeyCode.Space) && trialEnCours == false)
         {
             print("space key was pressed");
+            photonView.RPC("startExpe", Photon.Pun.RpcTarget.AllBuffered);
+            Cards();
             CardCreation();
             trialEnCours = true;
-            photonView.RPC("startExpe", Photon.Pun.RpcTarget.AllBuffered);
+            
 
         }
 
@@ -68,19 +75,29 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         if (Input.GetKeyDown(KeyCode.E) && trialEnCours == true)
         {
             print("End");
+            //stop timing , stop expe ? 
         }
     }
 
     // Start is called before the first frame update
     void Awake()
     {
-       card1 = GameObject.Find("/[CameraRig]/Controller (right)").GetComponent<Teleporter>().card1;
-       bool training = GameObject.Find("/[CameraRig]/Controller (right)").GetComponent<Teleporter>().training;
+        trash1.SetActive(false);
+        trash2.SetActive(false);
+        trash3.SetActive(false);
+        trash4.SetActive(false);
+    }
+
+    public void Cards()
+    {
+        // recup jeu de carte et training depuis le csv
+        //card1 = GameObject.Find("/[CameraRig]/Controller (right)").GetComponent<Teleporter>().card1;
+        //bool training = GameObject.Find("/[CameraRig]/Controller (right)").GetComponent<Teleporter>().training;
         if (training)
         {
             textures = Resources.LoadAll("dixit_training/", typeof(Texture2D));
         }
-        else if(card1)
+        else if (card1)
         {
             textures = Resources.LoadAll("dixit_part1/", typeof(Texture2D));
         }
@@ -88,11 +105,6 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         {
             textures = Resources.LoadAll("dixit_part2/", typeof(Texture2D));
         }
-
-        trash1.SetActive(false);
-        trash2.SetActive(false);
-        trash3.SetActive(false);
-        trash4.SetActive(false);
     }
 
     public void CardCreation() { 
@@ -139,7 +151,39 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
     //Add card to the list of card
     void startExpe()
     {
-        expe expe = new expe("01");
+        expe = new expe(participant);
+
+        if (expe.curentTrial.training == "Y")
+        {
+            training = true;
+        }
+        else
+        {
+            training = false;
+        }
+        if (expe.curentTrial.cardSet == "1")
+        {
+            card1 = true;
+        }else
+        {
+            card1 = false;
+        }
+
+        if (expe.curentTrial.collabEnvironememn == "C")
+        {
+            //desactiver son
+            Debug.Log("Desactiver son" );
+           // Transform speaker = transform.Find("Network Player(Clone)/Head/Speaker");
+            GameObject player = GameObject.Find("Network Player(Clone)");
+            Transform speaker = player.transform.Find("Head/Speaker");
+            //player.
+            speaker.GetComponent<AudioSource>().enabled = false;
+
+        }
+        else
+        {
+            //card1 = false;
+        }
     }
 
     [PunRPC]

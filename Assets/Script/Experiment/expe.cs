@@ -16,6 +16,7 @@ public class expe
     //static string[] letters = {"H", "N", "K", "R"};
     static string[] letters = { "evertnone", "ehornone" };
     private List<Trial> theTrials;
+    public Trial curentTrial;
     private int ctrial = -1;
     private StreamWriter writer;
     private StreamWriter kineWriter;
@@ -53,17 +54,17 @@ public class expe
             List<string> values = new List<string>(str.Split(';'));
             if (values[1] == participant)
             {
-                    trial = new Trial(
+                curentTrial = new Trial(
                         values[0], values[1], values[2],
                         values[3], values[4]
                     );
 
-                    Debug.Log("Goupe: " + trial.group + "Participant: " + trial.participant +
-                              "training: " + trial.training + "cardSet: " + trial.cardSet +
-                              "collabEnvironememn: " + trial.collabEnvironememn);
+                    Debug.Log("Goupe: " + curentTrial.group + "Participant: " + curentTrial.participant +
+                              "training: " + curentTrial.training + "cardSet: " + curentTrial.cardSet +
+                              "collabEnvironememn: " + curentTrial.collabEnvironememn);
             }
         }
-      //  Debug.Log("Goupe: " + trial.group + );
+        //  Debug.Log("Goupe: " + trial.group + );
         /*
         // file name should look like  "class-PXX-2019-MM-DD-HH-MM-SS.csv"
         string mydate = System.DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");

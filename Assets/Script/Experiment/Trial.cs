@@ -17,11 +17,13 @@ public class Trial
 
     public Trial(
         string g_, string p_, string train,
-        string cardSet, string colabEnvironement
+        string cardS, string colabEnv
         )
     {
         group = g_; participant = p_;  training = train;
-        
+        cardSet = cardS; collabEnvironememn = colabEnv;
+
+
     }
     public string StringToLog()
     {
