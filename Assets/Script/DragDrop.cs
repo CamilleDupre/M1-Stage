@@ -49,14 +49,23 @@ public class DragDrop : MonoBehaviourPun
     private bool cardSeletedForGroupMove = false;
     private Vector3 loalscaleEmpty;
 
+    expe expe;
+
+
     // Start is called before the first frame update
     void Awake()
     {
         m_pose = GetComponent<SteamVR_Behaviour_Pose>();
+        expe = GameObject.Find("/Salle").GetComponent<rendering>().expe;
     }
     // Update is called once per frame
     void Update()
     {
+
+        if(expe == null)
+        {
+            expe = GameObject.Find("/Salle").GetComponent<rendering>().expe;
+        }
         //Pointer
         m_HasPosition = UpdatePointer();
         //m_Pointer.SetActive(m_HasPosition);
@@ -66,6 +75,7 @@ public class DragDrop : MonoBehaviourPun
             if (wait && ob!=null)
             {
                 //just a clic -> tag
+                expe.curentTrial.incTest();
                 player = GameObject.Find("Network Player(Clone)");
                 player.GetComponent<PhotonView>().RPC("ChangeTag", Photon.Pun.RpcTarget.AllBuffered, hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
             }

@@ -15,6 +15,8 @@ public class Trial
     // public int tct;
     // public float mux, muy, muz;
 
+    public int test = 0;
+
     public Trial(
         string g_, string p_, string train,
         string cardS, string colabEnv
@@ -31,4 +33,10 @@ public class Trial
 
         return str;
     }
+
+    public void incTest()
+    {
+        test = test + 1;
+    }
+
 }

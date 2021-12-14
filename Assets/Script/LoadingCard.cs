@@ -13,8 +13,8 @@ public class LoadingCard : MonoBehaviour
     {
         if (textures == null) // load one time the texture
         {
-            bool card1 = GameObject.Find("/[CameraRig]/Controller (right)").GetComponent<Teleporter>().card1;
-            bool training = GameObject.Find("/[CameraRig]/Controller (right)").GetComponent<Teleporter>().training;
+            bool card1 = GameObject.Find("/Salle").GetComponent<rendering>().card1;
+            bool training = GameObject.Find("/Salle").GetComponent<rendering>().training;
             if (training)
             {
                 textures = Resources.LoadAll("dixit_training/", typeof(Texture2D));

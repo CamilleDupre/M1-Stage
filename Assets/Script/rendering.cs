@@ -29,7 +29,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
 
     //List of textures
     public object[] textures;
-    public bool card1 = true;
+    public bool card1;
     public bool training;
 
     //who to load
@@ -38,7 +38,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
     public GameObject m_Pointer;
 
     private bool trialEnCours = false ;
-    expe expe;
+    public expe expe;
 
     public class MyCard
     {
@@ -76,6 +76,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         {
             print("End");
             //stop timing , stop expe ? 
+            Debug.Log(expe.curentTrial.test);
         }
     }
 
@@ -93,18 +94,17 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         // recup jeu de carte et training depuis le csv
         //card1 = GameObject.Find("/[CameraRig]/Controller (right)").GetComponent<Teleporter>().card1;
         //bool training = GameObject.Find("/[CameraRig]/Controller (right)").GetComponent<Teleporter>().training;
+        Debug.Log(card1);
         if (training)
         {
             textures = Resources.LoadAll("dixit_training/", typeof(Texture2D));
         }
-        else if (card1)
+        else 
         {
-            textures = Resources.LoadAll("dixit_part1/", typeof(Texture2D));
+            textures = Resources.LoadAll("dixit_part"+ expe.curentTrial.cardSet+ "/", typeof(Texture2D));
         }
-        else
-        {
-            textures = Resources.LoadAll("dixit_part2/", typeof(Texture2D));
-        }
+        
+
     }
 
     public void CardCreation() { 
@@ -161,6 +161,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         {
             training = false;
         }
+
         if (expe.curentTrial.cardSet == "1")
         {
             card1 = true;
@@ -173,13 +174,8 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         {
             //desactiver son
             Debug.Log("Sound off" );
-           // Transform speaker = transform.Find("Network Player(Clone)/Head/Speaker");
             GameObject sound = GameObject.Find("Network Voice");
-
             sound.SetActive(false);
-            //player.GetComponent<PhotonVoiceView>().enabled = false;
-            //speaker.GetComponent<Speaker>().enabled = false;
-
         }
         else
         {
