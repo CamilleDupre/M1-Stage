@@ -174,10 +174,11 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
             //desactiver son
             Debug.Log("Desactiver son" );
            // Transform speaker = transform.Find("Network Player(Clone)/Head/Speaker");
-            GameObject player = GameObject.Find("Network Player(Clone)");
-            Transform speaker = player.transform.Find("Head/Speaker");
-            //player.
-            speaker.GetComponent<AudioSource>().enabled = false;
+            GameObject sound = GameObject.Find("Network Voice");
+
+            sound.SetActive(false);
+            //player.GetComponent<PhotonVoiceView>().enabled = false;
+            //speaker.GetComponent<Speaker>().enabled = false;
 
         }
         else
