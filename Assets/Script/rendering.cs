@@ -172,7 +172,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         if (expe.curentTrial.collabEnvironememn == "C")
         {
             //desactiver son
-            Debug.Log("Desactiver son" );
+            Debug.Log("Sound off" );
            // Transform speaker = transform.Find("Network Player(Clone)/Head/Speaker");
             GameObject sound = GameObject.Find("Network Voice");
 
@@ -183,7 +183,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         }
         else
         {
-            //card1 = false;
+            Debug.Log(" Sound on");
         }
     }
 

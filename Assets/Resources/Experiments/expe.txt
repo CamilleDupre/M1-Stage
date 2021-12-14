@@ -1,2 +1,5 @@
 Group;Participant;Training;CardSet;CollabEnvironememn;
 g01;p01;N;1;C;
+g01;p02;N;1;C;
+g02;p03;N;2;R;
+g02;p04;N;2;R;
