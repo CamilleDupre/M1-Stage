@@ -72,12 +72,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
 
         if (Input.GetKeyDown(KeyCode.E) && trialEnCours == true)
         {
-            print("End");
-            //stop timing , stop expe ? 
-            Debug.Log("nb tag card : " + expe.curentTrial.nbTag);
-            Debug.Log("nb change tag color : " + expe.curentTrial.nbChangeTag);
-            Debug.Log("nb sync TP : " + expe.curentTrial.nbSyncTp);
-            Debug.Log("nb async TP : " + expe.curentTrial.nbAsyncTP);
+            photonView.RPC("endExpe", Photon.Pun.RpcTarget.AllBuffered);
         }
     }
 
@@ -141,6 +136,7 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
     }
 
 
+    
     [PunRPC]
     //Add card to the list of card
     void addListCard(int OB)
@@ -148,8 +144,20 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         cardList.Add(PhotonView.Find(OB).gameObject);
     }
 
+
     [PunRPC]
-    //Add card to the list of card
+    void endExpe()
+    {
+        print("End");
+        //stop timing , stop expe ? 
+        Debug.Log("nb tag card : " + expe.curentTrial.nbTag);
+        Debug.Log("nb change tag color : " + expe.curentTrial.nbChangeTag);
+        Debug.Log("nb sync TP : " + expe.curentTrial.nbSyncTp);
+        Debug.Log("nb async TP : " + expe.curentTrial.nbAsyncTP);
+    }
+
+
+    [PunRPC]
     void startExpe()
     {
         expe = new expe(participant);
