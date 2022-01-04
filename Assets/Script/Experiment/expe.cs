@@ -65,32 +65,44 @@ public class expe
             }
         }
         //  Debug.Log("Goupe: " + trial.group + );
-        /*
         // file name should look like  "class-PXX-2019-MM-DD-HH-MM-SS.csv"
         string mydate = System.DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
         string path = "Assets/Resources/logs/class-" + participant + "-" + mydate + ".csv";
         //string path = "Assets/Resources/logs/test.csv";
 
+        //File.Create(path);
         //Write some text to the test.txt file
         writer = new StreamWriter(path, false);
         writer.WriteLine(
             // "factor"
-            "Participant;Trial;Training;UEyes;UPos;UDist;DVertPos;DDist;UserX;UserY;UserZ;DiscX;DiscY;Letter;FrontColor;BackColor;Lines"
+            "Group;Participant;Training;CardSet;CollabEnvironememn"
             // measure
-            + ";Size;TCT;ErrorCount;PosErrorCount;MUserX;MUserY;MUserZ"
-            + ";AvgUserX;AvgUserY;AvgUserZ;AvgDist"
-            + ";PW;PH;GW;GH;MX;MY");
+            + ";nbAsyncTP;nbSyncTp;nbSyncTpGround;nbAsyncTPGround;nbSyncTpWall;nbAsyncTPWall;"
+            + ";nbDestroyCard;nbUndoCard;nbDragCard;nbGroupCardTP"
+            + ";nbTag;nbChangeTag");
         writer.Flush();
-        path = "Assets/Resources/logs/class-" + participant + "-" + mydate + ".kine";
+        path = "Assets/Resources/logs/class-" + participant + "-" + mydate + ".txt";
+        curentTrial.pathLog = path;
+      
         kineWriter = new StreamWriter(path, false);
-        kineWriter.WriteLine(
-            "## ");
+
+        curentTrial.kineWriter = kineWriter;
+        kineWriter.WriteLine(curentTrial.group + " " + curentTrial.participant + " kine action");
         kineWriter.Flush();
-        */
+
     }
 
     public void Finished()
     {
+
+        writer.WriteLine(
+           // "factor"
+           curentTrial.group + ";" + curentTrial.participant + ";" + curentTrial.training + ";" + curentTrial.cardSet + ";" + curentTrial.collabEnvironememn + ";"  
+           + curentTrial.nbAsyncTP + ";" + curentTrial.nbSyncTp + ";" + curentTrial.nbSyncTpGround + ";" + curentTrial.nbAsyncTPGround + ";"
+           + curentTrial.nbSyncTpWall + ";" + curentTrial.nbAsyncTPWall + ";" + curentTrial.nbDestroyCard + ";" + curentTrial.nbUndoCard + ";"
+           + curentTrial.nbDragCard + ";" + curentTrial.nbGroupCardTP + ";" + curentTrial.nbTag + ";" + curentTrial.nbChangeTag
+            );
+        writer.Flush();
         writer.Close();
         kineWriter.Close();
     }

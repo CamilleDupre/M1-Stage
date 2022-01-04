@@ -381,9 +381,11 @@ public class Teleporter : MonoBehaviour
 
             if (!syncTeleportation)
             {
+                expe.curentTrial.incNbAsyncTPGround(translateVector);
                 StartCoroutine(MoveRig(cameraRig, translateVector));
             }
             else {
+                expe.curentTrial.incNbSyncTpGround(translateVector);
                 photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
             }
             
@@ -647,10 +649,12 @@ public class Teleporter : MonoBehaviour
             //then teleport
             if (!syncTeleportation)
             {
+                expe.curentTrial.incNbAsyncTPWall(translateVector);
                 StartCoroutine(MoveRig(cameraRig, translateVector));
             }
             else
             {
+                expe.curentTrial.incNbSyncTpWall(translateVector);
                 photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
             }
         }

@@ -148,12 +148,25 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
     [PunRPC]
     void endExpe()
     {
+
+        expe.Finished();
         print("End");
         //stop timing , stop expe ? 
         Debug.Log("nb tag card : " + expe.curentTrial.nbTag);
         Debug.Log("nb change tag color : " + expe.curentTrial.nbChangeTag);
         Debug.Log("nb sync TP : " + expe.curentTrial.nbSyncTp);
         Debug.Log("nb async TP : " + expe.curentTrial.nbAsyncTP);
+
+        Debug.Log("nb sync TP W : " + expe.curentTrial.nbSyncTpWall);
+        Debug.Log("nb async TP W: " + expe.curentTrial.nbAsyncTPWall);
+        Debug.Log("nb sync TP G: " + expe.curentTrial.nbSyncTpGround);
+        Debug.Log("nb async TP G: " + expe.curentTrial.nbAsyncTPGround);
+
+
+        Debug.Log("nb DragCard : " + expe.curentTrial.nbDragCard);
+        Debug.Log("nb GroupCardTP: " + expe.curentTrial.nbGroupCardTP);
+        Debug.Log("nb DestroyCard: " + expe.curentTrial.nbDestroyCard);
+        Debug.Log("nb UndoCard: " + expe.curentTrial.nbUndoCard);
     }
 
 

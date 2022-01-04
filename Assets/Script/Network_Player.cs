@@ -111,7 +111,7 @@ public class Network_Player : MonoBehaviourPun
                         nameR = hit.transform.GetComponent<Renderer>().material.name;
                         photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
                         right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
-                        expe.curentTrial.incNbChangeTag();
+                        expe.curentTrial.incNbChangeTag(nameR);
                         // Debug.Log("tag not sync: photonView.IsMine");
                     }
                 }
