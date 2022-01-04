@@ -67,8 +67,6 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
             Cards();
             CardCreation();
             trialEnCours = true;
-            
-
         }
 
 
@@ -76,7 +74,10 @@ public class rendering : MonoBehaviourPunCallbacks //, MonoBehaviourPun
         {
             print("End");
             //stop timing , stop expe ? 
-            Debug.Log(expe.curentTrial.test);
+            Debug.Log("nb tag card : " + expe.curentTrial.nbTag);
+            Debug.Log("nb change tag color : " + expe.curentTrial.nbChangeTag);
+            Debug.Log("nb sync TP : " + expe.curentTrial.nbSyncTp);
+            Debug.Log("nb async TP : " + expe.curentTrial.nbAsyncTP);
         }
     }
 

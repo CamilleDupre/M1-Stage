@@ -70,6 +70,9 @@ public class Teleporter : MonoBehaviour
     private GameObject player;
 
 
+    expe expe;
+
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -81,6 +84,12 @@ public class Teleporter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (expe == null)
+        {
+            expe = GameObject.Find("/Salle").GetComponent<rendering>().expe;
+        }
+
         //Pointer
         m_HasPosition = UpdatePointer();
 
@@ -169,6 +178,7 @@ public class Teleporter : MonoBehaviour
                 timer = 0;
                 nbClick = 0;
                 tryTeleport();
+                expe.curentTrial.incNbAsyncTP();
                 syncTeleportation = false;
                 doubleclick = false;
 
@@ -179,6 +189,7 @@ public class Teleporter : MonoBehaviour
         {
             syncTeleportation = true;
             tryTeleport();
+            expe.curentTrial.incNbSyncTp();
             syncTeleportation = false;
             doubleclick = false;
         }

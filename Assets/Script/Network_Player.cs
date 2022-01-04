@@ -48,6 +48,9 @@ public class Network_Player : MonoBehaviourPun
     private bool synctag = true;
 
 
+
+    expe expe;
+
     void Start()
     {
         //photonView = GetComponent<PhotonView>();
@@ -76,6 +79,10 @@ public class Network_Player : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
+        if (expe == null)
+        {
+            expe = GameObject.Find("/Salle").GetComponent<rendering>().expe;
+        }
 
         synctag = GameObject.Find("/[CameraRig]/Controller (right)").GetComponent<Teleporter>().synctag;
         Ray ray = new Ray(right.transform.position, right.transform.forward);
@@ -104,6 +111,7 @@ public class Network_Player : MonoBehaviourPun
                         nameR = hit.transform.GetComponent<Renderer>().material.name;
                         photonView.RPC("ChangeRayColour", Photon.Pun.RpcTarget.All, nameR);
                         right.GetComponent<PhotonView>().RPC("RayColour", Photon.Pun.RpcTarget.All, nameR);
+                        expe.curentTrial.incNbChangeTag();
                         // Debug.Log("tag not sync: photonView.IsMine");
                     }
                 }

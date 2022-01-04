@@ -15,7 +15,19 @@ public class Trial
     // public int tct;
     // public float mux, muy, muz;
 
-    public int test = 0;
+    public int nbTag = 0;
+    public int nbChangeTag = 0;
+
+    public int nbSyncTp  = 0;
+    public int nbAsyncTP = 0;
+       
+    /**
+        public int nbSyncTpWall = 0;
+        public int nbAsyncTPWall = 0;
+
+        public int nbSyncTpGround = 0;
+        public int nbAsyncTPGround = 0;
+     **/
 
     public Trial(
         string g_, string p_, string train,
@@ -34,9 +46,24 @@ public class Trial
         return str;
     }
 
-    public void incTest()
+    public void incNbTag()
     {
-        test = test + 1;
+        nbTag = nbTag + 1;
+    }
+
+    public void incNbChangeTag()
+    {
+        nbChangeTag = nbChangeTag + 1;
+    }
+
+    public void incNbSyncTp()
+    {
+        nbSyncTp = nbSyncTp + 1;
+    }
+
+    public void incNbAsyncTP()
+    {
+        nbAsyncTP = nbAsyncTP + 1;
     }
 
 }
