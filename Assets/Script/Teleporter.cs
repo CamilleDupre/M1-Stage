@@ -15,6 +15,7 @@ public class Teleporter : MonoBehaviour
     public GameObject tagNotsync;
 
     public GameObject Cube;
+    public GameObject CubePlayer;
 
     // intersecion raycast and object
     public GameObject m_Pointer;
@@ -317,6 +318,7 @@ public class Teleporter : MonoBehaviour
             if (!syncTeleportation)
             {
                 cameraRig.RotateAround(cam.transform.position, Vector3.up, 90);
+                CubePlayer.transform.RotateAround(CubePlayer.transform.position, Vector3.up, 90);
             }
             else
             {
@@ -331,6 +333,7 @@ public class Teleporter : MonoBehaviour
             if (!syncTeleportation)
             {
                 cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
+                CubePlayer.transform.RotateAround(CubePlayer.transform.position, Vector3.up, -90);
             }
             else
             {
@@ -388,15 +391,15 @@ public class Teleporter : MonoBehaviour
                 StartCoroutine(MoveRig(cameraRig, translateVector));
                 expe.curentTrial.incNbSyncTpGround(translateVector);
                 Vector3 playerPos= new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
-                if (Physics.RaycastAll(player.transform.position, player.transform.forward, 100.0F)[0].transform.name == "MUR R")
+                if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR R")
                 {
                     playerPos.x += 1;
                 }
-                else if (Physics.RaycastAll(player.transform.position, player.transform.forward, 100.0F)[0].transform.name == "MUR B")
+                else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR B")
                 {
                     playerPos.z += 1;
                 }
-                else if (Physics.RaycastAll(player.transform.position, player.transform.forward, 100.0F)[0].transform.name == "MUR L")
+                else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR L")
                 {
                     playerPos.x -= 1;
                 }
