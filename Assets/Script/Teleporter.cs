@@ -405,7 +405,7 @@ public class Teleporter : MonoBehaviour
                 }
                 else //if (Physics.RaycastAll(player.transform.position, player.transform.forward, 100.0F)[0].transform.name == "MUR R")
                 {
-                    playerPos.z += 1;
+                    playerPos.z -= 1;
                 }
 
                 photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, playerPos);
