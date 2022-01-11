@@ -385,7 +385,9 @@ public class Teleporter : MonoBehaviour
                 StartCoroutine(MoveRig(cameraRig, translateVector));
             }
             else {
+                StartCoroutine(MoveRig(cameraRig, translateVector));
                 expe.curentTrial.incNbSyncTpGround(translateVector);
+                Vector3 playerPos= new Vector3(headPosition.x + 1, cameraRig.position.y, headPosition.z);
                 photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
             }
             
@@ -661,9 +663,11 @@ public class Teleporter : MonoBehaviour
     }
 
     [PunRPC]
-    void MoveRigRPC(int cameraRig, Vector3 translation)
+    void MoveRigRPC(int cameraRig, Vector3 pos)
     {
-        StartCoroutine(MoveRig(PhotonView.Find(cameraRig).transform, translation));
+        // StartCoroutine(MoveRig(PhotonView.Find(cameraRig).transform, translation));
+        StartCoroutine(MoveRigForSyncTP(PhotonView.Find(cameraRig).transform, pos));
+        
     }
 
     [PunRPC]
@@ -723,6 +727,26 @@ public class Teleporter : MonoBehaviour
         if (syncTeleportation)
         {
             Cube.transform.position += translation; // teleportation
+        }
+
+        SteamVR_Fade.Start(Color.clear, m_FadeTime, true); // normal screen
+
+        m_IsTeleportoting = false;
+
+    }
+
+    private IEnumerator MoveRigForSyncTP(Transform cameraRig, Vector3 pos)
+    {
+        m_IsTeleportoting = true;
+
+        SteamVR_Fade.Start(Color.black, m_FadeTime, true); // black screen
+
+        yield return new WaitForSeconds(m_FadeTime); // fade time
+
+        cameraRig.position = pos; // teleportation
+        if (syncTeleportation)
+        {
+            Cube.transform.position = pos; // teleportation
         }
 
         SteamVR_Fade.Start(Color.clear, m_FadeTime, true); // normal screen

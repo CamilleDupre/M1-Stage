@@ -77,7 +77,7 @@ public class expe
             // "factor"
             "Group;Participant;Training;CardSet;CollabEnvironememn"
             // measure
-            + ";nbAsyncTP;nbSyncTp;nbSyncTpGround;nbAsyncTPGround;nbSyncTpWall;nbAsyncTPWall;"
+            + ";nbAsyncTP;nbSyncTp;nbSyncTpGround;nbAsyncTPGround;nbSyncTpWall;nbAsyncTPWall"
             + ";nbDestroyCard;nbUndoCard;nbDragCard;nbGroupCardTP"
             + ";nbTag;nbChangeTag");
         writer.Flush();
