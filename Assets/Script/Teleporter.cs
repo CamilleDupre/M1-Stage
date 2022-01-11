@@ -172,7 +172,7 @@ public class Teleporter : MonoBehaviour
                 
             }
 
-            if (Time.time - timer > 0.2f)
+            if (Time.time - timer > 0.3f)
             {
                 wait = false;
                 timer = 0;
