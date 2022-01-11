@@ -388,7 +388,7 @@ public class Teleporter : MonoBehaviour
                 StartCoroutine(MoveRig(cameraRig, translateVector));
                 expe.curentTrial.incNbSyncTpGround(translateVector);
                 Vector3 playerPos= new Vector3(headPosition.x + 1, cameraRig.position.y, headPosition.z);
-                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
+                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, playerPos);
             }
             
         }
