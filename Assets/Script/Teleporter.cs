@@ -387,7 +387,24 @@ public class Teleporter : MonoBehaviour
             else {
                 StartCoroutine(MoveRig(cameraRig, translateVector));
                 expe.curentTrial.incNbSyncTpGround(translateVector);
-                Vector3 playerPos= new Vector3(headPosition.x + 1, cameraRig.position.y, headPosition.z);
+                Vector3 playerPos= new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
+                if (Physics.RaycastAll(player.transform.position, player.transform.forward, 100.0F)[0].transform.name == "MUR R")
+                {
+                    playerPos.x += 1;
+                }
+                else if (Physics.RaycastAll(player.transform.position, player.transform.forward, 100.0F)[0].transform.name == "MUR B")
+                {
+                    playerPos.z += 1;
+                }
+                else if (Physics.RaycastAll(player.transform.position, player.transform.forward, 100.0F)[0].transform.name == "MUR L")
+                {
+                    playerPos.x -= 1;
+                }
+                else //if (Physics.RaycastAll(player.transform.position, player.transform.forward, 100.0F)[0].transform.name == "MUR R")
+                {
+                    playerPos.z += 1;
+                }
+
                 photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, playerPos);
             }
             
