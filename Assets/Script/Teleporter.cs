@@ -121,8 +121,17 @@ public class Teleporter : MonoBehaviour
         //Teleport
         position = SteamVR_Actions.default_Pos.GetAxis(SteamVR_Input_Sources.Any);
 
+        if (m_TeleportAction.GetStateUp(m_pose.inputSource))
+        {
+            if (wait)
+            {
+                tryTeleport();
+            }
+            wait = false;
+            longclic = false;
+        }
 
-        if (m_TeleportAction.GetStateDown(m_pose.inputSource))
+                if (m_TeleportAction.GetStateDown(m_pose.inputSource))
         {
             if (position.x < -0.5)
             {
@@ -162,7 +171,26 @@ public class Teleporter : MonoBehaviour
             }
         }
 
+
         if (wait)
+        {
+            if (Time.time - timer > 1.5) //  after 1.5s it is long clic
+            {
+                longclic = true;
+                wait = false;
+                // Debug.Log("long clic");
+            }
+        }
+        if (longclic)
+        {
+            syncTeleportation = true;
+            tryTeleport();
+            expe.curentTrial.incNbSyncTp();
+            syncTeleportation = false;
+            longclic = false;
+        }
+        /*
+            if (wait)
         {
             //just a clic -> normal teleportation
             if (nbClick == 2)
@@ -194,7 +222,7 @@ public class Teleporter : MonoBehaviour
             syncTeleportation = false;
             doubleclick = false;
         }
-
+        */
         if (m_TeleportAction.GetStateUp(m_pose.inputSource))
         {
           
