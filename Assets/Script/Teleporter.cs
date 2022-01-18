@@ -389,7 +389,8 @@ public class Teleporter : MonoBehaviour
                 Quaternion rotat = cameraRig.rotation;
                 Vector3 playerPos = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
                 Debug.Log(playerPos);
-                if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform != null && Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR R")
+                if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform != null && 
+                    Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR R")
                 {
                     if (PhotonNetwork.IsMasterClient)
                     {
@@ -401,19 +402,21 @@ public class Teleporter : MonoBehaviour
                     }
                     
                 }
-                else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform != null &&  Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR B")
-                {
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        playerPos.z += 1;
-                    }
-                    else
-                    {
-                        playerPos.z -= 1;
-                    }
+                else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform != null &&  
+                         Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR B")
+                     {
+                        if (PhotonNetwork.IsMasterClient)
+                        {
+                            playerPos.z += 1;
+                        }
+                        else
+                        {
+                            playerPos.z -= 1;
+                        }
 
-                }
-                else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform != null &&  Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR L")
+                     }
+                else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform != null &&  
+                         Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR L")
                 {
                     if (PhotonNetwork.IsMasterClient)
                     {
