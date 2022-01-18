@@ -571,9 +571,9 @@ public class Teleporter : MonoBehaviour
 
                     for (int i = 0; i < objectHit.Length; i++)
                     {
-                        
+                        //cameraRig.rotation = new Quaternion(0.0f, -0.7f, 0.0f, 0.7f);
                         //Debug.Log("objHit : " + objectHit[i].transform.name);
-                        
+
                         if (objectHit[i].transform.name == "MUR L" || objectHit[i].transform.parent.name == "MUR L")
                         {
                             translateVector = new Vector3(0, 0, m_Pointer.transform.position.z - groundPosition.z);
