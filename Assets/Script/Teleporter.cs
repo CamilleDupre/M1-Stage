@@ -70,6 +70,7 @@ public class Teleporter : MonoBehaviour
     //player
     private GameObject player;
     public Vector3 cameraRigPos;
+    Transform cameraRig;
 
 
     expe expe;
@@ -90,7 +91,7 @@ public class Teleporter : MonoBehaviour
         {
             expe = GameObject.Find("/Salle").GetComponent<rendering>().expe;
         }
-        Transform cameraRig = SteamVR_Render.Top().origin;
+        cameraRig = SteamVR_Render.Top().origin;
         cameraRigPos = cameraRig.position;
         //Pointer
         m_HasPosition = UpdatePointer();
@@ -99,7 +100,7 @@ public class Teleporter : MonoBehaviour
         {
             tpsync.SetActive(false);
             tpNotsync.SetActive(true);
-            Cube.SetActive(true);
+           // Cube.SetActive(true);
         }
         if (syncTeleportation == false)
         {
@@ -123,7 +124,7 @@ public class Teleporter : MonoBehaviour
         position = SteamVR_Actions.default_Pos.GetAxis(SteamVR_Input_Sources.Any);
 
 
-                if (m_TeleportAction.GetStateDown(m_pose.inputSource))
+        if (m_TeleportAction.GetStateDown(m_pose.inputSource))
         {
             if (position.x < -0.5)
             {
@@ -155,7 +156,7 @@ public class Teleporter : MonoBehaviour
             else
             {
                 nbClick++;
-                Debug.Log("C");
+                //Debug.Log("C");
                 coordClic = coordPrev = m_Pointer.transform.position; //hit.transform.position;
                 forwardClic = transform.forward;
                 wait = true;
@@ -178,7 +179,7 @@ public class Teleporter : MonoBehaviour
             syncTeleportation = true;
             tryTeleport();
             expe.curentTrial.incNbSyncTp();
-            syncTeleportation = false;
+            //syncTeleportation = false;
             longclic = false;
         }
        
@@ -259,7 +260,7 @@ public class Teleporter : MonoBehaviour
 
         // head position + camera rig
         Vector3 headPosition = SteamVR_Render.Top().head.position;
-        Transform cameraRig = SteamVR_Render.Top().origin;
+        //Transform cameraRig = SteamVR_Render.Top().origin;
       
         //player possition
         Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
@@ -346,64 +347,7 @@ public class Teleporter : MonoBehaviour
             else {
                 StartCoroutine(MoveRig(cameraRig, translateVector));
                 expe.curentTrial.incNbSyncTpGround(translateVector);
-
-                Quaternion rotat = cameraRig.rotation;
-                Vector3 playerPos = cameraRig.position;//new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
-                Debug.Log(playerPos);
-                if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform != null && 
-                    Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR R")
-                {
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        playerPos.x += 1;
-                    }
-                    else
-                    {
-                        playerPos.x -= 1;
-                    }
-                    
                 }
-                else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform != null &&  
-                         Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR B")
-                     {
-                        if (PhotonNetwork.IsMasterClient)
-                        {
-                            playerPos.z += 1;
-                        }
-                        else
-                        {
-                            playerPos.z -= 1;
-                        }
-
-                     }
-                else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform != null &&  
-                         Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR L")
-                {
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        playerPos.x -= 1;
-                    }
-                    else
-                    {
-                        playerPos.x += 1;
-                    }
-
-                }
-                else //if (Physics.RaycastAll(player.transform.position, player.transform.forward, 100.0F)[0].transform.name == "MUR R")
-                {
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        playerPos.z -= 1;
-                    }
-                    else
-                    {
-                        playerPos.z += 1;
-                    }
-
-                }
-                Debug.Log(playerPos);
-                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.Others,cameraRig.gameObject.GetComponent<PhotonView>().ViewID, cameraRigPos, rotat);
-            }
             
         }
 
@@ -671,60 +615,7 @@ public class Teleporter : MonoBehaviour
             {
                 StartCoroutine(MoveRig(cameraRig, translateVector));
                 expe.curentTrial.incNbSyncTpWall(translateVector);
-
-                Quaternion rotat = cameraRig.rotation;
-                Vector3 playerPos = cameraRig.position;// new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
-                if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR R")
-                {
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        playerPos.x += 1;
-                    }
-                    else
-                    {
-                        playerPos.x -= 1;
-                    }
-
                 }
-                else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR B")
-                {
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        playerPos.z += 1;
-                    }
-                    else
-                    {
-                        playerPos.z -= 1;
-                    }
-
-                }
-                else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR L")
-                {
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        playerPos.x -= 1;
-                    }
-                    else
-                    {
-                        playerPos.x += 1;
-                    }
-
-                }
-                else //if (Physics.RaycastAll(player.transform.position, player.transform.forward, 100.0F)[0].transform.name == "MUR R")
-                {
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        playerPos.z -= 1;
-                    }
-                    else
-                    {
-                        playerPos.z += 1;
-                    }
-
-                }
-
-                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.Others ,cameraRig.gameObject.GetComponent<PhotonView>().ViewID, cameraRigPos, rotat);
-            }
         }
     }
 
@@ -791,12 +682,71 @@ public class Teleporter : MonoBehaviour
         yield return new WaitForSeconds( m_FadeTime); // fade time
         
         cameraRig.position += translation; // teleportation
+        Debug.Log("camera rig pos tp :" +cameraRig.position);
         if (syncTeleportation)
         {
             Cube.transform.position += translation; // teleportation
         }
 
         SteamVR_Fade.Start(Color.clear, m_FadeTime, true); // normal screen
+
+        if (syncTeleportation)
+        {
+            Quaternion rotat = SteamVR_Render.Top().origin.rotation;
+            Vector3 playerPos = SteamVR_Render.Top().origin.position;// new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
+            Debug.Log(playerPos);
+            if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR R")
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    playerPos.x += 1;
+                }
+                else
+                {
+                    playerPos.x -= 1;
+                }
+
+            }
+            else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR B")
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    playerPos.z += 1;
+                }
+                else
+                {
+                    playerPos.z -= 1;
+                }
+
+            }
+            else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR L")
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    playerPos.x -= 1;
+                }
+                else
+                {
+                    playerPos.x += 1;
+                }
+
+            }
+            else //if (Physics.RaycastAll(player.transform.position, player.transform.forward, 100.0F)[0].transform.name == "MUR R")
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    playerPos.z -= 1;
+                }
+                else
+                {
+                    playerPos.z += 1;
+                }
+
+            }
+            Debug.Log(playerPos);
+            photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.Others, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, playerPos, rotat);
+            syncTeleportation = false;
+        }
 
         m_IsTeleportoting = false;
 
@@ -820,9 +770,7 @@ public class Teleporter : MonoBehaviour
         }
 
         SteamVR_Fade.Start(Color.clear, m_FadeTime, true); // normal screen
-
         m_IsTeleportoting = false;
-
     }
 
     private bool UpdatePointer()
