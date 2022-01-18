@@ -437,7 +437,7 @@ public class Teleporter : MonoBehaviour
 
                 }
 
-                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, playerPos, rotat);
+                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.Others,cameraRig.gameObject.GetComponent<PhotonView>().ViewID, playerPos, rotat);
             }
             
         }
@@ -465,7 +465,6 @@ public class Teleporter : MonoBehaviour
                         {
                             translateVector = new Vector3(m_Pointer.transform.position.x - Cube.transform.position.x, 0, 0);
                         }
-
                         else if (objectHit[i].transform.name == "MUR L" || objectHit[i].transform.parent.name == "MUR L")
                         {
                             //Debug.Log("need to rotate e 1 time");
@@ -611,7 +610,6 @@ public class Teleporter : MonoBehaviour
                     }
                 }
             }
-
             else //(hit.transform.name == "MUR L" || hit.transform.parent.name == "MUR L")
             {
                 if (syncTeleportation)
@@ -697,6 +695,7 @@ public class Teleporter : MonoBehaviour
                 }
 
             }
+
             //then teleport
             if (!syncTeleportation)
             {
@@ -759,7 +758,7 @@ public class Teleporter : MonoBehaviour
 
                 }
 
-                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, playerPos, rotat);
+                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.Others ,cameraRig.gameObject.GetComponent<PhotonView>().ViewID, playerPos, rotat);
             }
         }
     }
