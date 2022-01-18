@@ -440,7 +440,7 @@ public class Teleporter : MonoBehaviour
 
                 }
                 string wall = Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name;
-                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID);
+                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, wall);
             }
             
         }
@@ -710,13 +710,13 @@ public class Teleporter : MonoBehaviour
             {
                 string wall = Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name;
                 expe.curentTrial.incNbSyncTpWall(translateVector);
-                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
+                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector, wall);
             }
         }
     }
 
     [PunRPC]
-    void MoveRigRPC(int cameraRig, Vector3 pos)
+    void MoveRigRPC(int cameraRig, Vector3 pos, string wall)
     {
         // StartCoroutine(MoveRig(PhotonView.Find(cameraRig).transform, translation));
 
