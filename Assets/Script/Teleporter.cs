@@ -388,7 +388,8 @@ public class Teleporter : MonoBehaviour
 
                 Quaternion rotat = cameraRig.rotation;
                 Vector3 playerPos = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
-                if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR R")
+                Debug.Log(playerPos);
+                if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform != null && Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR R")
                 {
                     if (PhotonNetwork.IsMasterClient)
                     {
@@ -400,7 +401,7 @@ public class Teleporter : MonoBehaviour
                     }
                     
                 }
-                else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR B")
+                else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform != null &&  Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR B")
                 {
                     if (PhotonNetwork.IsMasterClient)
                     {
@@ -412,7 +413,7 @@ public class Teleporter : MonoBehaviour
                     }
 
                 }
-                else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR L")
+                else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform != null &&  Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR L")
                 {
                     if (PhotonNetwork.IsMasterClient)
                     {
@@ -436,7 +437,7 @@ public class Teleporter : MonoBehaviour
                     }
 
                 }
-
+                Debug.Log(playerPos);
                 photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.Others,cameraRig.gameObject.GetComponent<PhotonView>().ViewID, playerPos, rotat);
             }
             
@@ -844,7 +845,6 @@ public class Teleporter : MonoBehaviour
         SteamVR_Fade.Start(Color.black, m_FadeTime, true); // black screen
         // Rotation
         {
-            Transform cam = cameraRig.Find("Camera (eye)");
             cameraRig.rotation = rotat;
         }
         yield return new WaitForSeconds(m_FadeTime); // fade time
