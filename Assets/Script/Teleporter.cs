@@ -69,7 +69,7 @@ public class Teleporter : MonoBehaviour
     private PhotonView photonView;
     //player
     private GameObject player;
-    Transform cameraRig;
+    public Vector3 cameraRigPos;
 
 
     expe expe;
@@ -86,12 +86,12 @@ public class Teleporter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cameraRig = SteamVR_Render.Top().origin;
         if (expe == null)
         {
             expe = GameObject.Find("/Salle").GetComponent<rendering>().expe;
         }
-
+        Transform cameraRig = SteamVR_Render.Top().origin;
+        cameraRigPos = cameraRig.position;
         //Pointer
         m_HasPosition = UpdatePointer();
 
@@ -250,46 +250,6 @@ public class Teleporter : MonoBehaviour
 
     }
 
-    /* try drag wall
-    private void dragTeleport(Vector3 prev, Vector3 curr)
-    {
-        if (!m_HasPosition || m_IsTeleportoting)
-            return;
-
-        Vector3 headPosition = SteamVR_Render.Top().head.position;
-        Transform cameraRig = SteamVR_Render.Top().origin;
-
-        Vector3 delta = new Vector3();
-        delta = curr - prev;
-
-        if (hit.transform.tag == "Wall" || hit.transform.tag == "Card")
-        {
-            if (hit.transform.name == "MUR B" || hit.transform.parent.name == "MUR B")
-            {
-
-                Vector3 translation = new Vector3(-delta.x, 0, 0);
-                cameraRig.position = cameraRig.position + translation;
-                Debug.Log("drag mur b " + translation);
-
-            }
-            else if (hit.transform.name == "MUR R" || hit.transform.parent.name == "MUR R")
-            {
-                Vector3 translation = new Vector3(0, 0, -delta.z);
-                cameraRig.position = cameraRig.position + translation;
-                Debug.Log("drag mur r " + translation);
-
-            }
-            else if (hit.transform.name == "MUR L" || hit.transform.parent.name == "MUR L")
-            {
-                Vector3 translation = new Vector3(0, 0, -delta.z);
-                cameraRig.position = cameraRig.position + translation;
-                Debug.Log("drag mur l " + translation);
-
-            }
-        }
-    }
-    */
-
     private void tryTeleport()
     {
 
@@ -299,8 +259,8 @@ public class Teleporter : MonoBehaviour
 
         // head position + camera rig
         Vector3 headPosition = SteamVR_Render.Top().head.position;
-        
-
+        Transform cameraRig = SteamVR_Render.Top().origin;
+      
         //player possition
         Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
         if (e)
