@@ -439,8 +439,8 @@ public class Teleporter : MonoBehaviour
                     }
 
                 }
-
-                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, playerPos);
+                string wall = Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name;
+                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, wall);
             }
             
         }
@@ -715,10 +715,10 @@ public class Teleporter : MonoBehaviour
     }
 
     [PunRPC]
-    void MoveRigRPC(int cameraRig, Vector3 pos)
+    void MoveRigRPC(int cameraRig, Vector3 pos, string wall)
     {
         // StartCoroutine(MoveRig(PhotonView.Find(cameraRig).transform, translation));
-        StartCoroutine(MoveRigForSyncTP(PhotonView.Find(cameraRig).transform, pos));
+        StartCoroutine(MoveRigForSyncTP(PhotonView.Find(cameraRig).transform, pos, wall));
         
     }
 
@@ -787,12 +787,96 @@ public class Teleporter : MonoBehaviour
 
     }
 
-    private IEnumerator MoveRigForSyncTP(Transform cameraRig, Vector3 pos)
+    private IEnumerator MoveRigForSyncTP(Transform cameraRig, Vector3 pos, string wall)
     {
         m_IsTeleportoting = true;
 
         SteamVR_Fade.Start(Color.black, m_FadeTime, true); // black screen
-
+        // Rotqtion
+        {
+            Transform cam = cameraRig.Find("Camera (eye)");
+            string wallPlayer = Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name;
+            if (wallPlayer == "Mur B")
+            {
+                if (wall == "Mur B")
+                {
+                    //nothing
+                }
+                else if (wall == "Mur L")
+                {
+                    cameraRig.RotateAround(cam.transform.position, Vector3.up, 90);
+                }
+                else if (wall == "Mur R")
+                {
+                    cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
+                }
+                else
+                {
+                    cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
+                    cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
+                }
+            }
+            else if (wallPlayer == "Mur L")
+            {
+                if (wall == "Mur B")
+                {
+                    cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
+                }
+                else if (wall == "Mur L")
+                {
+                    //nothing
+                }
+                else if (wall == "Mur R")
+                {
+                    cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
+                    cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
+                }
+                else
+                {
+                    cameraRig.RotateAround(cam.transform.position, Vector3.up, 90);
+                }
+            }
+            else if (wallPlayer == "Mur R")
+            {
+                if (wall == "Mur B")
+                {
+                    cameraRig.RotateAround(cam.transform.position, Vector3.up, 90);
+                }
+                else if (wall == "Mur L")
+                {
+                    cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
+                    cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
+                }
+                else if (wall == "Mur R")
+                {
+                    //nothing
+                }
+                else
+                {
+                    cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
+                }
+            }
+            else //if (wallPlayer == "Mur B")  no wall
+            {
+                if (wall == "Mur B")
+                {
+                    cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
+                    cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
+                }
+                else if (wall == "Mur L")
+                {
+                    cameraRig.RotateAround(cam.transform.position, Vector3.up, -90);
+                }
+                else if (wall == "Mur R")
+                {
+                    cameraRig.RotateAround(cam.transform.position, Vector3.up, 90);
+                }
+                else
+                {
+                    //nothing
+                }
+            }
+        }
         yield return new WaitForSeconds(m_FadeTime); // fade time
 
         cameraRig.position = pos; // teleportation
