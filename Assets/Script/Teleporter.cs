@@ -386,6 +386,7 @@ public class Teleporter : MonoBehaviour
                 StartCoroutine(MoveRig(cameraRig, translateVector));
                 expe.curentTrial.incNbSyncTpGround(translateVector);
 
+                cameraRig = SteamVR_Render.Top().origin;
                 Quaternion rotat = cameraRig.rotation;
                 Vector3 playerPos = cameraRig.position;//new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
                 Debug.Log(playerPos);
@@ -711,6 +712,7 @@ public class Teleporter : MonoBehaviour
                 StartCoroutine(MoveRig(cameraRig, translateVector));
                 expe.curentTrial.incNbSyncTpWall(translateVector);
 
+                cameraRig = SteamVR_Render.Top().origin;
                 Quaternion rotat = cameraRig.rotation;
                 Vector3 playerPos = cameraRig.position;// new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
                 if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR R")
