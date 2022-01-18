@@ -708,8 +708,9 @@ public class Teleporter : MonoBehaviour
             }
             else
             {
+                string wall = Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name;
                 expe.curentTrial.incNbSyncTpWall(translateVector);
-                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
+                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector, wall);
             }
         }
     }
