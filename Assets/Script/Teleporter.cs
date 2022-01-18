@@ -693,9 +693,12 @@ public class Teleporter : MonoBehaviour
         if (syncTeleportation)
         {
             Quaternion rotat = SteamVR_Render.Top().origin.rotation;
-            Vector3 playerPos = SteamVR_Render.Top().origin.position;// new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
+            Debug.Log("rotation" +rotat);
+            Vector3 headPosition = SteamVR_Render.Top().head.position;
+            Vector3 playerPos = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
             Debug.Log(playerPos);
-            if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR R")
+            //R
+            if (rotat.y == 90)
             {
                 if (PhotonNetwork.IsMasterClient)
                 {
@@ -707,7 +710,8 @@ public class Teleporter : MonoBehaviour
                 }
 
             }
-            else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR B")
+            //B
+            else if (rotat.y== 0 && rotat.x==0 && rotat.z == 0)
             {
                 if (PhotonNetwork.IsMasterClient)
                 {
@@ -719,7 +723,8 @@ public class Teleporter : MonoBehaviour
                 }
 
             }
-            else if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR L")
+            //L
+            else if (rotat.y == -90)
             {
                 if (PhotonNetwork.IsMasterClient)
                 {
@@ -731,6 +736,7 @@ public class Teleporter : MonoBehaviour
                 }
 
             }
+            //no wall
             else //if (Physics.RaycastAll(player.transform.position, player.transform.forward, 100.0F)[0].transform.name == "MUR R")
             {
                 if (PhotonNetwork.IsMasterClient)
