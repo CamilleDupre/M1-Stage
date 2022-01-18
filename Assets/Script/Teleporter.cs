@@ -440,7 +440,7 @@ public class Teleporter : MonoBehaviour
 
                 }
                 string wall = Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name;
-                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, wall);
+                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID);
             }
             
         }
@@ -710,16 +710,17 @@ public class Teleporter : MonoBehaviour
             {
                 string wall = Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name;
                 expe.curentTrial.incNbSyncTpWall(translateVector);
-                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector, wall);
+                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.All, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, translateVector);
             }
         }
     }
 
     [PunRPC]
-    void MoveRigRPC(int cameraRig, Vector3 pos, string wall)
+    void MoveRigRPC(int cameraRig, Vector3 pos)
     {
         // StartCoroutine(MoveRig(PhotonView.Find(cameraRig).transform, translation));
-        StartCoroutine(MoveRigForSyncTP(PhotonView.Find(cameraRig).transform, pos, wall));
+
+        StartCoroutine(MoveRigForSyncTP(PhotonView.Find(cameraRig).transform, pos));
         
     }
 
@@ -788,7 +789,7 @@ public class Teleporter : MonoBehaviour
 
     }
 
-    private IEnumerator MoveRigForSyncTP(Transform cameraRig, Vector3 pos, string wall)
+    private IEnumerator MoveRigForSyncTP(Transform cameraRig, Vector3 pos)
     {
         m_IsTeleportoting = true;
 
@@ -796,6 +797,7 @@ public class Teleporter : MonoBehaviour
         // Rotqtion
         {
             Transform cam = cameraRig.Find("Camera (eye)");
+            /*
             string wallPlayer = Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name;
             if (wallPlayer == "Mur B")
             {
@@ -877,6 +879,7 @@ public class Teleporter : MonoBehaviour
                     //nothing
                 }
             }
+            */
         }
         yield return new WaitForSeconds(m_FadeTime); // fade time
 
