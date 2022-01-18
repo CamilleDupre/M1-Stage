@@ -750,7 +750,7 @@ public class Teleporter : MonoBehaviour
 
             }
             Debug.Log(playerPos);
-            photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.Others, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, playerPos, rotat);
+            photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.Others, cameraRig.gameObject.GetComponent<PhotonView>().ViewID, cameraRig.position, rotat);
             syncTeleportation = false;
         }
 
