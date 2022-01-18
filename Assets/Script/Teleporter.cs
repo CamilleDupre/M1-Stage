@@ -402,7 +402,7 @@ public class Teleporter : MonoBehaviour
 
                 }
                 Debug.Log(playerPos);
-                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.Others,cameraRig.gameObject.GetComponent<PhotonView>().ViewID, playerPos, rotat);
+                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.Others,cameraRig.gameObject.GetComponent<PhotonView>().ViewID, cameraRigPos, rotat);
             }
             
         }
@@ -723,7 +723,7 @@ public class Teleporter : MonoBehaviour
 
                 }
 
-                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.Others ,cameraRig.gameObject.GetComponent<PhotonView>().ViewID, playerPos, rotat);
+                photonView.RPC("MoveRigRPC", Photon.Pun.RpcTarget.Others ,cameraRig.gameObject.GetComponent<PhotonView>().ViewID, cameraRigPos, rotat);
             }
         }
     }
