@@ -387,7 +387,7 @@ public class Teleporter : MonoBehaviour
                 expe.curentTrial.incNbSyncTpGround(translateVector);
 
                 Quaternion rotat = cameraRig.rotation;
-                Vector3 playerPos = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
+                Vector3 playerPos = cameraRig.position;//new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
                 Debug.Log(playerPos);
                 if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform != null && 
                     Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR R")
@@ -712,7 +712,7 @@ public class Teleporter : MonoBehaviour
                 expe.curentTrial.incNbSyncTpWall(translateVector);
 
                 Quaternion rotat = cameraRig.rotation;
-                Vector3 playerPos = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
+                Vector3 playerPos = cameraRig.position;// new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
                 if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR R")
                 {
                     if (PhotonNetwork.IsMasterClient)
