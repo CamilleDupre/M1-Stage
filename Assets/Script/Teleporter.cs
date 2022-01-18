@@ -69,6 +69,7 @@ public class Teleporter : MonoBehaviour
     private PhotonView photonView;
     //player
     private GameObject player;
+    Transform cameraRig;
 
 
     expe expe;
@@ -85,7 +86,7 @@ public class Teleporter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        cameraRig = SteamVR_Render.Top().origin;
         if (expe == null)
         {
             expe = GameObject.Find("/Salle").GetComponent<rendering>().expe;
@@ -298,7 +299,7 @@ public class Teleporter : MonoBehaviour
 
         // head position + camera rig
         Vector3 headPosition = SteamVR_Render.Top().head.position;
-        Transform cameraRig = SteamVR_Render.Top().origin;
+        
 
         //player possition
         Vector3 groundPosition = new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
@@ -386,7 +387,6 @@ public class Teleporter : MonoBehaviour
                 StartCoroutine(MoveRig(cameraRig, translateVector));
                 expe.curentTrial.incNbSyncTpGround(translateVector);
 
-                cameraRig = SteamVR_Render.Top().origin;
                 Quaternion rotat = cameraRig.rotation;
                 Vector3 playerPos = cameraRig.position;//new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
                 Debug.Log(playerPos);
@@ -712,7 +712,6 @@ public class Teleporter : MonoBehaviour
                 StartCoroutine(MoveRig(cameraRig, translateVector));
                 expe.curentTrial.incNbSyncTpWall(translateVector);
 
-                cameraRig = SteamVR_Render.Top().origin;
                 Quaternion rotat = cameraRig.rotation;
                 Vector3 playerPos = cameraRig.position;// new Vector3(headPosition.x, cameraRig.position.y, headPosition.z);
                 if (Physics.RaycastAll(CubePlayer.transform.position, CubePlayer.transform.forward, 100.0F)[0].transform.name == "MUR R")
