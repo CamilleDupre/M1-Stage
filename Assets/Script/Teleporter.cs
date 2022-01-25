@@ -167,7 +167,7 @@ public class Teleporter : MonoBehaviour
 
         if (wait)
         {
-            if (Time.time - timer > 1.5) //  after 1.5s it is long clic
+            if (Time.time - timer > 0.7) //  after 0.7s it is long clic
             {
                 longclic = true;
                 wait = false;
