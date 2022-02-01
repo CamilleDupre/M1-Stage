@@ -552,8 +552,15 @@ public class Teleporter : MonoBehaviour
         SteamVR_Fade.Start(Color.black, m_FadeTime, true); // black screen
 
         yield return new WaitForSeconds( m_FadeTime); // fade time
+
         
         cameraRig.position += translation; // teleportation
+
+        if (cameraRig.position.x < -3.5) { cameraRig.position = new Vector3(-3.5f, cameraRig.position.y, cameraRig.position.z); }
+        if (cameraRig.position.x > 3.5)  { cameraRig.position = new Vector3( 3.5f, cameraRig.position.y, cameraRig.position.z); }
+        if (cameraRig.position.z < -3.5) { cameraRig.position = new Vector3(cameraRig.position.x, cameraRig.position.y, -3.5f); }
+        if (cameraRig.position.z > 3.5)  { cameraRig.position = new Vector3(cameraRig.position.x, cameraRig.position.y,  3.5f); }
+
         Debug.Log("camera rig pos tp :" +cameraRig.position);
         if (syncTeleportation)
         {
